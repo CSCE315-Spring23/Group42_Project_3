@@ -41,7 +41,7 @@ function CardItem(props) {
         )}
       </li>
       {showPopup && (
-        <Popup onClose={togglePopup} />
+        <Popup text = {props.text} ingregients = {props.ingregients} onClose={togglePopup} />
       )}
     </>
   );

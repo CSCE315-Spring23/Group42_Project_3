@@ -53,7 +53,7 @@
 import React from 'react';
 import './Cards.css';
 
-function Card({ title, text, image }) {
+function Card({ title, text, image, ingredients }) {
   return (
     <div className='card'>
       <img src={image} alt={title} className='card-image' />

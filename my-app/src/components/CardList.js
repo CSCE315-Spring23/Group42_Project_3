@@ -19,6 +19,7 @@ function CardList(props) {
                   label={card.label}
                   path={card.path}
                   key={index}
+                  ingredients = {card.ingredients}
                 />
               );
             })}
@@ -32,6 +33,7 @@ function CardList(props) {
                   label={card.label}
                   path={card.path}
                   key={index}
+                  ingredients = {card.ingredients}
                 />
               );
             })}
