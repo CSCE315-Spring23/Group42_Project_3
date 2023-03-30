@@ -8,34 +8,34 @@ import CardList from '../CardList';
 const cardData = {
   cards: [
     {
-      image: "path/to/image1",
+      image: "images/burger-img-1.jpg",
       text: "Burgers",
       label: "Label 1",
-      path: "/card1",
+      path: "/Burgers",
     },
     {
-      image: "path/to/image2",
+      image: "images/burger-img-1.jpg",
       text: "Sandwiches",
       label: "Label 2",
-      path: "/card2",
+      path: "/Sandwiches",
     },
     {
-      image: "path/to/image1",
+      image: "images/burger-img-1.jpg",
       text: "Baskets",
       label: "Label 1",
-      path: "/card1",
+      path: "/Baskets",
     },
     {
-      image: "path/to/image1",
+      image: "images/burger-img-1.jpg",
       text: "Sides",
       label: "Label 1",
-      path: "/card1",
+      path: "/Sides",
     },
     {
-      image: "path/to/image1",
+      image: "images/burger-img-1.jpg",
       text: "Seasonal",
       label: "Label 1",
-      path: "/card1",
+      path: "/Seasonal",
     },
   ],
 };
@@ -43,7 +43,7 @@ const cardData = {
 function Home() {
   return (<>
     <HeroSection />
-    <CardList cardData={cardData} title="Menu" />
+    <CardList cardData={cardData} title="Menu" />    
     <Footer />
   </>);
 }

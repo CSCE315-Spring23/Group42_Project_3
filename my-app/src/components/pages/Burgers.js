@@ -5,32 +5,32 @@ import CardList from '../CardList';
 const cardData = {
     cards: [
       {
-        image: "path/to/image1",
-        text: "Burger 1",
+        image: "images/burger-img-1.jpg",
+        text: "Burgers",
         label: "Label 1",
         path: "/card1",
       },
       {
-        image: "path/to/image2",
-        text: "Card 2",
+        image: "images/burger-img-1.jpg",
+        text: "Sandwiches",
         label: "Label 2",
         path: "/card2",
       },
       {
-        image: "path/to/image1",
-        text: "Burger 1",
+        image: "images/burger-img-1.jpg",
+        text: "Baskets",
         label: "Label 1",
         path: "/card1",
       },
       {
-        image: "path/to/image1",
-        text: "Burger 1",
+        image: "images/burger-img-1.jpg",
+        text: "Sides",
         label: "Label 1",
         path: "/card1",
       },
       {
-        image: "path/to/image1",
-        text: "Burger 1",
+        image: "images/burger-img-1.jpg",
+        text: "Seasonal",
         label: "Label 1",
         path: "/card1",
       },
@@ -40,7 +40,9 @@ const cardData = {
 
 function Burgers() {
     return (<>
-      <CardList cardData={cardData} title="BURGERS" />
+    <div id="menu">
+        <CardList cardData={cardData} title="BURGERS" />
+    </div>
 
       <Footer/>
     </>);
