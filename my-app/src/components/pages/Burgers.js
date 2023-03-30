@@ -6,36 +6,42 @@ const cardData = {
     cards: [
       {
         image: "images/burger-img-1.jpg",
-        text: "Burgers",
+        text: "Burger",
         label: "Label 1",
         path: "/card1",
+        ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
       },
       {
         image: "images/burger-img-1.jpg",
-        text: "Sandwiches",
-        label: "Label 2",
-        path: "/card2",
+        text: "Burger",
+        label: "Label 1",
+        path: "/card1",
+        ingredients: ["bun", "veggie patty", "lettuce", "tomato", "avocado"]
       },
       {
         image: "images/burger-img-1.jpg",
-        text: "Baskets",
+        text: "Burger",
         label: "Label 1",
         path: "/card1",
+        ingredients: ["bun", "chicken patty", "lettuce", "tomato", "mayo"]
       },
       {
         image: "images/burger-img-1.jpg",
-        text: "Sides",
+        text: "Burger",
         label: "Label 1",
         path: "/card1",
+        ingredients: ["bun", "pork patty", "lettuce", "tomato", "bbq sauce"]
       },
       {
         image: "images/burger-img-1.jpg",
-        text: "Seasonal",
+        text: "Burger",
         label: "Label 1",
         path: "/card1",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
     ],
   };
+  
   
 
 function Burgers() {

@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import "react-icons/fa";
-
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -63,7 +60,7 @@ function Navbar() {
             </li>
             <li className='nav-item'>
               <Link
-                to='/investmentopps'
+                to='/Sandwiches'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
