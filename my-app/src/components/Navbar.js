@@ -50,6 +50,7 @@ function Navbar() {
               onClick={closeMobileMenu}
             >
               Menu
+              </Link>
             </li>
             <li className='nav-item'>
               <Link

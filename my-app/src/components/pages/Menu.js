@@ -6,7 +6,7 @@ const cardData = {
     cards: [
       {
         image: "path/to/image1",
-        text: "Burger 1",
+        text: "not burger 1",
         label: "Label 1",
         path: "/card1",
       },
@@ -38,12 +38,12 @@ const cardData = {
   };
   
 
-function Burgers() {
+function Menu() {
     return (<>
-      <CardList cardData={cardData} title="BURGERS" />
+      <CardList cardData={cardData} title="MENU" />
 
       <Footer/>
     </>);
   }
   
-  export default Burgers;
+  export default Menu;
