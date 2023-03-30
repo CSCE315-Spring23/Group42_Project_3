@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import './App.css';
 import Home from './components/pages/Home';
 import Burgers from './components/pages/Burgers';
+import Menu from './components/pages/Menu';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home/>} />
           <Route exact path='/Burgers' element={<Burgers/>} />
+          <Route exact path='/Menu' element={<Menu/>} />
           <Route exact path='/' element={<Home/>} />
           <Route exact path='/' element={<Home/>} />
           <Route exact path='/' element={<Home/>} />
