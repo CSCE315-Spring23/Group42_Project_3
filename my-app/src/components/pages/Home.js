@@ -42,7 +42,7 @@ const cardData = {
 function Home() {
   return (<>
     <HeroSection />
-    <CardList cardData={cardData} title="Menu" />    
+    <CardList id = 'cards' cardData={cardData} title="Menu" />    
     <Footer />
   </>);
 }

@@ -22,6 +22,7 @@ function HeroSection() {
           buttonStyle='btn--outline'
           buttonSize='btn--large'
           onClick={handleOnClick}
+          path='#cards'
         >
           GET STARTED
         </Button>
