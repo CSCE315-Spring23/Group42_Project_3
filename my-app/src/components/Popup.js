@@ -10,6 +10,7 @@ function Popup({text, ingredients, onClose}) {
 
   const addToCart = () => {
     // You can pass the quantities to the backend here to add to cart
+    // setSelectedIngredients([...selectedIngredients, selectedIngredient]);
   }
 
   //get these from database by passing in name
@@ -26,7 +27,7 @@ function Popup({text, ingredients, onClose}) {
       <IngredientForm ingredients={i} setQuantities = {setQuantities}></IngredientForm>
       <Button className = "close" buttonStyle='btn--outline' onClick={<Link> </Link>}>X</Button>
       <Button className= "cart" buttonStyle='btn--outline' onClick={addToCart}>ADD TO CART</Button>
-      <Button className= "checkout" buttonStyle='btn--outline'>CHECK OUT</Button>
+      <Button className= "checkout" buttonStyle='btn--outline' path={'/checkout'}>CHECK OUT</Button>
       </div>
       </div>
   );

@@ -17,11 +17,6 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
     setQuantities(newValues);
   };
   
-
-  // const selectedButton = (i) => {
-
-  // };
-
   return (
     <div className="form-container">
       <form>
