@@ -19,12 +19,12 @@
   max-width: 1500px;
 }
 
-image{
+img{
   z-index: 100;
-  width: 50%;
-  height: 40px;
-  top: 25%;
-  left: 10px;
+  width: 30%;
+  height: 70%;
+  top: 15%;
+  left: 0;
 }
 
 .navbar-logo {
@@ -37,9 +37,10 @@ image{
   display: flex;
   align-items: center;
   width: 50%;
-  height: 40px;
-  top: 25%;
+  height: 60%;
+  top: 15%;
   left: 10px;
+  z-index: 10000;
 }
 
 .fa-typo3 {
