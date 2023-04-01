@@ -1,6 +1,6 @@
 .navbar {
   background: linear-gradient(90deg, rgba(92,0,32,255) 0%, rgba(92,0,32,255) 100%);
-  /* background-color: rgba(265, 265, 265, -1); */
+  /* rev's yellow: rgd(249, 187, 18) */
   height: 80px;
   display: flex;
   justify-content: center;
