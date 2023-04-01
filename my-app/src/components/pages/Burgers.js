@@ -1,7 +1,10 @@
 import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
+import getMenuItems from '../../database';
 
+getMenuItems();
+console.log("here");
 const cardData = {
     cards: [
       {
@@ -41,8 +44,8 @@ const cardData = {
       },
     ],
   };
-  
-  
+
+
 
 function Burgers() {
     return (<>
@@ -53,5 +56,5 @@ function Burgers() {
       <Footer/>
     </>);
   }
-  
+
   export default Burgers;
