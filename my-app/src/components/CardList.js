@@ -2,8 +2,7 @@ import React from 'react';
 import './Cards.css';
 import CardItem from './CardItem';
 
-function CardList(props) {
-  const { cardData, title } = props;
+function CardList({cardData, title} ) {
 
   return (
     <div className='cards'>

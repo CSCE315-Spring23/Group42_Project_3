@@ -19,13 +19,8 @@ function Popup({text, ingredients, onClose}) {
     <div className='popup'>
       <div className='popup__content'>
       <p>{text} </p>
-      {/* <ul>
-          {i.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
-          ))}
-      </ul> */}
       <IngredientForm ingredients={i} setQuantities = {setQuantities}></IngredientForm>
-      <Button className = "close" buttonStyle='btn--outline' onClick={<Link> </Link>}>X</Button>
+      <Button className = "close" buttonStyle='btn--outline' onClick={onClose}>X</Button>
       <Button className= "cart" buttonStyle='btn--outline' onClick={addToCart}>ADD TO CART</Button>
       <Button className= "checkout" buttonStyle='btn--outline' path={'/checkout'}>CHECK OUT</Button>
       </div>

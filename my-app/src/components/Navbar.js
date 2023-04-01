@@ -28,8 +28,9 @@ function Navbar() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
+          {/* <image src = 'images/Revs-logo.png'></image> */}
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-            Rev's
+          <image src = 'images/Revs-logo.png'></image>
           </Link>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
