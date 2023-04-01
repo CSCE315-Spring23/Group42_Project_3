@@ -1,15 +1,15 @@
 import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
-import getMenuItems from '../../database';
-
-getMenuItems();
-console.log("here");
+const {database} = require('../../database');
+//
+//test();
+let bName = test();
 const cardData = {
     cards: [
       {
         image: "images/burger-img-1.jpg",
-        text: "Burger",
+        text: bName,
         label: "Label 1",
         path: "",
         ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
