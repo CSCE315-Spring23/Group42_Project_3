@@ -7,6 +7,7 @@ import Menu from './components/pages/Menu';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sandwiches from './components/pages/Sandwiches';
 import Checkout from './components/pages/Checkout';
+import EmployeeView from './components/pages/EmployeeView';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path='/Sandwiches' element={<Sandwiches/>} />
           <Route exact path='/Checkout' element={<Checkout/>} />
           <Route exact path='/' element={<Home/>} />
+          <Route exact path='/EmployeeView' element={<EmployeeView/>} />
         </Routes>
       </Router>
     </>
