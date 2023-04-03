@@ -1,39 +1,38 @@
 import React from 'react';
-import Card from '../Cards';
 import Footer from '../Footer';
-import CardList from '../CardList';
+import EmployeeCardList from '../EmployeeCardList';
 
 const cardData = {
     cards: [
       {
-        image: "path/to/image1",
-        text: "testing",
-        label: "Label 1",
-        path: "/card1",
+        text: "Burger",
+        path: "",
+        ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
       },
       {
-        image: "path/to/image2",
-        text: "testing",
-        label: "Label 2",
-        path: "/card2",
+        text: "Sandwich",
+        path: "",
+        ingredients: ["bun", "veggie patty", "lettuce", "tomato", "avocado"]
       },
       {
-        image: "path/to/image1",
-        text: "Burger 1",
-        label: "Label 1",
-        path: "/card1",
+        text: "Basket",
+        path: "",
+        ingredients: ["bun", "chicken patty", "lettuce", "tomato", "mayo"]
       },
       {
-        image: "path/to/image1",
-        text: "Burger 1",
-        label: "Label 1",
-        path: "/card1",
+        text: "Sides",
+        path: "",
+        ingredients: ["bun", "pork patty", "lettuce", "tomato", "bbq sauce"]
       },
       {
-        image: "path/to/image1",
-        text: "Burger 1",
-        label: "Label 1",
-        path: "/card1",
+        text: "Seasonal Stuff",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Other",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
     ],
   };
@@ -41,7 +40,7 @@ const cardData = {
 function EmployeeView() {
     return (<>
         <div id="employeemenu">
-            <CardList cardData={cardData} title="MENU" />
+            <EmployeeCardList cardData={cardData} title="MENU" />
         </div>
         <Footer/>
       </>);
