@@ -4,7 +4,7 @@ import CardList from '../CardList';
 const {database} = require('../../database');
 //
 //test();
-let bName = test();
+let bName = "hi";
 const cardData = {
     cards: [
       {
