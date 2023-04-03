@@ -6,35 +6,126 @@ import { Button } from '../Button';
 const cardData = {
     cards: [
       {
-        text: "Burger",
+        text: "Item",
         path: "",
         ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
       },
       {
-        text: "Sandwich",
+        text: "Item",
         path: "",
         ingredients: ["bun", "veggie patty", "lettuce", "tomato", "avocado"]
       },
       {
-        text: "Basket",
+        text: "Item",
         path: "",
         ingredients: ["bun", "chicken patty", "lettuce", "tomato", "mayo"]
       },
       {
-        text: "Sides",
+        text: "Item",
         path: "",
         ingredients: ["bun", "pork patty", "lettuce", "tomato", "bbq sauce"]
       },
       {
-        text: "Seasonal Stuff",
+        text: "Item",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Other",
+        text: "Item",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "Item",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+
     ],
   };
 

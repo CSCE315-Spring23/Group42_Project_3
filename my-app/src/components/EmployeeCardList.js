@@ -10,11 +10,10 @@ function EmployeeCardList({cardData, title} ) {
       <div className='cards__container'>
         <div className='cards__wrapper'>
           <ul className='cards__items'>
-            {cardData.cards.slice(0, 3).map((card, index) => {
+            {cardData.cards.slice(0, 8).map((card, index) => {
               return (
                 <EmployeeCardItem
                   text={card.text}
-                  label={card.label}
                   path={card.path}
                   key={index}
                   ingredients = {card.ingredients}
@@ -23,11 +22,22 @@ function EmployeeCardList({cardData, title} ) {
             })}
           </ul>
           <ul className='cards__items'>
-            {cardData.cards.slice(3).map((card, index) => {
+            {cardData.cards.slice(8, 16).map((card, index) => {
               return (
                 <EmployeeCardItem
                   text={card.text}
-                  label={card.label}
+                  path={card.path}
+                  key={index}
+                  ingredients = {card.ingredients}
+                />
+              );
+            })}
+          </ul>
+          <ul className='cards__items'>
+            {cardData.cards.slice(16, 24).map((card, index) => {
+              return (
+                <EmployeeCardItem
+                  text={card.text}
                   path={card.path}
                   key={index}
                   ingredients = {card.ingredients}
