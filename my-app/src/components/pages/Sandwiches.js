@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
+import Navbar from '../CustomerNavbar';
 
 const cardData = {
     cards: [
@@ -34,6 +35,7 @@ const cardData = {
 
 function Sandwiches() {
     return (<>
+    <Navbar/>
     <div id="menu">
         <CardList cardData={cardData} title="SANDWICHES" />
     </div>

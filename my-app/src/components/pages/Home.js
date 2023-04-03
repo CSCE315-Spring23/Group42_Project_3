@@ -3,7 +3,7 @@ import '../../App.css';
 import HeroSection from '../HeroSection';
 import Footer from '../Footer';
 import CardList from '../CardList';
-import Navbar from '../Navbar';
+import Navbar from '../CustomerNavbar';
 
 const cardData = {
   cards: [

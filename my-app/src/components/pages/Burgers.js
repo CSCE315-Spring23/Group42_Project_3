@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
 // const {database} = require('../../database');
-import Navbar from '../Navbar';
+import Navbar from '../CustomerNavbar';
 //
 //test();
 let bName = "hi";
