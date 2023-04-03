@@ -1,7 +1,8 @@
 import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
-const {database} = require('../../database');
+// const {database} = require('../../database');
+import Navbar from '../Navbar';
 //
 //test();
 let bName = "hi";
@@ -48,7 +49,9 @@ const cardData = {
 
 
 function Burgers() {
+
     return (<>
+    <Navbar />
     <div id="menu">
         <CardList cardData={cardData} title="BURGERS" />
     </div>

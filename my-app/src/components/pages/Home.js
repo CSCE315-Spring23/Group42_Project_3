@@ -3,6 +3,7 @@ import '../../App.css';
 import HeroSection from '../HeroSection';
 import Footer from '../Footer';
 import CardList from '../CardList';
+import Navbar from '../Navbar';
 
 const cardData = {
   cards: [
@@ -41,6 +42,7 @@ const cardData = {
 
 function Home() {
   return (<>
+    <Navbar />
     <HeroSection />
     <CardList id = 'cards' cardData={cardData} title="Menu" />    
     <Footer />
