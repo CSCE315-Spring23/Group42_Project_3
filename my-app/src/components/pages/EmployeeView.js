@@ -135,7 +135,9 @@ function EmployeeView() {
             <EmployeeCardList cardData={cardData} title="Employee View" />
             
         </div>
-        <button>Checkout</button>
+        {/* <button>Checkout</button> */}
+        {/* <Button text = "Checkout" buttonStyle={"btn--primary"}/> */}
+        <Button buttonStyle='btn--primary' path='/checkout'>CHECK OUT</Button>
         <Footer/>
       </>);
 }
