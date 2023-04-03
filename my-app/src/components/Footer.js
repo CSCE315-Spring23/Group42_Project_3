@@ -30,8 +30,8 @@ function Footer() {
           <div class='footer-link-items'>
             <h2>User Login</h2>
             <Link to='/home'>Order Now</Link>
-            <Link to='/'>Employee View</Link>
-            <Link to='/'>Menuboard View</Link>
+            <Link to='/EmployeeView'>Employee View</Link>
+            <Link to='/Menuboard'>Menuboard View</Link>
             <Link to='/'>Manager View</Link>
           </div>
           <div class='footer-link-items'>
