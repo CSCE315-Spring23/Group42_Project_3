@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../Footer';
 import EmployeeCardList from '../EmployeeCardList';
+import { Button } from '../Button';
 
 const cardData = {
     cards: [
@@ -40,8 +41,10 @@ const cardData = {
 function EmployeeView() {
     return (<>
         <div id="employeemenu">
-            <EmployeeCardList cardData={cardData} title="MENU" />
+            <EmployeeCardList cardData={cardData} title="Employee View" />
+            
         </div>
+        <button>Checkout</button>
         <Footer/>
       </>);
 }
