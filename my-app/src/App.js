@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sandwiches from './components/pages/Sandwiches';
 import Checkout from './components/pages/Checkout';
 import EmployeeView from './components/pages/EmployeeView';
+import MenuBoard from './components/pages/Menuboard';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route exact path='/Menu' element={<Menu/>} />
           <Route exact path='/Sandwiches' element={<Sandwiches/>} />
           <Route exact path='/Checkout' element={<Checkout/>} />
-          <Route exact path='/' element={<Home/>} />
+          <Route exact path='/Menuboard' element={<MenuBoard/>} />
           <Route exact path='/EmployeeView' element={<EmployeeView/>} />
         </Routes>
       </Router>
