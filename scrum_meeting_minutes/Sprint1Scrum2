@@ -1,0 +1,30 @@
+SCRUM Meeting 2 for Project 3
+Prepared by: Ariela Mitrani
+Meeting Date: 4/2/2023
+
+Meeting Attendees:
+Whole team in attendance 
+
+Meeting Agenda Items:
+Fix the major blocking error that has halted progress with connection to the database!!
+Assign modified tasks given that we cannot connect to the database; Adjust to be more UI-focused for our first deliverable rather than relying on the database
+
+Status Update Since Last Meeting
+Accomplishments:
+Hours of debugging on database connection to no avail
+Code completed for connection to database in javascript as well as the framework for basic queries
+
+Tasks Completed:
+Task Description                                    Assigned to     Completed? (yes/no)
+Created js code for database connection, queries    Ariela          yes
+
+Before The Next Meeting
+Plans:
+Determine how to move around the blocking database connection issue, as our entire UI depends on being able to read from the database
+Have a setup for the managerview (at least the skeleton) so we can populate it once the DB is connected
+
+Task Assignments:
+See ClickUp Link: https://app.clickup.com/9006057385/v/l/7-9006057385-1 
+
+Minutes from Previous Meeting
+Last meeting was focused on getting us started on this sprint. We had roles assigned for certain deliverables, however, our progress was derailed due to a blocking issue between last scrum meeting and this one. The basic framework of the website is set up at this point on the customer side, and the plans moving forward are to start on the manager side. As of the last meeting, we had not yet encountered this blocking issue and thus were more focused on connecting our frontend to our backend, as well as polishing our existing UI and implementing a framew0rk for the manager and menu views.
