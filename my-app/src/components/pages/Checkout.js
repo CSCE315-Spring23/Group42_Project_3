@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../Cards';
+import Navbar from '../CustomerNavbar';
 
 function Checkout({ selectedIngredients }) {
   return (
