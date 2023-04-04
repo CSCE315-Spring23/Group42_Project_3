@@ -41,7 +41,7 @@ function CardItem(props) {
         )}
       </li>
       {showPopup && (
-        <Popup text = {props.text} ingregients = {props.ingregients} onClose={togglePopup} />
+        <Popup text = {props.text} ingredients = {props.ingredients} onClose={togglePopup} />
       )}
     </>
   );

@@ -1,113 +1,75 @@
 //import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import {GetBurgerList, GetIngredients} from './databaseFunctions'
+//import axios from 'axios';
+import Navbar from '../CustomerNavbar';
 
 
 function Burgers() {
-  const [menuItems, setMenuItems] = useState([]);
+  var menuItems = GetBurgerList();
 
-  useEffect(() => {
-    async function fetchMenuItems() {
-      const response = await fetch('http://localhost:3001/burgerRequest');
-      const data = await response.json();
-      setMenuItems(data);
-    }
+  // const ingredientsArr = [];
+  // var ingredientList = GetIngredients(1);
+  // if (ingredientList.length === 0) {
+  //   return <div>Loading...</div>;
+  // }
+  // ingredientsArr.push(ingredientList);
+  //
+  // var ingredientList2 = GetIngredients(1);
+  // if (ingredientList2.length === 0) {
+  //   return <div>Loading...</div>;
+  // }
+  // ingredientsArr.push(ingredientList2);
+  //
+  // var ingredientList3 = GetIngredients(1);
+  // if (ingredientList3.length === 0) {
+  //   return <div>Loading...</div>;
+  // }
+  // ingredientsArr.push(ingredientList3);
+  // var ingredientList4 = GetIngredients(1);
+  // if (ingredientList4.length === 0) {
+  //   return <div>Loading...</div>;
+  // }
+  // ingredientsArr.push(ingredientList4);
+  const [ingredientsArr, setIngredientsArr] = useState([]);
 
-    fetchMenuItems();
-  }, []);
+useEffect(() => {
+  async function fetchData() {
+    const menuItemIds = [1,2,3,4]; // Replace with your menu item IDs
+    const results = await Promise.all(
+      menuItemIds.map(async (id) => {
+        const response = await fetch(`http://localhost:3001/getInventoryItemsForMenu/${id}`);
+        const data = await response.json();
+        return data;
+      })
+    );
+    setIngredientsArr(results);
+  }
 
-  //console.log(menuItems);
+  fetchData();
+}, []);
+
   if (menuItems.length === 0) {
     return <div>Loading...</div>;
   }
 
-  //let bName = menuItems[0].menu_item_name;
-//  let bName = "h";
   const cardData = {
-      cards: [
-        {
-          image: "images/burger-img-1.jpg",
-          text: menuItems[0].menu_item_name,
-          label: "Label 1",
-          path: "",
-          ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
-        },
-        {
-          image: "images/burger-img-1.jpg",
-          text: menuItems[1].menu_item_name,
-          label: "Label 1",
-          path: "",
-          ingredients: ["bun", "veggie patty", "lettuce", "tomato", "avocado"]
-        },
-        {
-          image: "images/burger-img-1.jpg",
-          text: menuItems[2].menu_item_name,
-          label: "Label 1",
-          path: "",
-          ingredients: ["bun", "chicken patty", "lettuce", "tomato", "mayo"]
-        },
-        {
-          image: "images/burger-img-1.jpg",
-          text: menuItems[3].menu_item_name,
-          label: "Label 1",
-          path: "",
-          ingredients: ["bun", "pork patty", "lettuce", "tomato", "bbq sauce"]
-        },
-      ],
-    };
-=======
-// const {database} = require('../../database');
-import Navbar from '../CustomerNavbar';
-//
-//test();
-let bName = "hi";
-const cardData = {
-    cards: [
-      {
-        image: "images/burger-img-1.jpg",
-        text: bName,
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "veggie patty", "lettuce", "tomato", "avocado"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "chicken patty", "lettuce", "tomato", "mayo"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "pork patty", "lettuce", "tomato", "bbq sauce"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
-      },
-    ],
+    cards: []
   };
 
-
-
-function Burgers() {
->>>>>>> refs/remotes/origin/main
+  for (let i = 0; i < menuItems.length; i++) {
+    const item = menuItems[i];
+    const card = {
+      image: "images/burger-img-1.jpg",
+      text: item.menu_item_name,
+      //label: "Label 1",
+      //path: "",
+      ingredients: ingredientsArr[i]
+    };
+    cardData.cards.push(card);
+  }
 
     return (<>
     <Navbar />

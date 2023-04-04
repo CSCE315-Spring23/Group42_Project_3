@@ -19,7 +19,7 @@ function Popup({text, ingredients, onClose}) {
     <div className='popup'>
       <div className='popup__content'>
       <p>{text} </p>
-      <IngredientForm ingredients={i} setQuantities = {setQuantities}></IngredientForm>
+      <IngredientForm ingredients={ingredients} setQuantities = {setQuantities}></IngredientForm>
       <Button className = "close" buttonStyle='btn--outline' onClick={onClose}>X</Button>
       <Button className= "cart" buttonStyle='btn--outline' onClick={addToCart}>ADD TO CART</Button>
       <Button className= "checkout" buttonStyle='btn--outline' path={'/checkout'}>CHECK OUT</Button>
