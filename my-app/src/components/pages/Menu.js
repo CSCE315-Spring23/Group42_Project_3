@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
+import Navbar from '../CustomerNavbar';
 
 const cardData = {
     cards: [

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MenuBoardItem from '../MenuBoardItem';
+import Navbar from '../CustomerNavbar';
 
 const MenuBoard = () => {
   const [menuItems, setMenuItems] = useState([
