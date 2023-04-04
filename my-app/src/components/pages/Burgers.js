@@ -1,7 +1,7 @@
 //import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
-import React, { useState, useEffect } from 'react';
+//import React, { useState, useEffect } from 'react';
 import {GetBurgerList, GetIngredients} from './databaseFunctions'
 //import axios from 'axios';
 import Navbar from '../CustomerNavbar';
@@ -33,23 +33,7 @@ function Burgers() {
   //   return <div>Loading...</div>;
   // }
   // ingredientsArr.push(ingredientList4);
-  const [ingredientsArr, setIngredientsArr] = useState([]);
-
-useEffect(() => {
-  async function fetchData() {
-    const menuItemIds = [1,2,3,4]; // Replace with your menu item IDs
-    const results = await Promise.all(
-      menuItemIds.map(async (id) => {
-        const response = await fetch(`http://localhost:3001/getInventoryItemsForMenu/${id}`);
-        const data = await response.json();
-        return data;
-      })
-    );
-    setIngredientsArr(results);
-  }
-
-  fetchData();
-}, []);
+  var ingredientsArr = GetIngredients();
 
   if (menuItems.length === 0) {
     return <div>Loading...</div>;
