@@ -2,6 +2,7 @@ import React from 'react';
 import './Cards.css';
 import EmployeeCardItem from './EmployeeCardItem';
 
+//Show items in a list
 function EmployeeCardList({cardData, title} ) {
 
   return (

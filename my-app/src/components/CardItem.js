@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Popup from './Popup';
 
+//Used for displaying menu items in our menu page
 function CardItem(props) {
   const [showPopup, setShowPopup] = useState(false);
 

@@ -11,6 +11,7 @@ import EmployeeView from './components/pages/EmployeeView';
 import MenuBoard from './components/pages/Menuboard';
 import ManagerView from './components/pages/ManagerView';
 
+//Main App documentation with all the different pages available
 function App() {
   return (
     <>
