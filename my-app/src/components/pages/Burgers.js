@@ -1,53 +1,32 @@
 import Footer from '../Footer';
 import CardList from '../CardList';
-// const {database} = require('../../database');
+import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
-//
-//test();
-let bName = "hi";
-const cardData = {
-    cards: [
-      {
-        image: "images/burger-img-1.jpg",
-        text: bName,
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "veggie patty", "lettuce", "tomato", "avocado"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "chicken patty", "lettuce", "tomato", "mayo"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "pork patty", "lettuce", "tomato", "bbq sauce"]
-      },
-      {
-        image: "images/burger-img-1.jpg",
-        text: "Burger",
-        label: "Label 1",
-        path: "",
-        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
-      },
-    ],
-  };
-
 
 
 function Burgers() {
+  var menuItems = GetMenuList(1, 4);
+  var ingredientsArr = GetIngredients(1, 4);
+
+  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  const cardData = {
+    cards: []
+  };
+
+  for (let i = 0; i < menuItems.length; i++) {
+    const item = menuItems[i];
+    const card = {
+      image: "images/burger-img-1.jpg",
+      text: item.menu_item_name,
+      //label: "Label 1",
+      //path: "",
+      ingredients: ingredientsArr[i]
+    };
+    cardData.cards.push(card);
+  }
 
     return (<>
     <Navbar />
