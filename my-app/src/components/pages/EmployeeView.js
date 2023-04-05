@@ -3,6 +3,10 @@ import Footer from '../Footer';
 import EmployeeCardList from '../EmployeeCardList';
 import { Button } from '../Button';
 
+{/*
+* Shows Employee View so they can log in and access features not visible for customers
+* @author: 
+*/ }
 const cardData = {
     cards: [
       {
@@ -129,6 +133,7 @@ const cardData = {
     ],
   };
 
+  //Implemented 
 function EmployeeView() {
     return (<>
         <div id="employeemenu">

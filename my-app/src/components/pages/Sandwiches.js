@@ -3,7 +3,10 @@ import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
 
-
+{/*
+* Shows the menuboard for all menu items in Rev's including prices
+* @author: 
+*/ }
 function Sandwiches() {
   var menuItems = GetMenuList(7, 10);
   var ingredientsArr = GetIngredients(7, 10);
@@ -28,6 +31,7 @@ function Sandwiches() {
     cardData.cards.push(card);
   }
 
+    {/* HTML structure*/ }
     return (<>
     <Navbar />
     <div id="menu">

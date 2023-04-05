@@ -3,7 +3,11 @@ import './Footer.css';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 
-{/* */}
+/* 
+* Global footer for all pages in our application
+* Keeps links to all differnet views including employee and Manager views
+* @author
+*/
 function Footer() {
   return (
     <div className='footer-container'>
