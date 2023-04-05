@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Button } from './Button';
 import './IngredientForm.css';
 
+/*
+* Ingredient list used to customize orders such as Burgers and sandwiches
+* 
+*/
 const IngredientForm = ({ ingredients, setQuantities }) => {
   const [quantityValues, setQuantityValues] = useState(ingredients.map(() => 0));
 

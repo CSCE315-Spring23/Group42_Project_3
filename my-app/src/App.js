@@ -9,7 +9,9 @@ import Sandwiches from './components/pages/Sandwiches';
 import Checkout from './components/pages/Checkout';
 import EmployeeView from './components/pages/EmployeeView';
 import MenuBoard from './components/pages/Menuboard';
+import ManagerView from './components/pages/ManagerView';
 
+//Main App documentation with all the different pages available
 function App() {
   return (
     <>
@@ -22,6 +24,7 @@ function App() {
           <Route exact path='/Checkout' element={<Checkout/>} />
           <Route exact path='/Menuboard' element={<MenuBoard/>} />
           <Route exact path='/EmployeeView' element={<EmployeeView/>} />
+          <Route exact path='/ManagerView' element={<ManagerView/>} />
         </Routes>
       </Router>
     </>

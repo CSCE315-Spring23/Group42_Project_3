@@ -3,6 +3,7 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
+//Navbar personalized to fit Employee's View
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);

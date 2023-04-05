@@ -3,125 +3,144 @@ import Footer from '../Footer';
 import EmployeeCardList from '../EmployeeCardList';
 import { Button } from '../Button';
 
+{/*
+* Shows Employee View so they can log in and access features not visible for customers
+* @author: 
+*/ }
 const cardData = {
     cards: [
       {
-        text: "Item",
+        text: "1. Revs Burger",
         path: "",
         ingredients: ["bun", "beef patty", "lettuce", "tomato", "cheese"]
       },
       {
-        text: "Item",
+        text: "2. Double Cheese Burger",
         path: "",
         ingredients: ["bun", "veggie patty", "lettuce", "tomato", "avocado"]
       },
       {
-        text: "Item",
+        text: "3. Classic Burger",
         path: "",
         ingredients: ["bun", "chicken patty", "lettuce", "tomato", "mayo"]
       },
       {
-        text: "Item",
+        text: "4. Bacon Cheeseburger",
         path: "",
         ingredients: ["bun", "pork patty", "lettuce", "tomato", "bbq sauce"]
       },
       {
-        text: "Item",
+        text: "5. Three Tender Basket",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "6. Four Steak Finger Basket",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "7. Gig Em Patty Melt",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "8. Howdy Chicken Sandwich",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "9. Chicken Tender Sandwich",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "10. Grilled Cheese",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "11. Burger/Sandwich Combo",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "12. Basket Combo",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "13. Aggie Shake",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "14. Double Scoop Ice Cream",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "15. Chocolate Cookie",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "16. Brownie",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "17. Salad Bar",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "18. Sauce",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "19. Fountain Drink",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "20. Drip Coffee",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "21. Cold Brew",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "22. Fries",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "23. Tater Tots",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
       {
-        text: "Item",
+        text: "24. Onion Rings",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "25. Kettle Chips",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "26. Silverware",
+        path: "",
+        ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
+      },
+      {
+        text: "28. Seasonal Item",
         path: "",
         ingredients: ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"]
       },
@@ -129,6 +148,7 @@ const cardData = {
     ],
   };
 
+  //Implemented 
 function EmployeeView() {
     return (<>
         <div id="employeemenu">

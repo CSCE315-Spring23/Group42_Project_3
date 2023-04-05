@@ -4,6 +4,10 @@ import { Button } from './Button';
 import './HeroSection.css';
 // import { useHistory } from 'react-router-dom';
 
+/*
+*Display background video for Home page
+*
+*/
 function HeroSection() {
 //   const history = useHistory();
 

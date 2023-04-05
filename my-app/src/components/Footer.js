@@ -3,6 +3,11 @@ import './Footer.css';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 
+/* 
+* Global footer for all pages in our application
+* Keeps links to all differnet views including employee and Manager views
+* @author
+*/
 function Footer() {
   return (
     <div className='footer-container'>
@@ -32,7 +37,7 @@ function Footer() {
             <Link to='/home'>Order Now</Link>
             <Link to='/EmployeeView'>Employee View</Link>
             <Link to='/Menuboard'>Menuboard View</Link>
-            <Link to='/'>Manager View</Link>
+            <Link to='/ManagerView'>Manager View</Link>
           </div>
           <div class='footer-link-items'>
             <h2>Contact Us</h2>

@@ -29,16 +29,45 @@ pool.connect((err, client, done) => {
 });
 
 // Define an endpoint that returns data from the 'users' table
-app.get('/burgerRequest', async (req, res) => {
+app.get('/menuRequest/:start/:end', async (req, res) => {
   try {
-    console.log("attempting fetch");
-    //const userId = req.params.id;
-    const { rows } = await pool.query('SELECT * FROM Menu  WHERE MENU_ITEM_ID < 5');
+    const start = parseInt(req.params.start);
+    const end = parseInt(req.params.end);
+    //console.log("attempting fetch");
+    const userId = req.params.id;
+    const { rows } = await pool.query(`SELECT * FROM Menu WHERE MENU_ITEM_ID >= $1 AND MENU_ITEM_ID <= $2 ORDER BY MENU_ITEM_ID`, [start, end]);
     res.json(rows);
-    console.log(rows);
+    //console.log(rows);
   } catch (err) {
-    console.log("error!");
+    //console.log("error!");
     console.error("Read failed with error " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
+  try {
+    const inventoryItems = [];
+    const start = parseInt(req.params.start);
+    const end = parseInt(req.params.end);
+    for (let i = start; i <= end; i++) {
+      //console.log("item :" + i);
+      const recipeItemsQuery = `SELECT inventory_id FROM Recipe_Item WHERE menu_id = ${i}`;
+      const recipeItemsResult = await pool.query(recipeItemsQuery);
+      const inventoryIds = recipeItemsResult.rows.map((item) => parseInt(item.inventory_id));
+      //console.log(inventoryIds);
+      const inventoryItemsQuery = `SELECT * FROM inventory_item WHERE inventory_id IN (${inventoryIds.join(",")})`;
+      const inventoryItemsResult = await pool.query(inventoryItemsQuery);
+      const inventoryItemsForMenu = inventoryItemsResult.rows.map((item) => item.inventory_item_name);
+      inventoryItems.push(inventoryItemsForMenu);
+      //console.log("item :" + i);
+      //console.log(inventoryItemsForMenu);
+      inventoryIds.length = 0;
+    }
+    res.json(inventoryItems);
+    console.log(inventoryItems);
+  } catch (err) {
+    console.error("Read failed with error " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

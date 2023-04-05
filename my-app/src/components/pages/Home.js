@@ -5,6 +5,10 @@ import Footer from '../Footer';
 import CardList from '../CardList';
 import Navbar from '../CustomerNavbar';
 
+{/*
+* Shows Home page of the web app with main order options for customers
+* @author: 
+*/ }
 const cardData = {
   cards: [
     {
@@ -40,6 +44,7 @@ const cardData = {
   ],
 };
 
+{/* HTML structure*/ }
 function Home() {
   return (<>
     <Navbar />

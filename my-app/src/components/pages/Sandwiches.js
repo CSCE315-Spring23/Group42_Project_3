@@ -1,41 +1,39 @@
-import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
+import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
 
-const cardData = {
-    cards: [
-      {
-        image: "images/sandwich-img-1.jpg",
-        text: "Sandwiches",
-        label: "Label 1",
-        path: "",
-      },
-      {
-        image: "images/sandwich-img-1.jpg",
-        text: "Sandwiches",
-        label: "Label 2",
-        path: "",
-      },
-      {
-        image: "images/sandwich-img-1.jpg",
-        text: "Baskets",
-        label: "Label 1",
-        path: "",
-      },
-      {
-        image: "images/sandwich-img-1.jpg",
-        text: "Sides",
-        label: "Label 1",
-        path: "",
-      },
-    ],
-  };
-  
-
+{/*
+* Shows the menuboard for all menu items in Rev's including prices
+* @author: 
+*/ }
 function Sandwiches() {
+  var menuItems = GetMenuList(7, 10);
+  var ingredientsArr = GetIngredients(7, 10);
+
+  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  const cardData = {
+    cards: []
+  };
+
+  for (let i = 0; i < menuItems.length; i++) {
+    const item = menuItems[i];
+    const card = {
+      image: "images/sandwich-img-1.jpg",
+      text: item.menu_item_name,
+      //label: "Label 1",
+      //path: "",
+      ingredients: ingredientsArr[i]
+    };
+    cardData.cards.push(card);
+  }
+
+    {/* HTML structure*/ }
     return (<>
-    <Navbar/>
+    <Navbar />
     <div id="menu">
         <CardList cardData={cardData} title="SANDWICHES" />
     </div>
@@ -43,5 +41,5 @@ function Sandwiches() {
       <Footer/>
     </>);
   }
-  
+
   export default Sandwiches;
