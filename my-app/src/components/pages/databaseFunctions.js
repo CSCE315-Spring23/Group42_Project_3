@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+/* Fetch menu items from list to display in table */
 function GetMenuList(start, end){
   const [menuItems, setMenuItems] = useState([]);
 
@@ -16,6 +17,7 @@ function GetMenuList(start, end){
   return menuItems;
 }
 
+//Fetch ingredient list to be display in table
 function GetIngredients(start, end) {
    const [ingredientArr, setIngredientArr] = useState([]);
 

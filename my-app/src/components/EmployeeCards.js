@@ -1,6 +1,7 @@
 import React from 'react';
 import './Cards.css';
 
+//Display one item
 function EmployeeCard({ title, text }) {
   return (
     <div className='card'>

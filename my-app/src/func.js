@@ -1,3 +1,4 @@
+//Connecting to our database SQL
 const database = require('./database');
 
 

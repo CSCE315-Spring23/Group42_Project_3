@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import MenuBoardItem from '../MenuBoardItem';
 import Navbar from '../CustomerNavbar';
 
+{/*
+* Displays all sandwich types for customers to choose from
+* @author: 
+*/ }
 const MenuBoard = () => {
   const [menuItems, setMenuItems] = useState([
     {
@@ -30,6 +34,7 @@ const MenuBoard = () => {
     },
   ]);
 
+  {/* HTML structure*/ }
   return (
     <div style={{ backgroundColor: "rgb(106,91,92)"}}>
     <img src = 'images/Revs-logo.png' alt = "Rev's American Grill"></img>

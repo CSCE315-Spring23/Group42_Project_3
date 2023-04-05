@@ -3,7 +3,10 @@ import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
 
-
+/* 
+* Display the different burger type when making a customer order
+* @author Daniela Santos
+*/
 function Burgers() {
   var menuItems = GetMenuList(1, 4);
   var ingredientsArr = GetIngredients(1, 4);
@@ -28,6 +31,8 @@ function Burgers() {
     cardData.cards.push(card);
   }
 
+
+    /*HTML output with global footer */
     return (<>
     <Navbar />
     <div id="menu">
