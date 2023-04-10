@@ -1,4 +1,2 @@
 *.class
-./node_modules
-./myapp/node_modules/
-./my-app/package.json
+./my-app/node_modules
