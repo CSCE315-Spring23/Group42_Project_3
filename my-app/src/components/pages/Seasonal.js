@@ -5,12 +5,12 @@ import Navbar from '../CustomerNavbar';
 
 
 function Seasonal() {
-  var menuItems = GetMenuList(26, 26);
-  var ingredientsArr = GetIngredients(26, 26);
+  var menuItems = GetMenuList(27,10000);
+  var ingredientsArr = GetIngredients(27,10000);
 
-  if (menuItems.length === 0 | ingredientsArr.length === 0) {
-    return <div>Loading...</div>;
-  }
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
+    return <div>Sorry, there are no seasonal items right now!</div>;
+}
 
   const cardData = {
     cards: []

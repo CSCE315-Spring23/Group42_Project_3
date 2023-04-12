@@ -33,7 +33,7 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
   try {
     const start = parseInt(req.params.start);
     const end = parseInt(req.params.end);
-    //console.log("attempting fetch");
+    //console.log("attempting fetch, start: ", start, ", end: ", end);
     const userId = req.params.id;
     const { rows } = await pool.query(`SELECT * FROM Menu WHERE MENU_ITEM_ID >= $1 AND MENU_ITEM_ID <= $2 ORDER BY MENU_ITEM_ID`, [start, end]);
     res.json(rows);
@@ -43,7 +43,22 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
     console.error("Read failed with error " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
-});
+});const [loadingState, setLoadingState] = useState('loading');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingState('error');
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
+    if (loadingState === 'loading') {
+      return <div>Loading...</div>;
+    } else {
+      return <div>Sorry, there are no seasonal items right now.</div>;
+    }
+  }
 
 app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
