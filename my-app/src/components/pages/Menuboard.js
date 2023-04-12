@@ -1,50 +1,40 @@
 import React, { useState } from 'react';
-import MenuBoardItem from '../MenuBoardItem';
 import Navbar from '../CustomerNavbar';
+import View from '../MenuBoard/View';
 
 {/*
 * Displays all sandwich types for customers to choose from
 * @author: 
 */ }
 const MenuBoard = () => {
-  const [menuItems, setMenuItems] = useState([
+  const [burgers, setMenuItems] = useState([
     {
       name: 'Hamburger',
       price: 5.99,
+      ingredients: ["Patty", "Bun", "lettuce"],
     },
     {
       name: 'Cheeseburger',
       price: 6.49,
+      ingredients: ["Patty", "Bun", "cheese", "lettuce"],
     },
+  ]);
+  const [sides, setSideItems] = useState([
     {
       name: 'French Fries',
       price: 2.99,
+      ingredients: ["Patty", "Bun", "lettuce"],
     },
     {
       name: 'Onion Rings',
       price: 3.99,
-    },
-    {
-      name: 'Soft Drink',
-      price: 1.99,
-    },
-    {
-      name: 'Milkshake',
-      price: 4.99,
+      ingredients: ["Patty", "Bun", "lettuce"],
     },
   ]);
 
   {/* HTML structure*/ }
   return (
-    <div style={{ backgroundColor: "rgb(106,91,92)"}}>
-    <img src = 'images/Revs-logo.png' alt = "Rev's American Grill"></img>
-      <h1>Menu Board</h1>
-      <ul>
-        {menuItems.map((item) => (
-          <MenuBoardItem key={item.name} name={item.name} price={item.price} />
-        ))}
-      </ul>
-    </div>
+    <View burgers={burgers} baskets={burgers} sandwiches={burgers} sides = {sides} seasonal={sides} />
   );
 };
 

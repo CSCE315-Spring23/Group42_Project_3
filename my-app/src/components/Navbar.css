@@ -22,7 +22,7 @@
 img{
   z-index: 100;
   width: 50%;
-  height: 270%;
+  height: 40%;
   top: 15%;
   left: 0;
 }
@@ -37,7 +37,7 @@ img{
   display: flex;
   align-items: center;
   width: 50%;
-  height: 60%;
+  height: 30%;
   top: 15%;
   left: 10px;
   z-index: 10000;
