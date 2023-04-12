@@ -5,7 +5,7 @@ import Navbar from '../CustomerNavbar';
 
 {/*
 * Shows the menuboard for all menu items in Rev's including prices
-* @author: 
+* @author:
 */ }
 function Sandwiches() {
   var menuItems = GetMenuList(7, 10);
@@ -22,7 +22,7 @@ function Sandwiches() {
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
     const card = {
-      image: "images/sandwich-img-1.jpg",
+      image: item.image_link,
       text: item.menu_item_name,
       //label: "Label 1",
       //path: "",
