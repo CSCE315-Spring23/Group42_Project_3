@@ -38,4 +38,4 @@ function Baskets() {
     </>);
   }
 
-  export default BASKETS;
+  export default Baskets;
