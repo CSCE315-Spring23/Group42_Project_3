@@ -29,8 +29,8 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
         show: "y",
     },
     {
-        label1: "Regular",
-        label2: "Black Bean",
+        label1: "Black Bean",
+        label2: "Regular",
         label3: "",
         show: "y",
     },
@@ -49,14 +49,22 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
     return 0;
   }
 
-  const visibleIngredients = ingredients.filter((ingredient) => ingredient !== "Tray Paper");
+  function customName(ingredient) {
+    if(ingredient === "Beef Patty"){
+      return "Patty type";
+    }
+    return ingredient;
+  }
+
+  const ingredientsToHide = ["Tray Paper", "Black Bean Patty"];
+  const visibleIngredients = ingredients.filter((ingredient) => !ingredientsToHide.includes(ingredient));
 
   return (
     <div className="form-container">
       <form>
         {visibleIngredients.map((ingredient, index) => (
           <div key={index} className="form-row">
-            <label>{ingredient}</label>
+            <label>{customName(ingredient)}</label>
             <div className="quantity-buttons">
               <Button
                 buttonStyle={quantityValues[index] === -1 ? "btn--primary" : "btn--outline"}
