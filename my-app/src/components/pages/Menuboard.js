@@ -1,51 +1,74 @@
 import React, { useState } from 'react';
-import MenuBoardItem from '../MenuBoardItem';
-import Navbar from '../CustomerNavbar';
+import View from '../MenuBoard/View';
+import {GetMenuList, GetIngredients} from './databaseFunctions'
+import Loading from '../Loading';
 
 {/*
 * Displays all sandwich types for customers to choose from
 * @author: 
 */ }
+
 const MenuBoard = () => {
-  const [menuItems, setMenuItems] = useState([
-    {
-      name: 'Hamburger',
+  var menuItems = GetMenuList(1, 20);
+  var ingredientsArr = GetIngredients(1, 20);
+
+  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+    return <Loading />;
+  }
+
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
+    return <Loading />;
+  }
+  
+  const burgersArr = [];
+  for (let i = 0; i < 4; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
       price: 5.99,
-    },
-    {
-      name: 'Cheeseburger',
-      price: 6.49,
-    },
-    {
-      name: 'French Fries',
-      price: 2.99,
-    },
-    {
-      name: 'Onion Rings',
-      price: 3.99,
-    },
-    {
-      name: 'Soft Drink',
-      price: 1.99,
-    },
-    {
-      name: 'Milkshake',
-      price: 4.99,
-    },
-  ]);
+      ingredients: ingredientsArr[i]
+    };
+    burgersArr.push(card);
+  }
+  
+  const basketsArr = [];
+  for (let i = 4; i < 7; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
+      price: 5.99,
+      ingredients: ingredientsArr[i]
+    };
+    basketsArr.push(card);
+  }
+
+  const sandwichesArr = [];
+  for (let i = 8; i < 12; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
+      price: 5.99,
+      ingredients: ingredientsArr[i]
+    };
+    sandwichesArr.push(card);
+  }
+
+  const sidesArr = [];
+  for (let i = 12; i < 20; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
+      price: 5.99,
+      ingredients: ingredientsArr[i]
+    };
+    sidesArr.push(card);
+  }
 
   {/* HTML structure*/ }
   return (
-    <div style={{ backgroundColor: "rgb(106,91,92)"}}>
-    <img src = 'images/Revs-logo.png' alt = "Rev's American Grill"></img>
-      <h1>Menu Board</h1>
-      <ul>
-        {menuItems.map((item) => (
-          <MenuBoardItem key={item.name} name={item.name} price={item.price} />
-        ))}
-      </ul>
-    </div>
+    <View burgers={burgersArr} baskets={basketsArr} sandwiches={sandwichesArr} sides = {sidesArr} seasonal= {[]} />
   );
 };
 
 export default MenuBoard;
+

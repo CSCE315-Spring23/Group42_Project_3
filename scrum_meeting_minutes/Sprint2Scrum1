@@ -1,0 +1,42 @@
+SCRUM Meeting 1 for Project 3
+Prepared by: Ariela Mitrani
+Meeting Date: 4/12/2023
+Meeting Attendees
+Whole team in attendance
+
+Meeting Agenda Items
+Discuss plans for this sprint, broad role delegation
+Debrief team meeting
+Set deliverables before scrum meeting 2
+
+Status Update Since Last Meeting
+Accomplishments:
+MenuBoard GUI completed
+Tables started for managerview
+Team meeting completed; Retrospective completed
+
+Tasks Completed:
+Task Description              Assigned to           Completed? (yes/no)
+View menuboard                Daniela S             yes
+View database as manager      Daniela M             no
+Sprint 2 Retrospective        All                   yes
+Team meeting slides. prep     All                   yes
+
+Before The Next Meeting
+Plans:
+Manager side update
+Complete menu
+OAuth
+Update customerview
+Finish employeeview
+
+Task Assignments:
+Task Description                Assigned to
+Manager view database view      Daniela M
+Menuboard backend               Daniela S
+OAuth integration               Bryan
+Unique images for menu          Ariela
+EmployeeView                    Srikar
+
+Minutes from Previous Meeting
+First meeting of the sprint so not much to discuss, but last time we met was for our team meeting. The presentation went well, and we have some room to improve our presentation before final presentations. Mostly, we want to work on better presentation skills and relying less heavily on our slides.

@@ -3,13 +3,10 @@ import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
 import Loading from '../Loading';
-/*
-* Shows the menuboard for all menu items in Rev's including prices
-* @author: ariela
-*/
-function Sandwiches() {
-  var menuItems = GetMenuList(7, 10);
-  var ingredientsArr = GetIngredients(7, 10);
+
+function Baskets() {
+  var menuItems = GetMenuList(5, 6);
+  var ingredientsArr = GetIngredients(5, 6);
 
   if (menuItems.length === 0 | ingredientsArr.length === 0) {
     return <Loading />;
@@ -31,15 +28,14 @@ function Sandwiches() {
     cardData.cards.push(card);
   }
 
-    /* HTML structure*/ 
     return (<>
     <Navbar />
     <div id="menu">
-        <CardList cardData={cardData} title="SANDWICHES" />
+        <CardList cardData={cardData} title="BASKETS" />
     </div>
 
       <Footer/>
     </>);
   }
 
-  export default Sandwiches;
+  export default Baskets;

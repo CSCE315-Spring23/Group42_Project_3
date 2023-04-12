@@ -1,0 +1,95 @@
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgba(92,0,32,255);
+}
+
+.content {
+  background-color: #655a5a;
+  position: absolute;
+  top: 10%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.logo {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+  height: 25%;
+  padding-bottom: 0.5%;
+}
+
+.stripe {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+  height: .5%;
+  padding-bottom: .5%;
+  background-color: rgba(92,0,32,255);
+  color: rgba(92,0,32,255);
+}
+
+.menu-items {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.menu-column {
+  /* position: absolute; */
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-basis: 33.33%;
+}
+
+.one {
+  align-self: flex-start;
+  top: 0%;
+  /* position: absolute; */
+  padding-right: 5%;
+  padding-left: 3%;
+}
+
+.two {
+  padding-right: 4%;
+  padding-left: 4%;
+}
+
+.three {
+  align-self: flex-start;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+h2, .mb-text, ul {
+  width: 100%;
+}
+
+h2 {
+  font-size: 36px;
+  color: #d9ad56;
+  padding-top: 5%;
+  font-weight: 700;
+}
+
+.mb-text{
+  font-size: 13px;
+  font-style: italic;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding-top: 10px;
+}

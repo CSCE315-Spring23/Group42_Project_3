@@ -33,7 +33,7 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
   try {
     const start = parseInt(req.params.start);
     const end = parseInt(req.params.end);
-    //console.log("attempting fetch");
+    //console.log("attempting fetch, start: ", start, ", end: ", end);
     const userId = req.params.id;
     const { rows } = await pool.query(`SELECT * FROM Menu WHERE MENU_ITEM_ID >= $1 AND MENU_ITEM_ID <= $2 ORDER BY MENU_ITEM_ID`, [start, end]);
     res.json(rows);

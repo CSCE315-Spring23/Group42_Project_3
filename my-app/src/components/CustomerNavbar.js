@@ -29,7 +29,7 @@ function Navbar() {
       <nav className='navbar'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-          <img src = 'images/Revs-logo.png' alt = "Rev's American Grill"></img>
+          <img className = 'navbar-img' src = 'images/Revs-logo.png' alt = "Rev's American Grill"></img>
           </Link>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -69,11 +69,29 @@ function Navbar() {
             </li>
             <li className='nav-item'>
               <Link
-                to='/addprojects'
+                to='/Baskets'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
                 Baskets
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to='/Sides'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Sides
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to='/Seasonal'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Seasonal
               </Link>
             </li>
 
