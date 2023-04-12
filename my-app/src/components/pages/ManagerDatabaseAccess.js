@@ -12,7 +12,7 @@ import Navbar from '../ManagerNavbar';
 function ManagerDatabaseAccess() {
     return (<> 
         <Navbar />
-
+<div id="database"></div>
         <Footer/>
       </>);
 }
