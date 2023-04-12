@@ -76,6 +76,24 @@ function Navbar() {
                 Baskets
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                to='/Sides'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Sides
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to='/Seasonal'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Seasonal
+              </Link>
+            </li>
 
             <li>
               <Link

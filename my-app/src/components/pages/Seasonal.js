@@ -19,7 +19,7 @@ function Seasonal() {
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
     const card = {
-      image: item.image_link,
+      image: "images/seasonal-img-1.jpg",
       text: item.menu_item_name,
       //label: "Label 1",
       //path: "",
