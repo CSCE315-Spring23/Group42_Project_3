@@ -18,17 +18,6 @@ const MenuBoardView = ({burgers, baskets, sandwiches, sides, seasonal}) => {
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
               ))}
             </ul>
-            <h2>BASKETS</h2>
-            <p className='mb-text'>All Combos include a Fountain Drink</p>
-            <ul>
-              {baskets.map((item) => (
-                <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
-              ))}
-            </ul>
-          </div>
-          <div className='menu-column two'>
-          <img className='logo' src='images/Revs-logo.png' alt="Rev's American Grill" />
-        <div className='stripe'></div>
             <h2>SANDWICHES</h2>
             <p className='mb-text'>All Combos include a Fountain Drink and Fries or Kettle Chips</p>
             <ul>
@@ -37,16 +26,27 @@ const MenuBoardView = ({burgers, baskets, sandwiches, sides, seasonal}) => {
               ))}
             </ul>
           </div>
-          <div className='menu-column three'>
-            <h2>SHAKES 'N SWEETS</h2>
+          <div className='menu-column two'>
+          <img className='logo' src='images/Revs-logo.png' alt="Rev's American Grill" />
+        <div className='stripe'></div>
+            <h2>BASKETS</h2>
+            <p className='mb-text'>All Combos include a Fountain Drink</p>
             <ul>
-              {sides.map((item) => (
+              {baskets.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
               ))}
             </ul>
             <h2>SEASONAL</h2>
             <ul>
               {seasonal.map((item) => (
+                <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
+              ))}
+            </ul>
+          </div>
+          <div className='menu-column three'>
+            <h2>SHAKES 'N SWEETS</h2>
+            <ul>
+              {sides.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
               ))}
             </ul>
