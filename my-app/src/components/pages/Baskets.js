@@ -2,7 +2,7 @@ import Footer from '../Footer';
 import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
-
+import Loading from '../Loading';
 
 function Baskets() {
   var menuItems = GetMenuList(5, 6);

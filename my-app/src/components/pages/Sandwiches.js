@@ -2,7 +2,7 @@ import Footer from '../Footer';
 import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
-
+import Loading from '../Loading';
 /*
 * Shows the menuboard for all menu items in Rev's including prices
 * @author: ariela
