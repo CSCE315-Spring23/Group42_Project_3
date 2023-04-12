@@ -1,0 +1,34 @@
+SCRUM Meeting 3 for Project 3
+Prepared by: Ariela Mitrani
+Meeting Date: 4/3/2023
+
+Meeting Attendees:
+Whole team in attendance 
+
+Meeting Agenda Items:
+Discuss functionality we want to implement before the sprint ends tomorrow
+Assign and change task assignments based on the work that has been done so far between this scrum meeting and last
+
+Status Update Since Last Meeting
+Accomplishments:
+Got database connected, set up express, and loaded in values to the GUI
+Menuboard started, employee view started, manager view started
+Command to run db and GUI at the same time
+
+Tasks Completed:
+Task Description            Assigned to       Completed? (yes/no)
+Database connectivity       Ariela            yes
+MenuBoard                   Daniela S         no
+employeeView                Bryan             no
+managerView                 Daniela M         no
+
+Before The Next Meeting
+Plans:
+Finish sprint retrospective
+Finish implementing basic framework for GUI, start working on some database integration
+
+Task Assignments:
+See ClickUp Link: https://app.clickup.com/9006057385/v/l/7-9006057385-1 
+
+Minutes from Previous Meeting
+Last meeting, we talked about the major blocking issue we were having with the database connectivity. Additionally, we also went through and delegated GUI tasks, since our initial plans were halted due to the database not being able to be connected. We brainstormed ideas to move forward, and then reviewed our progress thus far. Finally, we took inventory of what needed to be done before the retrospective is due, and assigned tasks for that. 
