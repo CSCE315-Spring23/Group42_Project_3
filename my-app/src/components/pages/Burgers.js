@@ -19,7 +19,7 @@ function Burgers() {
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
     const card = {
-      image: "images/burger-img-1.jpg",
+      image: item.image_link,
       text: item.menu_item_name,
       //label: "Label 1",
       //path: "",
