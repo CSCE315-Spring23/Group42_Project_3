@@ -43,22 +43,7 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
     console.error("Read failed with error " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
-});const [loadingState, setLoadingState] = useState('loading');
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoadingState('error');
-    }, 10000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (menuItems.length === 0 || ingredientsArr.length === 0) {
-    if (loadingState === 'loading') {
-      return <div>Loading...</div>;
-    } else {
-      return <div>Sorry, there are no seasonal items right now.</div>;
-    }
-  }
+});
 
 app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
