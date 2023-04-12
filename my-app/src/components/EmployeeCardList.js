@@ -46,6 +46,18 @@ function EmployeeCardList({cardData, title} ) {
               );
             })}
           </ul>
+          <ul className='cards__items'>
+            {cardData.cards.slice(24, 27).map((card, index) => {
+              return (
+                <EmployeeCardItem
+                  text={card.text}
+                  path={card.path}
+                  key={index}
+                  ingredients = {card.ingredients}
+                />
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>

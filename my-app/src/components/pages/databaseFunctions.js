@@ -17,6 +17,22 @@ function GetMenuList(start, end){
   return menuItems;
 }
 
+function GetMenuList2(){
+  const [menuItems, setMenuItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchMenuItems() {
+      const response = await fetch(`http://localhost:3001/menuRequest2/`);
+      const data = await response.json();
+      setMenuItems(data);
+    }
+
+    fetchMenuItems();
+  }, []);
+
+  return menuItems;
+}
+
 //Fetch ingredient list to be display in table
 function GetIngredients(start, end) {
    const [ingredientArr, setIngredientArr] = useState([]);

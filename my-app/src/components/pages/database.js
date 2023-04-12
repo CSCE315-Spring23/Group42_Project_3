@@ -45,6 +45,23 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
   }
 });
 
+//this function is for getting all items from the menu rather than a start and end
+app.get('/menuRequest2', async () => {
+  try {
+    // const start = parseInt(req.params.start);
+    // const end = parseInt(req.params.end);
+    //console.log("attempting fetch");
+    // const userId = req.params.id;
+    const { rows } = await pool.query(`SELECT * FROM Menu ORDER BY MENU_ITEM_ID`);
+    res.json(rows);
+    //console.log(rows);
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
     const inventoryItems = [];
