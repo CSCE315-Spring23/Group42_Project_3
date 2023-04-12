@@ -23,7 +23,7 @@ function Seasonal() {
       text: item.menu_item_name,
       //label: "Label 1",
       //path: "",
-      ingredients: ingredientsArr[i]
+      ingredients: []
     };
     cardData.cards.push(card);
   }
