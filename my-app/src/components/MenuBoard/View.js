@@ -14,40 +14,40 @@ const MenuBoardView = ({burgers, baskets, sandwiches, sides, seasonal}) => {
             <h2>BURGERS</h2>
             <p className='mb-text'>Choose a Beef or Chipotle Black Bean Patty</p>
             <p className='mb-text'>All Combos include a Fountain Drink and Fries or Kettle Chips</p>
-            <ul>
+            {/* <ul>
               {burgers.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
               ))}
-            </ul>
+            </ul> */}
             <h2>BASKETS</h2>
             <p className='mb-text'>All Combos include a Fountain Drink</p>
             <ul>
-              {baskets.map((item) => (
+              {/* {baskets.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
-              ))}
+              ))} */}
             </ul>
           </div>
           <div className='menu-column two'>
             <h2>SANDWICHES</h2>
             <p className='mb-text'>All Combos include a Fountain Drink and Fries or Kettle Chips</p>
             <ul>
-              {sandwiches.map((item) => (
+              {/* {sandwiches.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
-              ))}
+              ))} */}
             </ul>
           </div>
           <div className='menu-column three'>
             <h2>SHAKES 'N SWEETS</h2>
             <ul>
-              {sides.map((item) => (
+              {/* {sides.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
-              ))}
+              ))} */}
             </ul>
             <h2>SEASONAL</h2>
             <ul>
-              {seasonal.map((item) => (
+              {/* {seasonal.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
-              ))}
+              ))} */}
             </ul>
           </div>
         </div>

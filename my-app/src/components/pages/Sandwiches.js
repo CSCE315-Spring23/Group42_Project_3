@@ -12,7 +12,7 @@ function Sandwiches() {
   var ingredientsArr = GetIngredients(7, 10);
 
   if (menuItems.length === 0 | ingredientsArr.length === 0) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const cardData = {

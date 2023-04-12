@@ -9,7 +9,7 @@ function Burgers() {
   var ingredientsArr = GetIngredients(1, 4);
 
   if (menuItems.length === 0 | ingredientsArr.length === 0) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const cardData = {

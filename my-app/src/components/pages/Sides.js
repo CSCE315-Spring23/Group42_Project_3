@@ -9,7 +9,7 @@ function Sides() {
   var ingredientsArr = GetIngredients(13, 25);
 
   if (menuItems.length === 0 | ingredientsArr.length === 0) {
-    return <div>Loading...</div>;
+    
   }
 
   const cardData = {

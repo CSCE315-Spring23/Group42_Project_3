@@ -9,7 +9,7 @@ function Baskets() {
   var ingredientsArr = GetIngredients(5, 6);
 
   if (menuItems.length === 0 | ingredientsArr.length === 0) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const cardData = {
