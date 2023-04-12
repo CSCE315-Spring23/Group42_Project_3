@@ -3,15 +3,17 @@ import '../../App.css';
 import Footer from '../Footer';
 import Navbar from '../ManagerNavbar';
 
+
 {/*
 * Shows Employee View so they can log in and access features not visible for customers
 * @author: 
 */ }
 
-function ManagerView() {
+function ManagerDatabaseAccess() {
     return (<> 
-    <Navbar/>
+        <Navbar />
+
         <Footer/>
       </>);
 }
-export default ManagerView
+export default ManagerDatabaseAccess

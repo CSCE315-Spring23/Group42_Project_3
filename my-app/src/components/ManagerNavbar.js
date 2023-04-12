@@ -36,17 +36,17 @@ function Navbar() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                Charts
+              <Link to='/ManagerView' className='nav-links' onClick={closeMobileMenu}>
+                Charts And Reports
               </Link>
             </li>
             <li className='nav-item'>
             <Link
-              to='/Menu'
+              to='/ManagerDatabaseAccess'
               className='nav-links'
               onClick={closeMobileMenu}
             >
-              Reports
+              View and Edit Database
               </Link>
             </li>
             <li className='nav-item'>
@@ -58,6 +58,7 @@ function Navbar() {
               Database Access and Edit
               </Link>
             </li>
+            {button && <Button buttonStyle='btn--outline' path='/Home'>SIGN OUT</Button>}
           </ul>
         </div>
       </nav>
