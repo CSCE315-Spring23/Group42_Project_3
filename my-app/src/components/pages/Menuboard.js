@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from '../CustomerNavbar';
 import View from '../MenuBoard/View';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Loading from '../Loading';
@@ -10,29 +9,12 @@ import Loading from '../Loading';
 */ }
 
 const MenuBoard = () => {
-  // var menuItems = GetMenuList(1, 20);
-  // var ingredientsArr = GetIngredients(1, 20);
+  var menuItems = GetMenuList(1, 20);
+  var ingredientsArr = GetIngredients(1, 20);
 
-  // if (menuItems.length === 0 | ingredientsArr.length === 0) {
-  //   return <Loading></Loading>;
-  // }
-  const [menuItems, setMenuItems] = React.useState([]);
-  const [ingredientsArr, setIngredientsArr] = React.useState([]);
-
-  React.useEffect(() => {
-    const fetchMenuItems = async () => {
-      const items = await GetMenuList(1, 20);
-      setMenuItems(items);
-    };
-
-    const fetchIngredients = async () => {
-      const ingredients = await GetIngredients(1, 20);
-      setIngredientsArr(ingredients);
-    };
-
-    fetchMenuItems();
-    fetchIngredients();
-  }, []);
+  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+    return <Loading />;
+  }
 
   if (menuItems.length === 0 || ingredientsArr.length === 0) {
     return <Loading />;
@@ -61,7 +43,7 @@ const MenuBoard = () => {
   }
 
   const sandwichesArr = [];
-  for (let i = 8; i < 13; i++) {
+  for (let i = 8; i < 12; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,
@@ -72,7 +54,7 @@ const MenuBoard = () => {
   }
 
   const sidesArr = [];
-  for (let i = 13; i < 20; i++) {
+  for (let i = 12; i < 20; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,
@@ -84,7 +66,7 @@ const MenuBoard = () => {
 
   {/* HTML structure*/ }
   return (
-    <View burgers={burgersArr} baskets={basketsArr} sandwiches={basketsArr} sides = {basketsArr} seasonal= {basketsArr} />
+    <View burgers={burgersArr} baskets={basketsArr} sandwiches={sandwichesArr} sides = {sidesArr} seasonal= {[]} />
   );
 };
 

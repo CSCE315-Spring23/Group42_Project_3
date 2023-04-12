@@ -21,7 +21,7 @@ body {
 .logo {
   display: block;
   margin: auto;
-  max-width: 33%;
+  max-width: 100%;
   height: 25%;
   padding-bottom: 0.5%;
 }
@@ -29,7 +29,7 @@ body {
 .stripe {
   display: block;
   margin: auto;
-  max-width: 33%;
+  max-width: 100%;
   height: .5%;
   padding-bottom: .5%;
   background-color: rgba(92,0,32,255);

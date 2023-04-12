@@ -19,7 +19,7 @@
   max-width: 1500px;
 }
 
-img{
+.navbar-img{
   z-index: 100;
   width: 40%;
   height: 300%;
