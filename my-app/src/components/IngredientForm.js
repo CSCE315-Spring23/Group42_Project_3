@@ -24,7 +24,7 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
   const specialButtons = [
     {
         label1: "None",
-        label2: "Regs",
+        label2: "Regular",
         label3: "Extra",
         show: "y",
     },
