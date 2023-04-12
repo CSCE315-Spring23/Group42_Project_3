@@ -51,7 +51,6 @@ function Home() {
   return (<>
     <Navbar />
     <HeroSection />
-    <Instructions />
     <Footer />
   </>);
 }
