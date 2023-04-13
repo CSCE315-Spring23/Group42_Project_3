@@ -12,7 +12,7 @@
     flex-direction: column;
     text-align: center;
   }
-  
+
   .Cart-title {
     border-bottom: 2px solid rgba(92,0,32,255);
     font-weight: 200;
@@ -21,18 +21,24 @@
   .Cart-total {
     text-align: center;
   }
-  
+
   .CartItem {
     display: flex;
     align-items: center;
     margin-top: 3em;
     font-size: 1.3rem;
   }
-  
+
+  .CartItemMods div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .CartItem div {
     width: 25%;
   }
-  
+
   .CartItem button {
     margin: 0 0.5em;
     width: 30px;
@@ -43,12 +49,11 @@
     transition: all 0.3s ease;
     outline: none;
   }
-  
+
   .CartItem button:hover {
     background-color: rgba(92,0,32,255);
   }
-  
+
   .CartItem button:disabled {
     background-color: silver;
   }
-  
