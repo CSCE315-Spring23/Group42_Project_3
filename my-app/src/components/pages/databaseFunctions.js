@@ -51,24 +51,11 @@ function GetIngredients(start, end) {
   return ingredientArr;
 }
 
-// function CreateSession(myID) {
-//   console.log("Running func w:" + myID);
-//    const [sessionArr, setSessionArr] = useState([]);
-//
-//   useEffect(() => {
-//     async function createSession() {
-//     const response = await fetch(`http://localhost:3001/checkSession/${myID}`);
-//     const data = await response.json();
-//       //data.sort((a, b) => a.menu_id - b.menu_id);
-//       setSessionArr(data);
-//     }
-//
-//     createSession();
-//   }, []);
-//
-//   return sessionArr;
-// }
+function AddToCart(type, name, quantity) {
+  var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  console.log("Adding " +quantity + " units of "+ type + ": " + name+ " to cart for user " + myID);
+}
 
 
 
-export {GetMenuList, GetIngredients};
+export {GetMenuList, GetIngredients, AddToCart};

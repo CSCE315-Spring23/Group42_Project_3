@@ -5,8 +5,8 @@ import Navbar from '../CustomerNavbar';
 import Loading from '../Loading';
 
 function Burgers() {
-  var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*\s*([^;]*).*$)|^.*$/, "$1");
-  console.log(myID);
+  //var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*\s*([^;]*).*$)|^.*$/, "$1");
+  //console.log(myID);
   //CreateSession(myID);
   var menuItems = GetMenuList(1, 4);
   var ingredientsArr = GetIngredients(1, 4);

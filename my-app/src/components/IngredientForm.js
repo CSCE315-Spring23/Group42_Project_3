@@ -6,7 +6,13 @@ import './IngredientForm.css';
 * Ingredient list used to customize orders such as Burgers and sandwiches
 *
 */
+
 const IngredientForm = ({ ingredients, setQuantities }) => {
+  // function GetModifications() {
+  //   console.log(ingredients);
+  //   console.log(quantityValues);
+  // }
+  
   const [quantityValues, setQuantityValues] = useState(ingredients.map(() => 0));
 
   const handleChange = (index, value) => {
@@ -97,4 +103,4 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
   );
 };
 
-export default IngredientForm;
+export {IngredientForm};
