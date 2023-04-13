@@ -69,27 +69,42 @@ function AddToCart(type, name, quantity) {
     const data = await response.json();
     console.log(data.message);
   });
-}
+} 
 
 function GetCartItems(){
+  const [myCart, setCart] = useState([]);
   var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
   console.log("getting cart");
-  async function fetchCart(myID) {
-    const response = await fetch(`http://localhost:3001/getCart/${myID}`);
-    const data = await response.json();
-    return data.rows[0].orderlist;
-  }
-  async function parseCart() {
-    const myCart = await fetchCart(myID);
-    //const myCart = JSON.parse(rawCart);
-    console.log(myCart); // should log an array of cart items
-    myCart.forEach((rawItem) => {
-      const item = JSON.parse(rawItem);
-      console.log(item.type);
-    });
-  }
   
-  parseCart();
+  useEffect(() => {
+    async function fetchCart() {
+      const response = await fetch(`http://localhost:3001/getCart/${myID}`);
+      const data = await response.json();
+      setCart(data.rows[0].orderlist);
+      console.log("cart in func: " + data.rows[0].orderlist);
+    }
+    fetchCart();
+  }, [myID]);
+  
+  console.log("cart: " + myCart); // should log an array of cart items
+  const items = [];
+  if(myCart !== null) {
+    for (let i = 0; i < myCart.length; i++) {
+      const element = JSON.parse(myCart[i]);
+      //console.log(element);
+      const item = { id: i+1, name: element.name, price: 4.99, qty: 1}
+      items.push(item);
+    };
+  }
+  return items;
+  
+  // const old = [
+  //   { id: 1, name: "Treats", price: 4.99, qty: 5 },
+  //   { id: 2, name: "Catnip", price: 1.49, qty: 3 },
+  //   { id: 3, name: "Bed", price: 14.99, qty: 1 },
+  //   { id: 4, name: "asdkjfhakjd", price: 14.99, qty: 1 }
+  // ];
+  // return old;
 }
 
 

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import CartItem from "./CartItem";
 import './cart.css'
 import { Button } from "../Button";
-import {GetCartItems} from "../pages/databaseFunctions";
 
 function Cart({ initialItems }) {
-  const initialStorage = JSON.parse(window.localStorage.getItem("items"));
-
-  const [items, setItems] = useState(initialStorage || initialItems);
+  //console.log("II: " + JSON.stringify(initialItems));
+  const [items, setItems] = useState(initialItems);
 
   useEffect(() => {
-    window.localStorage.setItem("items", JSON.stringify(items));
-  }, [items]);
+    setItems(initialItems);
+  }, [initialItems]);
+
+  //console.log("Items: " + items);
 
   const updateQty = (id, newQty) => {
     const newItems = items.map((item) => {
@@ -27,8 +27,6 @@ function Cart({ initialItems }) {
     .reduce((total, item) => total + item.price * item.qty, 0)
     .toFixed(2);
 
-  const cart = GetCartItems();
-  console.log(cart);
   return (
     <div className="Cart">
       <h1 className="Cart-title">Shopping Cart</h1>
