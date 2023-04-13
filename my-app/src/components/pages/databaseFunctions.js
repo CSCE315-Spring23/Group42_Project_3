@@ -12,26 +12,26 @@ function GetMenuList(start, end){
     }
 
     fetchMenuItems();
-  }, []);
+  }, [start, end]);
 
   return menuItems;
 }
 
-function GetMenuList2(){
-  const [menuItems, setMenuItems] = useState([]);
-
-  useEffect(() => {
-    async function fetchMenuItems() {
-      const response = await fetch(`http://localhost:3001/menuRequest2/`);
-      const data = await response.json();
-      setMenuItems(data);
-    }
-
-    fetchMenuItems();
-  }, []);
-
-  return menuItems;
-}
+// function GetMenuList2(){
+//   const [menuItems, setMenuItems] = useState([]);
+//
+//   useEffect(() => {
+//     async function fetchMenuItems() {
+//       const response = await fetch(`http://localhost:3001/menuRequest2/`);
+//       const data = await response.json();
+//       setMenuItems(data);
+//     }
+//
+//     fetchMenuItems();
+//   }, []);
+//
+//   return menuItems;
+// }
 
 //Fetch ingredient list to be display in table
 function GetIngredients(start, end) {
@@ -46,29 +46,29 @@ function GetIngredients(start, end) {
     }
 
     fetchIngredients();
-  }, []);
+  }, [start, end]);
 
   return ingredientArr;
 }
 
-function CreateSession(myID) {
-  console.log("Running func w:" + myID);
-   const [sessionArr, setSessionArr] = useState([]);
+// function CreateSession(myID) {
+//   console.log("Running func w:" + myID);
+//    const [sessionArr, setSessionArr] = useState([]);
+//
+//   useEffect(() => {
+//     async function createSession() {
+//     const response = await fetch(`http://localhost:3001/checkSession/${myID}`);
+//     const data = await response.json();
+//       //data.sort((a, b) => a.menu_id - b.menu_id);
+//       setSessionArr(data);
+//     }
+//
+//     createSession();
+//   }, []);
+//
+//   return sessionArr;
+// }
 
-  useEffect(() => {
-    async function createSession() {
-    const response = await fetch(`http://localhost:3001/checkSession/${myID}`);
-    const data = await response.json();
-      //data.sort((a, b) => a.menu_id - b.menu_id);
-      setSessionArr(data);
-    }
-
-    createSession();
-  }, []);
-
-  return sessionArr;
-}
 
 
-
-export {GetMenuList, GetIngredients, CreateSession};
+export {GetMenuList, GetIngredients};

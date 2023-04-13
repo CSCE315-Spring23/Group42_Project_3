@@ -82,7 +82,7 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
       inventoryIds.length = 0;
     }
     res.json(inventoryItems);
-    console.log(inventoryItems);
+    //console.log(inventoryItems);
   } catch (err) {
     console.error("Read failed with error " + err);
     res.status(500).json({ error: 'Internal server error' });
@@ -93,19 +93,39 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
 app.get('/checkSession/:id', async (req, res) => {
   try {
     const myID = req.params.id;
-    console.log("ID:" + myID);
+    //console.log("ID:" + myID);
 
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
 
     if (result.rowCount === 0) {
-      await pool.query('INSERT INTO cart (sessionid) VALUES ($1)', [myID]);
-      res.status(200).send('Session ID added to cart.');
+    await pool.query('INSERT INTO cart (sessionid) VALUES ($1)', [myID]);
+    res.status(200).json({ message: 'Session ID added to cart.' });
+  } else {
+    res.status(200).json({ message: 'Session ID already exists in cart.' });
+  }
+  } catch (err) {
+    console.error('Error checking session ID:', err);
+    res.status(500).json({message:'Internal server error.'});
+  }
+});
+
+app.get('/endSession/:id', async (req, res) => {
+  try {
+    const myID = req.params.id;
+
+    const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+
+    if (result.rowCount === 0) {
+      res.status(200).json({message:'Session ID does not exist in cart.'});
+      //console.log("doesnt exist to delete!");
     } else {
-      res.status(200).send('Session ID already exists in cart.');
+      await pool.query('DELETE FROM cart WHERE sessionid = $1', [myID]);
+      res.status(200).json({message: 'Session ID removed from cart.'});
+      //console.log("deleted!");
     }
   } catch (err) {
     console.error('Error checking session ID:', err);
-    res.status(500).send('Internal server error.');
+    res.status(500).json({message:'Internal server error.'});
   }
 });
 
