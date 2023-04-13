@@ -11,6 +11,8 @@ app.use(cors({
   origin: 'http://localhost:3000'
 }));
 
+//app.options('*', cors());
+
 console.log("db document running");
 
 // Connect to PostgreSQL database
@@ -128,6 +130,30 @@ app.get('/endSession/:id', async (req, res) => {
     res.status(500).json({message:'Internal server error.'});
   }
 });
+
+app.post('/addToCart/:id', async (req, res) => {
+  try {
+    const myID = req.params.id;
+    const item = req.body;
+    console.log(item);
+    const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+
+    if (result.rowCount === 0) {
+      res.status(500).json({ message: 'User session not found!' });
+    } else {
+      const cartItem = result.rows[0];
+      const currentCart = cartItem.orderlist || []; //init to empty if nothing there
+      currentCart.push(item);
+      const updateResult = await pool.query('UPDATE cart SET orderlist = $1 WHERE sessionid = $2', [currentCart, myID]);
+
+      res.status(200).json({ message: 'Added to cart!' });
+    }
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
 
 // Start the server
 app.listen(3001, () => {

@@ -54,6 +54,21 @@ function GetIngredients(start, end) {
 function AddToCart(type, name, quantity) {
   var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
   console.log("Adding " +quantity + " units of "+ type + ": " + name+ " to cart for user " + myID);
+  const item = { type, name, quantity };
+  //const jsonItem = encodeURIComponent(JSON.stringify(item));
+  async function AddToDB(myID, item) {
+    const response = await fetch(`http://localhost:3001/addToCart/${myID}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: item
+    });
+    const data = await response.json();
+    return data;
+  }
+  
+  AddToDB(myID, JSON.stringify(item));
 }
 
 
