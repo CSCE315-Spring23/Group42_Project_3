@@ -1,13 +1,11 @@
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
-
+const uuid = require('uuid').v4;
 // Set up server
 const app = express();
 app.use(express.json());
 app.use(express.static('.'));
-
-const uuid = require('uuid').v4;
 
 app.use(cors({
   origin: 'http://localhost:3000'
@@ -90,15 +88,6 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-//set a cookie w the current session
-app.post('/session', (req, res) => {
-  const sessionId = uuid();
-  res.cookie('sessionId', sessionId);
-  res.status(200).send('Session created successfully');
-  //console.log("my cookie: ", sessionId);
-});
-
 // Start the server
 app.listen(3001, () => {
   console.log('Server listening on port 3001');
