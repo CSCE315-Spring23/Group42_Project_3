@@ -15,6 +15,10 @@ import Navbar from '../CustomerNavbar';
 //<CardList id = 'cards' cardData={cardData} title="Menu" />
 {/* HTML structure*/ }
 function Home() {
+
+  var myID = localStorage.getItem('sessionId');
+  console.log(myID);
+
   return (<>
     <Navbar />
     <HeroSection />

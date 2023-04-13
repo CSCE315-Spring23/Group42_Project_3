@@ -5,6 +5,8 @@ import Navbar from '../CustomerNavbar';
 import Loading from '../Loading';
 
 function Burgers() {
+  var myID = localStorage.getItem('sessionId');
+  console.log(myID);
   var menuItems = GetMenuList(1, 4);
   var ingredientsArr = GetIngredients(1, 4);
 

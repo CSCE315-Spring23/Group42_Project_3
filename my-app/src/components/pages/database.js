@@ -7,8 +7,10 @@ const app = express();
 app.use(express.json());
 app.use(express.static('.'));
 
+const uuid = require('uuid').v4;
+
 app.use(cors({
-  origin: 'http://localhost:3000' // replace with your own domain or '*' to allow all domains
+  origin: 'http://localhost:3000'
 }));
 
 console.log("db document running");
@@ -87,6 +89,14 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
     console.error("Read failed with error " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+//set a cookie w the current session
+app.post('/session', (req, res) => {
+  const sessionId = uuid();
+  res.cookie('sessionId', sessionId);
+  res.status(200).send('Session created successfully');
+  //console.log("my cookie: ", sessionId);
 });
 
 // Start the server
