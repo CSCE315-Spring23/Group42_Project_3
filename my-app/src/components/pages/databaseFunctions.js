@@ -51,5 +51,24 @@ function GetIngredients(start, end) {
   return ingredientArr;
 }
 
+function CreateSession(myID) {
+  console.log("Running func w:" + myID);
+   const [sessionArr, setSessionArr] = useState([]);
 
-export {GetMenuList, GetIngredients};
+  useEffect(() => {
+    async function createSession() {
+    const response = await fetch(`http://localhost:3001/checkSession/${myID}`);
+    const data = await response.json();
+      //data.sort((a, b) => a.menu_id - b.menu_id);
+      setSessionArr(data);
+    }
+
+    createSession();
+  }, []);
+
+  return sessionArr;
+}
+
+
+
+export {GetMenuList, GetIngredients, CreateSession};

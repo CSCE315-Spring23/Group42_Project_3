@@ -1,13 +1,13 @@
 import Footer from '../Footer';
 import CardList from '../CardList';
-import {GetMenuList, GetIngredients} from './databaseFunctions'
+import {GetMenuList, GetIngredients, CreateSession} from './databaseFunctions'
 import Navbar from '../CustomerNavbar';
 import Loading from '../Loading';
 
 function Burgers() {
-  //document.cookie = "sessionId=1234";
   var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   console.log(myID);
+  CreateSession(myID);
   var menuItems = GetMenuList(1, 4);
   var ingredientsArr = GetIngredients(1, 4);
 

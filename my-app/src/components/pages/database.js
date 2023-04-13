@@ -88,6 +88,27 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+//check if we already have a row for our session
+app.get('/checkSession/:id', async (req, res) => {
+  try {
+    const myID = req.params.id;
+    console.log("ID:" + myID);
+
+    const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+
+    if (result.rowCount === 0) {
+      await pool.query('INSERT INTO cart (sessionid) VALUES ($1)', [myID]);
+      res.status(200).send('Session ID added to cart.');
+    } else {
+      res.status(200).send('Session ID already exists in cart.');
+    }
+  } catch (err) {
+    console.error('Error checking session ID:', err);
+    res.status(500).send('Internal server error.');
+  }
+});
+
 // Start the server
 app.listen(3001, () => {
   console.log('Server listening on port 3001');
