@@ -5,7 +5,7 @@ import './cart.css'
 function CartItemMods({ id, name, price, qty}) {
   //const addOne = () => updateQty(id, qty + 1);
   //const subOne = () => updateQty(id, qty - 1);
-  const mods = ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"];
+  const mods = ["NO bun", "SUB lamb patty"];
 
   return (
     <div className="CartItemMods">

@@ -143,14 +143,27 @@ app.post('/addToCart/:id', async (req, res) => {
     } else {
       const cartItem = result.rows[0];
       const currentCart = cartItem.orderlist || []; //init to empty if nothing there
+      console.log("Current:" + currentCart);
       currentCart.push(item);
       const updateResult = await pool.query('UPDATE cart SET orderlist = $1 WHERE sessionid = $2', [currentCart, myID]);
-
+      //console.log("Updated:" + JSON.stringify(updateResult));
+      //console.log(item);
       res.status(200).json({ message: 'Added to cart!' });
     }
   } catch (err) {
     console.error('Error adding to cart:', err);
     res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
+app.get('/getCart/:id', async (req, res) => {
+  try {
+    const myID = req.params.id;
+    const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+    res.json(result);
+  } catch (err) {
+    console.error("Read failed with error " +err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

@@ -12,7 +12,6 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
   //   console.log(ingredients);
   //   console.log(quantityValues);
   // }
-  
   const [quantityValues, setQuantityValues] = useState(ingredients.map(() => 0));
 
   const handleChange = (index, value) => {
@@ -62,13 +61,10 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
     return ingredient;
   }
 
-  const ingredientsToHide = ["Tray Paper", "Black Bean Patty"];
-  const visibleIngredients = ingredients.filter((ingredient) => !ingredientsToHide.includes(ingredient));
-
   return (
     <div className="form-container">
       <form>
-        {visibleIngredients.map((ingredient, index) => (
+        {ingredients.map((ingredient, index) => (
           <div key={index} className="form-row">
             <label>{customName(ingredient)}</label>
             <div className="quantity-buttons">

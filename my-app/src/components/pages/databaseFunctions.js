@@ -51,26 +51,46 @@ function GetIngredients(start, end) {
   return ingredientArr;
 }
 
+let addToCartPromise = Promise.resolve();
+
 function AddToCart(type, name, quantity) {
-  var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  const myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
   console.log("Adding " +quantity + " units of "+ type + ": " + name+ " to cart for user " + myID);
   const item = { type, name, quantity };
-  //const jsonItem = encodeURIComponent(JSON.stringify(item));
-  async function AddToDB(myID, item) {
+
+  addToCartPromise = addToCartPromise.then(async () => {
     const response = await fetch(`http://localhost:3001/addToCart/${myID}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: item
+      body: JSON.stringify(item)
     });
     const data = await response.json();
-    return data;
+    console.log(data.message);
+  });
+}
+
+function GetCartItems(){
+  var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  console.log("getting cart");
+  async function fetchCart(myID) {
+    const response = await fetch(`http://localhost:3001/getCart/${myID}`);
+    const data = await response.json();
+    return data.rows[0].orderlist;
+  }
+  async function parseCart() {
+    const myCart = await fetchCart(myID);
+    //const myCart = JSON.parse(rawCart);
+    console.log(myCart); // should log an array of cart items
+    myCart.forEach((rawItem) => {
+      const item = JSON.parse(rawItem);
+      console.log(item.type);
+    });
   }
   
-  AddToDB(myID, JSON.stringify(item));
+  parseCart();
 }
 
 
-
-export {GetMenuList, GetIngredients, AddToCart};
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems};
