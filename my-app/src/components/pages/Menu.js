@@ -8,46 +8,46 @@ import Navbar from '../CustomerNavbar';
 * @author: 
 */ }
 const cardData = {
-    cards: [
-      {
-        image: "path/to/image1",
-        text: "not burger 1",
-        label: "Label 1",
-        path: "/card1",
-      },
-      {
-        image: "path/to/image2",
-        text: "Card 2",
-        label: "Label 2",
-        path: "/card2",
-      },
-      {
-        image: "path/to/image1",
-        text: "Burger 1",
-        label: "Label 1",
-        path: "/card1",
-      },
-      {
-        image: "path/to/image1",
-        text: "Burger 1",
-        label: "Label 1",
-        path: "/card1",
-      },
-      {
-        image: "path/to/image1",
-        text: "Burger 1",
-        label: "Label 1",
-        path: "/card1",
-      },
-    ],
-  };
+  cards: [
+    {
+      image: "images/burger-img-1.jpg",
+      text: "Burgers",
+      label: "Label 1",
+      path: "/Burgers",
+    },
+    {
+      image: "images/sandwich-img-1.jpg",
+      text: "Sandwiches",
+      label: "Label 2",
+      path: "/Sandwiches",
+    },
+    {
+      image: "images/basket-img-1.jpg",
+      text: "Baskets",
+      label: "Label 1",
+      path: "/Baskets",
+    },
+    {
+      image: "images/side-img-1.jpg",
+      text: "Sides",
+      label: "Label 1",
+      path: "/Sides",
+    },
+    {
+      image: "images/seasonal-img-1.jpg",
+      text: "Seasonal",
+      label: "Label 1",
+      path: "/Seasonal",
+    },
+  ],
+};
   
 
 {/* HTML structure*/ }
 function Menu() {
     return (<>
+      <Navbar />
       <CardList cardData={cardData} title="MENU" />
-
       <Footer/>
     </>);
   }

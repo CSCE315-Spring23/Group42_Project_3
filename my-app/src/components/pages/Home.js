@@ -10,40 +10,7 @@ import Navbar from '../CustomerNavbar';
 * Shows Home page of the web app with main order options for customers
 * @author:
 */ }
-const cardData = {
-  cards: [
-    {
-      image: "images/burger-img-1.jpg",
-      text: "Burgers",
-      label: "Label 1",
-      path: "/Burgers",
-    },
-    {
-      image: "images/sandwich-img-1.jpg",
-      text: "Sandwiches",
-      label: "Label 2",
-      path: "/Sandwiches",
-    },
-    {
-      image: "images/basket-img-1.jpg",
-      text: "Baskets",
-      label: "Label 1",
-      path: "/Baskets",
-    },
-    {
-      image: "images/side-img-1.jpg",
-      text: "Sides",
-      label: "Label 1",
-      path: "/Sides",
-    },
-    {
-      image: "images/seasonal-img-1.jpg",
-      text: "Seasonal",
-      label: "Label 1",
-      path: "/Seasonal",
-    },
-  ],
-};
+
 
 //<CardList id = 'cards' cardData={cardData} title="Menu" />
 {/* HTML structure*/ }

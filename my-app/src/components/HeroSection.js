@@ -26,7 +26,7 @@ function HeroSection() {
           buttonStyle='btn--outline'
           buttonSize='btn--large'
           onClick={handleOnClick}
-          path='#cards'
+          path='/Menu'
         >
           GET STARTED
         </Button>
