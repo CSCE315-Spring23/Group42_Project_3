@@ -2,6 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const uuid = require('uuid').v4;
+const path = require('path');
 // Set up server
 const app = express();
 app.use(express.json());
