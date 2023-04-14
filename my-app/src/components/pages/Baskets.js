@@ -21,7 +21,7 @@ function Baskets() {
     const card = {
       image: item.image_link,
       text: item.menu_item_name,
-      //label: "Label 1",
+      label: item.menu_item_cost,
       //path: "",
       ingredients: ingredientsArr[i]
     };

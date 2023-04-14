@@ -47,6 +47,20 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
   }
 });
 
+// app.get('/menuRequest/:name', async (req, res) => {
+//   try {
+//     const name = req.params.name;
+//     console.log("Name: " + name);
+//     const { rows } = await pool.query('SELECT * FROM Menu WHERE MENU_ITEM_NAME = $1', [name]);
+//     //console.log(rows);
+//     res.json(rows);
+//   } catch (err) {
+//     //console.log("error!");
+//     console.error("Read failed with error " +err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
 //this function is for getting all items from the menu rather than a start and end
 app.get('/menuRequest2', async () => {
   try {
@@ -135,7 +149,7 @@ app.post('/addToCart/:id', async (req, res) => {
   try {
     const myID = req.params.id;
     const item = req.body;
-    console.log(item);
+    //console.log(item);
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
 
     if (result.rowCount === 0) {
@@ -143,7 +157,7 @@ app.post('/addToCart/:id', async (req, res) => {
     } else {
       const cartItem = result.rows[0];
       const currentCart = cartItem.orderlist || []; //init to empty if nothing there
-      console.log("Current:" + currentCart);
+      //console.log("Current:" + currentCart);
       currentCart.push(item);
       const updateResult = await pool.query('UPDATE cart SET orderlist = $1 WHERE sessionid = $2', [currentCart, myID]);
       //console.log("Updated:" + JSON.stringify(updateResult));

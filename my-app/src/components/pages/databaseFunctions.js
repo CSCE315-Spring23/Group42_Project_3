@@ -51,12 +51,11 @@ function GetIngredients(start, end) {
   return ingredientArr;
 }
 
-let addToCartPromise = Promise.resolve();
-
-function AddToCart(type, name, quantity) {
+let addToCartPromise = Promise.resolve(); //synchronization thing
+function AddToCart(type, name, quantity, price) {
   const myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
-  console.log("Adding " +quantity + " units of "+ type + ": " + name+ " to cart for user " + myID);
-  const item = { type, name, quantity };
+  //console.log("Adding " +quantity + " units of "+ type + ": " + name+ " to cart for user " + myID + " with price " + price);
+  const item = { type, name, quantity, price };
 
   addToCartPromise = addToCartPromise.then(async () => {
     const response = await fetch(`http://localhost:3001/addToCart/${myID}`, {
@@ -71,40 +70,44 @@ function AddToCart(type, name, quantity) {
   });
 } 
 
+
 function GetCartItems(){
   const [myCart, setCart] = useState([]);
   var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
-  console.log("getting cart");
+  //console.log("getting cart");
   
   useEffect(() => {
     async function fetchCart() {
       const response = await fetch(`http://localhost:3001/getCart/${myID}`);
       const data = await response.json();
       setCart(data.rows[0].orderlist);
-      console.log("cart in func: " + data.rows[0].orderlist);
+      //console.log("cart in func: " + data.rows[0].orderlist);
     }
     fetchCart();
   }, [myID]);
   
-  console.log("cart: " + myCart); // should log an array of cart items
+  //console.log("cart: " + myCart); // should log an array of cart items
   const items = [];
+  const modlist = [];
+  var j = 1;
+
   if(myCart !== null) {
     for (let i = 0; i < myCart.length; i++) {
       const element = JSON.parse(myCart[i]);
-      //console.log(element);
-      const item = { id: i+1, name: element.name, price: 4.99, qty: 1}
-      items.push(item);
+      if(element.type === "item") {
+        const item = { id: j, name: element.name, price: element.price, qty: 1, mods: [...modlist]}
+        items.push(item);
+        modlist.length = 0;
+        j++;
+      } else {
+          if(element.quantity === -1)
+            modlist.push("NO " + element.name);
+          else
+            modlist.push("EXTRA " + element.name);
+      }
     };
   }
   return items;
-  
-  // const old = [
-  //   { id: 1, name: "Treats", price: 4.99, qty: 5 },
-  //   { id: 2, name: "Catnip", price: 1.49, qty: 3 },
-  //   { id: 3, name: "Bed", price: 14.99, qty: 1 },
-  //   { id: 4, name: "asdkjfhakjd", price: 14.99, qty: 1 }
-  // ];
-  // return old;
 }
 
 

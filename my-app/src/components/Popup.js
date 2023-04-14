@@ -3,21 +3,21 @@ import React, {useState} from 'react';
 import { Button } from './Button';
 import {AddToCart} from './pages/databaseFunctions'
 import {IngredientForm} from './IngredientForm';
+//import {GetItemPrice} from './pages/databaseFunctions';
 import './Popup.css';
 
-function Popup({text, ingredients, onClose}) {
+function Popup({text, ingredients, onClose, price}) {
   //const i = ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"];
   const [quantities, setQuantities] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const ingredientsToHide = ["Tray Paper", "Black Bean Patty"];
   const visibleIngredients = ingredients.filter((ingredient) => !ingredientsToHide.includes(ingredient));
 
   function checkoutClick() {
-    AddToCart("item", text, 1);
     for (let i = 0; i < visibleIngredients.length; i++) {
-      //console.log(quantities[i] + " units of " + visibleIngredients[i]);
       if(quantities[i] !== 0)
-        AddToCart("mod", visibleIngredients[i], quantities[i]);
+        AddToCart("mod", visibleIngredients[i], quantities[i], 0);
     }
+    AddToCart("item", text, 1, price);
   }
 
   //get these from database by passing in name

@@ -2,7 +2,7 @@ import React from 'react';
 import CartItemMods from "./CartItemMods";
 import './cart.css'
 
-function CartItem({ id, name, price, qty, updateQty }) {
+function CartItem({ id, name, price, qty, updateQty, mods }) {
   const addOne = () => updateQty(id, qty + 1);
   const subOne = () => updateQty(id, qty - 1);
   //const mods = ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"];
@@ -23,7 +23,7 @@ function CartItem({ id, name, price, qty, updateQty }) {
         <div> ${(qty * price).toFixed(2)}</div>
       </div>
       <div className="ModRow">
-      <CartItemMods id={id} name={name} price={price} qty={qty} />
+      <CartItemMods id={id} name={name} price={price} qty={qty} mods={mods} />
       </div>
     </div>
   );

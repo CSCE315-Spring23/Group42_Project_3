@@ -1,7 +1,7 @@
 import React from 'react';
 import './Cards.css';
 
-function Card({ title, text, image, ingredients }) {
+function Card({ title, text, image, ingredients, price}) {
   return (
     <div className='card'>
       <img src={image} alt={title} className='card-image' />
