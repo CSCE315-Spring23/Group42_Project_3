@@ -6,7 +6,7 @@ const path = require('path');
 // Set up server
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../../public')));
 
 app.use(cors({
   origin: 'http://localhost:3000'
@@ -184,8 +184,8 @@ app.get('/getCart/:id', async (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  console.log("Sending unknown request");
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+  console.log("sent unknown request");
+  res.sendFile(path.resolve(__dirname, '../../../public', 'index.html'));
 });
 
 
