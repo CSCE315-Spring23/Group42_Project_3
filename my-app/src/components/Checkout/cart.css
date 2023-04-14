@@ -102,6 +102,10 @@
   align-items: center;
 }
 
+.carttext{
+  color: rgba(92,0,32,255);
+}
+
 /* If there are more than 3 buttons, wrap them to two rows */
 .popup-content > *:nth-child(n+4) {
   margin-top: 10px;

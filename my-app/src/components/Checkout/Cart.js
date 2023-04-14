@@ -54,12 +54,10 @@ function Cart({ initialItems }) {
         <div className="popup">
           <div className="popup-content">
             <h2>Order Placed</h2>
-            <p>Go back to Menu</p>
-            <button onClick={handleClose}><Link
-        to='/Menu'
-      >
-        Menu
-      </Link></button>
+            <p className="carttext">''</p>
+            <Button onClick={handleClose}><Link to='/Menu'>
+            Menu
+            </Link></Button>
           </div>
         </div>
       }
