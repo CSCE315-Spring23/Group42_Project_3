@@ -9,7 +9,7 @@ table {
   gap: 10px;
   padding: 1rem;
   margin-block: 20px;
-  color: maroon;
+  color: rgba(92,0,32,255);
   height: auto;
 }
 th, td {
@@ -38,21 +38,21 @@ th:nth-child(4) {
 
 
 .table-header-space{
-    background-color: maroon;
-    height: 100px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+  background-color: rgba(92,0,32,255);
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .table-tab{
-    margin-top: 150px;
-    background-color: whitesmoke;
+  margin-top: 150px;
+  background-color: whitesmoke;
 }
 
 .table-tab-header{
-    color: white;
-    padding: 10px;
-    cursor: pointer;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
 }
