@@ -14,6 +14,7 @@ function Cart({ initialItems }) {
   const handleClose = () => {
    setShowPopup(false);
    window.location.reload();
+   
  }
 
   const [items, setItems] = useState(initialItems);
@@ -51,9 +52,9 @@ function Cart({ initialItems }) {
       {showPopup &&
         <div className="popup">
           <div className="popup-content">
-            <h2>Popup Content</h2>
-            <p>This is an example of a popup.</p>
-            <button onClick={handleClose}>Close</button>
+            <h2>Order Placed</h2>
+            <p> </p>
+            <Button onClick={handleClose}>Go back home</Button>
           </div>
         </div>
       }
