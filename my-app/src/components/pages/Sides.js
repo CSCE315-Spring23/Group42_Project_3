@@ -18,12 +18,19 @@ function Sides() {
 
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
+    var ingredientsList = [];
+    if(item.menu_item_name === "Salad Bar")
+      ingredientsList = [];
+    else if(item.menu_item_name === "Sauce")
+      ingredientsList = ["x"];
+    else
+      ingredientsList = ingredientsArr[i];
     const card = {
       image: item.image_link,
       text: item.menu_item_name,
       label: item.menu_item_cost,
       //path: "",
-      ingredients: []
+      ingredients: ingredientsList
     };
     cardData.cards.push(card);
   }
