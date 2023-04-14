@@ -184,6 +184,7 @@ app.get('/getCart/:id', async (req, res) => {
 });
 
 app.get('*', (req, res) => {
+  console.log("Sending unknown request");
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
