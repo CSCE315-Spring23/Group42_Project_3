@@ -53,12 +53,12 @@ function Cart({ initialItems }) {
       {showPopup &&
         <div className="popup">
           <div className="popup-content">
-            <h2>Popup Content</h2>
-            <p>This is an example of a popup.</p>
+            <h2>Order Placed</h2>
+            <p>Go back to Menu</p>
             <button onClick={handleClose}><Link
         to='/Menu'
       >
-        Close
+        Menu
       </Link></button>
           </div>
         </div>
