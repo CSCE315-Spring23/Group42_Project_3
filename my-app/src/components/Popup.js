@@ -9,7 +9,7 @@ import './Popup.css';
 function Popup({text, ingredients, onClose, price}) {
   //const i = ["bun", "lamb patty", "lettuce", "tomato", "tzatziki sauce"];
   const [quantities, setQuantities] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  const ingredientsToHide = ["Tray Paper", "Black Bean Patty"];
+  const ingredientsToHide = ["Tray Paper", "Black Bean Patty", "Buns", "Small Paper Containers", "Sauce Containers"];
   const visibleIngredients = ingredients.filter((ingredient) => !ingredientsToHide.includes(ingredient));
 
   function checkoutClick() {
