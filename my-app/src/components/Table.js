@@ -40,7 +40,7 @@ const Table = () => {
                             key={tab.id}
                             onClick={() => handleClick(tab.id)}
                             style={{
-                                backgroundColor: activeTab === tab.id ? 'rgb(249, 187, 18)' : 'maroon',
+                                backgroundColor: activeTab === tab.id ? 'rgb(249, 187, 18)' : 'rgba(92,0,32,255)',
                                 color: 'white',
                                 padding: '10px',
                                 cursor: 'pointer',
