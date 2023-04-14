@@ -68,14 +68,14 @@ function AddToCart(type, name, quantity, price) {
     const data = await response.json();
     console.log(data.message);
   });
-} 
+}
 
 
 function GetCartItems(){
   const [myCart, setCart] = useState([]);
   var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
   //console.log("getting cart");
-  
+
   useEffect(() => {
     async function fetchCart() {
       const response = await fetch(`http://localhost:3001/getCart/${myID}`);
@@ -85,7 +85,7 @@ function GetCartItems(){
     }
     fetchCart();
   }, [myID]);
-  
+
   //console.log("cart: " + myCart); // should log an array of cart items
   const items = [];
   const modlist = [];
@@ -100,10 +100,40 @@ function GetCartItems(){
         modlist.length = 0;
         j++;
       } else {
-          if(element.quantity === -1)
-            modlist.push("NO " + element.name);
-          else
-            modlist.push("EXTRA " + element.name);
+          if(element.name === "Beef Patty") {
+            if(element.quantity === -1)
+              modlist.push("SUB Black Bean Patty");
+          }
+          else if(element.name === "Vanilla Ice Cream") {
+            if(element.quantity === -1)
+              modlist.push("CHOCOLATE");
+            else if(element.quantity === 0)
+              modlist.push("VANILLA");
+            else if(element.quantity === 1)
+              modlist.push("COFFEE");
+            else
+              modlist.push("STRAWBERRY");
+          }
+          else if(element.name === "x") {
+            if(element.quantity === -1)
+              modlist.push("BUFFALO");
+            else if(element.quantity === 0)
+              modlist.push("BBQ");
+            else if(element.quantity === 1)
+              modlist.push("HONEY MUSTARD");
+            else if(element.quantity === 2)
+              modlist.push("RANCH");
+            else if(element.quantity === 3)
+              modlist.push("SPICY RANCH");
+            else if(element.quantity === 4)
+              modlist.push("GIG EM");
+          }
+          else {
+            if(element.quantity === -1)
+              modlist.push("NO " + element.name);
+            else
+              modlist.push("EXTRA " + element.name);
+          }
       }
     };
   }
