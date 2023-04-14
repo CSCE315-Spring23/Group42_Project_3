@@ -4,7 +4,18 @@ import './cart.css'
 import { Button } from "../Button";
 
 function Cart({ initialItems }) {
+  const [showPopup, setShowPopup] = useState(false);
   //console.log("II: " + JSON.stringify(initialItems));
+  function checkoutClick(){
+    //PLACE ORDER!
+    setShowPopup(true);
+  }
+
+  const handleClose = () => {
+   setShowPopup(false);
+   window.location.reload();
+ }
+
   const [items, setItems] = useState(initialItems);
 
   useEffect(() => {
@@ -36,7 +47,16 @@ function Cart({ initialItems }) {
         ))}
       </div>
       <h2 className="Cart-total">Total: {total}</h2>
-      <Button className = 'btn--cart' buttonStyle={'btn--primary'} buttonSize={'btn--large'}>Checkout</Button>
+      <Button className = 'btn--cart' buttonStyle={'btn--primary'} buttonSize={'btn--large'} onClick={() => { checkoutClick();}}>Checkout</Button>
+      {showPopup &&
+        <div className="popup">
+          <div className="popup-content">
+            <h2>Popup Content</h2>
+            <p>This is an example of a popup.</p>
+            <button onClick={handleClose}>Close</button>
+          </div>
+        </div>
+      }
     </div>
   );
 }

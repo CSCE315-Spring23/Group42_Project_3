@@ -24,7 +24,7 @@ function Popup({text, ingredients, onClose, price}) {
   // const i = {ingredients};
   return (
     <div className='popup'>
-      <div className='popup__content'>
+      <div className='popup-content'>
       <p>{text} </p>
       <IngredientForm ingredients={visibleIngredients} setQuantities = {setQuantities}></IngredientForm>
       <Button className = "close" buttonStyle='btn--outline' onClick={onClose}>X</Button>
