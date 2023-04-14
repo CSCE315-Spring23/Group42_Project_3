@@ -2,6 +2,7 @@ import React from 'react';
 import './Footer.css';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
+import Weather from './Weather';
 
 /* 
 * Global footer for all pages in our application
@@ -108,6 +109,7 @@ function Footer() {
             </Link>
           </div>
         </div>
+        <Weather />
       </section>
     </div>
   );

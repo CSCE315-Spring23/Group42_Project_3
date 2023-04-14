@@ -13,9 +13,10 @@ function Cart({ initialItems }) {
   }
 
   const handleClose = () => {
-    setShowPopup(false);
-    window.location.reload();
-  }
+   setShowPopup(false);
+   window.location.reload();
+   
+ }
 
   const [items, setItems] = useState(initialItems);
 
