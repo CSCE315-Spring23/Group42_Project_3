@@ -5,11 +5,12 @@ const uuid = require('uuid').v4;
 // Set up server
 const app = express();
 app.use(express.json());
-app.use(express.static('.'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors({
   origin: 'http://localhost:3000'
 }));
+
 
 //app.options('*', cors());
 
@@ -182,7 +183,7 @@ app.get('/getCart/:id', async (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../public', 'index.html'));
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
 
