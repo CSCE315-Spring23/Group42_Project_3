@@ -60,7 +60,6 @@ const Table = () => {
                                             <th key={header}>{header}</th>
                                         ))}
                                     </tr>
-                                </thread>
                                 <tbody>
                                     {tab.tableData.map((data) => (
                                         <tr key={data.id}>
@@ -70,6 +69,7 @@ const Table = () => {
                                         </tr>
                                     ))}
                                 </tbody>
+                                </thread>
                             </table>
                         </div>
                     ))}
