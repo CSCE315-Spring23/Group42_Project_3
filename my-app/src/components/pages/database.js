@@ -41,7 +41,13 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
     const end = parseInt(req.params.end);
     //console.log("attempting fetch, start: ", start, ", end: ", end);
     const userId = req.params.id;
-    const { rows } = await pool.query(`SELECT * FROM Menu WHERE MENU_ITEM_ID >= $1 AND MENU_ITEM_ID <= $2 ORDER BY MENU_ITEM_ID`, [start, end]);
+
+    if((start == 0) && (end == 0)){
+      const { rows } = await pool.query('SELECT * FROM Menu ORDER BY MENU_ITEM_ID');
+    }
+    else{
+      const { rows } = await pool.query(`SELECT * FROM Menu WHERE MENU_ITEM_ID >= $1 AND MENU_ITEM_ID <= $2 ORDER BY MENU_ITEM_ID`, [start, end]);
+    }
     res.json(rows);
     //console.log(rows);
   } catch (err) {
@@ -66,41 +72,49 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
 // });
 
 //this function is for getting all items from the menu rather than a start and end
-app.get('/menuRequest2', async () => {
-  try {
-    // const start = parseInt(req.params.start);
-    // const end = parseInt(req.params.end);
-    //console.log("attempting fetch");
-    // const userId = req.params.id;
-    const { rows } = await pool.query(`SELECT * FROM Menu ORDER BY MENU_ITEM_ID`);
-    res.json(rows);
-    //console.log(rows);
-  } catch (err) {
-    //console.log("error!");
-    console.error("Read failed with error " +err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// app.get('/menuRequestAll', async (req, res) => {
+//   try {
+//     // const start = parseInt(req.params.start);
+//     // const end = parseInt(req.params.end);
+//     //console.log("attempting fetch");
+//     // const userId = req.params.id;
+//     const { rows } = await pool.query(`SELECT * FROM Menu ORDER BY MENU_ITEM_ID`);
+//     res.json(rows);
+//     //console.log(rows);
+//   } catch (err) {
+//     //console.log("error!");
+//     console.error("Read failed with error " +err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
 
 app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
     const inventoryItems = [];
     const start = parseInt(req.params.start);
     const end = parseInt(req.params.end);
-    for (let i = start; i <= end; i++) {
-      //console.log("item :" + i);
-      const recipeItemsQuery = `SELECT inventory_id FROM Recipe_Item WHERE menu_id = ${i}`;
-      const recipeItemsResult = await pool.query(recipeItemsQuery);
-      const inventoryIds = recipeItemsResult.rows.map((item) => parseInt(item.inventory_id));
-      //console.log(inventoryIds);
-      const inventoryItemsQuery = `SELECT * FROM inventory_item WHERE inventory_id IN (${inventoryIds.join(",")})`;
-      const inventoryItemsResult = await pool.query(inventoryItemsQuery);
-      const inventoryItemsForMenu = inventoryItemsResult.rows.map((item) => item.inventory_item_name);
-      inventoryItems.push(inventoryItemsForMenu);
-      //console.log("item :" + i);
-      //console.log(inventoryItemsForMenu);
-      inventoryIds.length = 0;
+    if((start == 0) && (end == 0)){
+      start = 1;
+        const sizeOfMenuQuery = `SELECT MAX(menu_item_id) FROM menu`;
+        const sizeOfMenuResult = await pool.query(sizeOfMenuQuery);
+        end = sizeOfMenuResult.rows.map((item) => parseInt(item.menu_item_id));
     }
+    
+      for (let i = start; i <= end; i++) {
+        //console.log("item :" + i);
+        const recipeItemsQuery = `SELECT inventory_id FROM Recipe_Item WHERE menu_id = ${i}`;
+        const recipeItemsResult = await pool.query(recipeItemsQuery);
+        const inventoryIds = recipeItemsResult.rows.map((item) => parseInt(item.inventory_id));
+        //console.log(inventoryIds);
+        const inventoryItemsQuery = `SELECT * FROM inventory_item WHERE inventory_id IN (${inventoryIds.join(",")})`;
+        const inventoryItemsResult = await pool.query(inventoryItemsQuery);
+        const inventoryItemsForMenu = inventoryItemsResult.rows.map((item) => item.inventory_item_name);
+        inventoryItems.push(inventoryItemsForMenu);
+        //console.log("item :" + i);
+        //console.log(inventoryItemsForMenu);
+        inventoryIds.length = 0;
+      }
+  
     res.json(inventoryItems);
     //console.log(inventoryItems);
   } catch (err) {

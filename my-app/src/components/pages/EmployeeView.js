@@ -153,8 +153,8 @@ import { Button } from '../Button';
   
 
   function EmployeeView() {
-    var menuItems = GetMenuList(1, 27);
-  var ingredientsArr = GetIngredients(1, 27);
+    var menuItems = GetMenuList(0, 0);
+  var ingredientsArr = GetIngredients(0, 0);
 
   if (menuItems.length === 0 | ingredientsArr.length === 0) {
     return <div>Loading...</div>;
