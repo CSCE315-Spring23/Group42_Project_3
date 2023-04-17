@@ -6,7 +6,7 @@ import { Button } from '../Button';
 
 {/*
 * Shows Employee View so they can log in and access features not visible for customers
-* @author: 
+* @author:
 */ }
 // const cardData = {
 //     cards: [
@@ -149,12 +149,12 @@ import { Button } from '../Button';
 //     ],
 //   };
 
-  //Implemented 
-  
+  //Implemented
+
 
   function EmployeeView() {
     var menuItems = GetMenuList(0, 0);
-  var ingredientsArr = GetIngredients(0, 0);
+    var ingredientsArr = GetIngredients(1, menuItems.length);
 
   if (menuItems.length === 0 | ingredientsArr.length === 0) {
     return <div>Loading...</div>;
@@ -166,25 +166,28 @@ import { Button } from '../Button';
 
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
+    const ingr = ingredientsArr[i];
     const card = {
       // image: "images/sandwich-img-1.jpg",
       text: item.menu_item_name,
-      label: item.menu_item_cost,
+      //label: item.menu_item_cost,
       //path: "",
-      ingredients: ingredientsArr[i]
+      ingredients: ingr
     };
+    //console.log("Menu items in cards: " + menuItems[i].menu_item_name);
+    console.log("Ingredients in cards: " + ingredientsArr[i]);
     cardData.cards.push(card);
   }
 
-    
+
 
     return (<>
         <div id="employeemenu">
             <EmployeeCardList cardData={cardData} title="Employee View" />
-            
+
         </div>
 
-        
+
 
          {/* <button>Checkout</button> */}
          {/* <Button text = "Checkout" buttonStyle={"btn--primary"}/> */}
