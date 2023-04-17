@@ -5,6 +5,6 @@ if [[ $OSTYPE == "darwin"* ]]; then
   node ./src/components/pages/database.js & npm start
 else
   # PowerShell or Bash
-  node ./src/components/pages/database.js
+  node ./src/components/pages/database.js &
   npm start
 fi
