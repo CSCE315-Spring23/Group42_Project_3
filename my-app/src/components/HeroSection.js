@@ -2,6 +2,7 @@ import React from 'react';
 import '../App.css';
 import { Button } from './Button';
 import './HeroSection.css';
+import Weather from './Weather';
 // import { useHistory } from 'react-router-dom';
 
 /*
@@ -30,6 +31,7 @@ function HeroSection() {
         >
           GET STARTED
         </Button>
+        <Weather/>
       </div>
     </div>
   );
