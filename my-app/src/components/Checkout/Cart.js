@@ -55,8 +55,8 @@ function Cart({ initialItems }) {
           <div className="popup-content">
             <h2>Order Placed</h2>
             <p className="carttext">''</p>
-            <Button onClick={handleClose}><Link to='/Menu'>
-            Menu
+            <Button onClick={handleClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none' }}>
+            Start Over
             </Link></Button>
           </div>
         </div>
