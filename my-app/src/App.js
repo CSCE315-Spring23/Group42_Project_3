@@ -16,13 +16,16 @@ import ManagerView from './components/pages/ManagerView';
 import ManagerDatabaseAccess  from './components/pages/ManagerDatabaseAccess';
 
 import jwt_decode from "jwt-decode";
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 //Main App documentation with all the different pages available
 function App() {
+  const [user, setUser] = useState({});
   function handleCallbackResponse(response) {
     var userObject = jwt_decode(response.credential);
     console.log(userObject);
+    setUser(userObject);
+    document.getElementById("signIn").hidden = true;
   }
 
   useEffect(()=> {
@@ -40,7 +43,15 @@ function App() {
     <>
       <div className = "App">
         <div id="signIn"></div>
+        { user && 
+        <div>
+          <img src={user.picture}></img>
+          <h3>{user.email}</h3>
+          
+          </div>
+        }
       </div>
+
       <Router>
         <Routes>
           <Route exact path='/' element={<Home/>} />
