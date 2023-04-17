@@ -1,73 +1,56 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faCloud, faCloudSun, faCloudRain } from '@fortawesome/free-solid-svg-icons';
 
 class Weather extends Component {
   state = {
-    weatherData: null
+    isLoading: true,
+    weatherData: null,
+    error: null
   }
 
   componentDidMount() {
-    const API_KEY = 'fc1eddf344a74d12fd07351746378bf4';
-    const LOCATION = 'College Station, TX';
-    const URL = `https://api.weatherstack.com/current?access_key=${API_KEY}&query=${LOCATION}`;
+    const API_KEY = 'c162fb7cca1b4833829201608231704';
+    const LOCATION = 'College Station Texas';
+    const URL = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${encodeURIComponent(LOCATION)}`;
 
     axios.get(URL)
       .then(response => {
         this.setState({
+          isLoading: false,
           weatherData: response.data
         });
       })
       .catch(error => {
-        console.log(error);
+        this.setState({
+          isLoading: false,
+          error: error
+        });
       });
   }
 
   render() {
-    let icon;
-    let description;
-    let temperature;
-  
-    if (this.state.weatherData && this.state.weatherData.current) {
-      const weather = this.state.weatherData.current;
-  
-      if (weather.weather_code === 113 || weather.weather_code === 116) {
-        icon = faSun;
-      } else if (weather.weather_code === 119 || weather.weather_code === 122) {
-        icon = faCloudSun;
-      } else if (
-        [
-          143,
-          248,
-          260,
-          143,
-        ].includes(weather.weather_code)
-      ) {
-        icon = faCloud;
-      } else {
-        icon = faCloudRain;
-      }
-  
-      description = weather.weather_descriptions[0];
-      temperature = weather.temperature;
+    const { isLoading, weatherData, error } = this.state;
+
+    if (isLoading) {
+      return <p>Loading...</p>;
     }
-  
+
+    if (error) {
+      return <p>Error: {error.message}</p>;
+    }
+
+    const { condition, temp_c, wind_kph, humidity } = weatherData.current;
+
     return (
       <div>
-        {this.state.weatherData && this.state.weatherData.current ? (
-          <div>
-            <FontAwesomeIcon icon={icon} size="4x" />
-            <p>{description}</p>
-            <p>{temperature ? `${temperature}°C` : ''}</p>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
+        <h2>Current Weather for College Station, Texas</h2>
+        <p>Condition: {condition.text}</p>
+        <p>Temperature: {temp_c}°C</p>
+        <p>Wind Speed: {wind_kph} km/h</p>
+        <p>Humidity: {humidity}%</p>
       </div>
     );
   }
-  
 }
 
 export default Weather;
