@@ -30,7 +30,7 @@ function EmployeeCardItem(props) {
         )}
       </li>
       {showPopup && (
-        <Popup text = {props.text} ingredients = {props.ingredients} onClose={togglePopup} />
+        <Popup text = {props.text} price = {props.label} ingredients = {props.ingredients} onClose={togglePopup} />
       )}
     </>
   );

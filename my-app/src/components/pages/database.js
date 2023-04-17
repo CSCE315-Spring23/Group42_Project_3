@@ -42,17 +42,20 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
     //console.log("attempting fetch, start: ", start, ", end: ", end);
     const userId = req.params.id;
 
-    if((start == 0) && (end == 0)){
-      const { rows } = await pool.query('SELECT * FROM Menu ORDER BY MENU_ITEM_ID');
+    var queryToUse;
+    if((start === 0) && (end === 0)){
+      queryToUse = 'SELECT * FROM Menu ORDER BY MENU_ITEM_ID';
     }
     else{
-      const { rows } = await pool.query(`SELECT * FROM Menu WHERE MENU_ITEM_ID >= $1 AND MENU_ITEM_ID <= $2 ORDER BY MENU_ITEM_ID`, [start, end]);
+      queryToUse = 'SELECT * FROM Menu WHERE MENU_ITEM_ID >= ' + start + ' AND MENU_ITEM_ID <= ' + end + ' ORDER BY MENU_ITEM_ID';
     }
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
     res.json(rows);
     //console.log(rows);
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error " +err);
+    console.error("Read failed with error in menuRequest: " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -92,8 +95,8 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
     const inventoryItems = [];
     const start = parseInt(req.params.start);
-    const end = parseInt(req.params.end);
-    if((start == 0) && (end == 0)){
+    var end = parseInt(req.params.end);
+    if((start === 0) && (end === 0)){
       start = 1;
         const sizeOfMenuQuery = `SELECT MAX(menu_item_id) FROM menu`;
         const sizeOfMenuResult = await pool.query(sizeOfMenuQuery);
@@ -118,7 +121,7 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
     res.json(inventoryItems);
     //console.log(inventoryItems);
   } catch (err) {
-    console.error("Read failed with error " + err);
+    console.error("Read failed with error in getInventoryItemsForMenu: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -194,7 +197,7 @@ app.get('/getCart/:id', async (req, res) => {
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
     res.json(result);
   } catch (err) {
-    console.error("Read failed with error " +err);
+    console.error("Read failed with error in getCart " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

@@ -169,35 +169,27 @@ import { Button } from '../Button';
     const card = {
       // image: "images/sandwich-img-1.jpg",
       text: item.menu_item_name,
-      //label: "Label 1",
+      label: item.menu_item_cost,
       //path: "",
       ingredients: ingredientsArr[i]
     };
     cardData.cards.push(card);
   }
 
-    {/* HTML structure*/ }
+    
+
     return (<>
-    {/* <Navbar /> */}
-    <div id="menu">
-        <EmployeeCardList cardData={cardData} title="SANDWICHES" />
-    </div>
-
-      <Footer/>
-    </>);
-
-    // return (<>
-    //     <div id="employeemenu">
-    //         <EmployeeCardList cardData={cardData} title="Employee View" />
+        <div id="employeemenu">
+            <EmployeeCardList cardData={cardData} title="Employee View" />
             
-    //     </div>
+        </div>
 
         
 
-    //     {/* <button>Checkout</button> */}
-    //     {/* <Button text = "Checkout" buttonStyle={"btn--primary"}/> */}
-    //     <Button buttonStyle='btn--primary' path='/checkout'>CHECK OUT</Button>
-    //     <Footer/>
-    //   </>);
+         {/* <button>Checkout</button> */}
+         {/* <Button text = "Checkout" buttonStyle={"btn--primary"}/> */}
+         <Button buttonStyle='btn--primary' path='/checkout'>CHECK OUT</Button>
+         <Footer/>
+       </>);
 }
 export default EmployeeView
