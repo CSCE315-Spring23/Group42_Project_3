@@ -1,10 +1,14 @@
 import React from 'react';
 import './Cards.css';
 import EmployeeCardItem from './EmployeeCardItem';
+import {GetMenuList} from './pages/databaseFunctions'
 
 //Show items in a list
 function EmployeeCardList({cardData, title} ) {
 
+  var menuItems = GetMenuList(0, 0);
+  var lastSlice = menuItems.length;
+  // lastSlice = 27;
   return (
     <div className='cards'>
       <h1>{title}</h1>
@@ -47,7 +51,7 @@ function EmployeeCardList({cardData, title} ) {
             })}
           </ul>
           <ul className='cards__items'>
-            {cardData.cards.slice(24, 27).map((card, index) => {
+            {cardData.cards.slice(24, lastSlice).map((card, index) => {
               return (
                 <EmployeeCardItem
                   text={card.text}

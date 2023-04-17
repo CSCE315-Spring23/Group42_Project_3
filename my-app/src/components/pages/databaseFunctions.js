@@ -17,19 +17,20 @@ function GetMenuList(start, end){
   return menuItems;
 }
 
-// function GetMenuList2(){
+//fetch all menu items from database table
+// function GetAllMenuList(){
 //   const [menuItems, setMenuItems] = useState([]);
-//
+
 //   useEffect(() => {
 //     async function fetchMenuItems() {
-//       const response = await fetch(`http://localhost:3001/menuRequest2/`);
+//       const response = await fetch(`http://localhost:3001/menuRequestAll/`);
 //       const data = await response.json();
 //       setMenuItems(data);
 //     }
-//
+
 //     fetchMenuItems();
 //   }, []);
-//
+
 //   return menuItems;
 // }
 
