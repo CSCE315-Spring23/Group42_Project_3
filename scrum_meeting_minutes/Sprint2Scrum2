@@ -1,0 +1,38 @@
+SCRUM Meeting 2 for Project 3
+Prepared by: Ariela Mitrani
+Meeting Date: 4/14/2023
+Meeting Attendees
+Whole team in attendance
+
+Meeting Agenda Items
+Discuss plans for this sprint
+Updates on deliverables from each of the members
+
+Status Update Since Last Meeting
+Accomplishments:
+Checkout button implemented
+Manager View table can be displayed
+
+Tasks Completed:
+Task Description                    Assigned to           Completed? (yes/no)
+Remaining tasks for employee view   Daniela S/ Ariela     yes
+Unique images for menu              Ariela                yes
+Manager View Table display          Daniela               yes
+
+Before The Next Meeting
+Plans: 
+Complete MenuBoard
+Connect Manager view to database
+Update employee view
+Oauth integration updates
+
+Task Assignments:
+Task Description                        Assigned to
+Manager View Table Database connection  Daniela M
+Oauth integration                       Bryan
+Weather                                 Daniela S
+Employee View                           Srikar
+Reports for manager view                Arjun
+
+Minutes from Previous Meeting
+Last meeting, we set up our initial roles for this sprint, and debriefed how sprint 1 went, as well as discussing how our team meeting went. We also each committed to a task that we would have done before the next scrum meeting, and figured out the smaller tasks we needed to complete to make progress towards our goal for sprint 2. Overall, we also discussed the effectiveness of the team this project, and why certain strategies were working better than others for successful completion of tasks on time.
