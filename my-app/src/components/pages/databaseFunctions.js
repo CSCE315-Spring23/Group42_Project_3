@@ -17,6 +17,23 @@ function GetMenuList(start, end){
   return menuItems;
 }
 
+/* Fetch menu items from list to display in table */
+function GetInventoryList(start, end){
+  const [inventoryItems, setInventoryItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchInventoryItems() {
+      const response = await fetch(`http://localhost:3001/inventoryRequest/${start}/${end}`);
+      const data = await response.json();
+      setInventoryItems(data);
+    }
+
+    fetchInventoryItems();
+  }, [start, end]);
+
+  return inventoryItems;
+}
+
 //fetch all menu items from database table
 // function GetAllMenuList(){
 //   const [menuItems, setMenuItems] = useState([]);
@@ -142,4 +159,4 @@ function GetCartItems(){
 }
 
 
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems};
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList};

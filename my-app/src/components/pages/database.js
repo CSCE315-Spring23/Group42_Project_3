@@ -60,6 +60,29 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
   }
 });
 
+app.get('/inventoryRequest/:start/:end', async (req, res) => {
+  try {
+    const start = parseInt(req.params.start);
+    const end = parseInt(req.params.end);
+
+    var queryToUse;
+    if((start === 0) && (end === 0)){
+      queryToUse = 'SELECT * FROM inventory_item ORDER BY inventory_id';
+    }
+    else{
+      queryToUse = 'SELECT * FROM inventory_item WHERE inventory_id >= ' + start + ' AND inventory_id <= ' + end + ' ORDER BY inventory_id';
+    }
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+    res.json(rows);
+    //console.log(rows);
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // app.get('/menuRequest/:name', async (req, res) => {
 //   try {
 //     const name = req.params.name;
