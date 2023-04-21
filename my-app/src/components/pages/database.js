@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../../public')));
 
 
-const allowedOrigins = ['https://revs-american-grill.onrender.com', 'http://localhost:3000']
+const allowedOrigins = ['https://revs-american-grill-z267.onrender.com/', 'http://localhost:3000']
 app.use(cors({
   origin: allowedOrigins
 }));
@@ -77,7 +77,7 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
     //console.log(rows);
-    
+
   } catch (err) {
     //console.log("error!");
     console.error("Read failed with error in inventoryRequest: " +err);
@@ -98,11 +98,11 @@ app.get('/orderRequest/:start/:end', async (req, res) => {
     else{
       queryToUse = 'SELECT * FROM inventory_item WHERE date_ordered >= ' + start + ' AND date_ordered <= ' + end + ' ORDER BY order_id';
     }
-    console.log(queryToUse); 
+    console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
     //console.log(rows);
-    
+
   } catch (err) {
     //console.log("error!");
     console.error("Read failed with error in inventoryRequest: " +err);
@@ -152,7 +152,7 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
         const sizeOfMenuResult = await pool.query(sizeOfMenuQuery);
         end = sizeOfMenuResult.rows.map((item) => parseInt(item.menu_item_id));
     }
-    
+
       for (let i = start; i <= end; i++) {
         //console.log("item :" + i);
         const recipeItemsQuery = `SELECT inventory_id FROM Recipe_Item WHERE menu_id = ${i}`;
@@ -167,7 +167,7 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
         //console.log(inventoryItemsForMenu);
         inventoryIds.length = 0;
       }
-  
+
     res.json(inventoryItems);
     //console.log(inventoryItems);
   } catch (err) {
