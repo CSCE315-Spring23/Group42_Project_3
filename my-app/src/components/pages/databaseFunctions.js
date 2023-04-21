@@ -9,6 +9,7 @@ function GetMenuList(start, end){
       const response = await fetch(`http://localhost:3001/menuRequest/${start}/${end}`);
       const data = await response.json();
       setMenuItems(data);
+      //console.log(data);
     }
 
     fetchMenuItems();
@@ -26,12 +27,32 @@ function GetInventoryList(start, end){
       const response = await fetch(`http://localhost:3001/inventoryRequest/${start}/${end}`);
       const data = await response.json();
       setInventoryItems(data);
+      console.table(data);
     }
 
     fetchInventoryItems();
   }, [start, end]);
 
+  //console.table(inventoryItems);
   return inventoryItems;
+}
+
+/* Fetch orders from list to display in table */
+function GetOrdersList(start, end){
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    async function fetchOrders() {
+      const response = await fetch(`http://localhost:3001/orderRequest/${start}/${end}`);
+      const data = await response.json();
+      setOrders(data);
+      console.table(data);
+    }
+
+    fetchOrders();
+  }, [start, end]);
+
+  return orders;
 }
 
 //fetch all menu items from database table

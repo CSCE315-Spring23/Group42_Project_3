@@ -78,6 +78,31 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
     //console.log(rows);
+    
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/orderRequest/:start/:end', async (req, res) => {
+  try {
+    const start = parseInt(req.params.start);
+    const end = parseInt(req.params.end);
+
+    var queryToUse;
+    if((start === 0) && (end === 0)){
+      queryToUse = 'SELECT * FROM orders ORDER BY order_id';
+    }
+    else{
+      queryToUse = 'SELECT * FROM inventory_item WHERE order_id >= ' + start + ' AND order_id <= ' + end + ' ORDER BY order_id';
+    }
+    console.log(queryToUse); 
+    const { rows } = await pool.query(queryToUse);
+    res.json(rows);
+    //console.log(rows);
+    
   } catch (err) {
     //console.log("error!");
     console.error("Read failed with error in inventoryRequest: " +err);
