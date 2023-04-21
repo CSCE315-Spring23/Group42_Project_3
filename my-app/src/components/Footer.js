@@ -3,6 +3,7 @@ import './Footer.css';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import Weather from './Weather';
+import LoginButton from './LoginButton';
 
 /* 
 * Global footer for all pages in our application
@@ -109,6 +110,7 @@ function Footer() {
             </Link>
           </div>
         </div>
+        <LoginButton />
         <Weather />
       </section>
     </div>
