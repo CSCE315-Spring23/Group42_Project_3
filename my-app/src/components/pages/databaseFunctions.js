@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+const isLocalhost = window.location.hostname === 'localhost'; // Check if current hostname is localhost
+const host = isLocalhost ? 'http://localhost:3001' : 'https://revs-american-grill-z267.onrender.com/'; // Set host based on current environment
 
+const response = await fetch(`${host}/menuRequest/${start}/${end}`); // Use dynamic URL string based on current environment
 /* Fetch menu items from list to display in table */
 function GetMenuList(start, end){
   const [menuItems, setMenuItems] = useState([]);
 
   useEffect(() => {
     async function fetchMenuItems() {
-      const response = await fetch(`http://localhost:3001/menuRequest/${start}/${end}`);
+      const response = await fetch(`${host}/menuRequest/${start}/${end}`);
       const data = await response.json();
       setMenuItems(data);
       //console.log(data);
@@ -24,7 +27,7 @@ function GetInventoryList(start, end){
 
   useEffect(() => {
     async function fetchInventoryItems() {
-      const response = await fetch(`http://localhost:3001/inventoryRequest/${start}/${end}`);
+      const response = await fetch(`${host}/inventoryRequest/${start}/${end}`);
       const data = await response.json();
       setInventoryItems(data);
       console.table(data);
@@ -43,7 +46,7 @@ function GetOrdersList(start, end){
 
   useEffect(() => {
     async function fetchOrders() {
-      const response = await fetch(`http://localhost:3001/orderRequest/${start}/${end}`);
+      const response = await fetch(`${host}/orderRequest/${start}/${end}`);
       const data = await response.json();
       setOrders(data);
       console.table(data);
@@ -78,7 +81,7 @@ function GetIngredients(start, end) {
 
   useEffect(() => {
     async function fetchIngredients() {
-      const response = await fetch(`http://localhost:3001/getInventoryItemsForMenu/${start}/${end}`);
+      const response = await fetch(`${host}/getInventoryItemsForMenu/${start}/${end}`);
       const data = await response.json();
       //data.sort((a, b) => a.menu_id - b.menu_id);
       setIngredientArr(data);
@@ -97,7 +100,7 @@ function AddToCart(type, name, quantity, price) {
   const item = { type, name, quantity, price };
 
   addToCartPromise = addToCartPromise.then(async () => {
-    const response = await fetch(`http://localhost:3001/addToCart/${myID}`, {
+    const response = await fetch(`${host}/addToCart/${myID}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -117,7 +120,7 @@ function GetCartItems(){
 
   useEffect(() => {
     async function fetchCart() {
-      const response = await fetch(`http://localhost:3001/getCart/${myID}`);
+      const response = await fetch(`${host}/getCart/${myID}`);
       const data = await response.json();
       setCart(data.rows[0].orderlist);
       //console.log("cart in func: " + data.rows[0].orderlist);
