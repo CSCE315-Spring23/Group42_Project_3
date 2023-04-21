@@ -60,6 +60,7 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
   }
 });
 
+//Fetch Inventory items from database where start and end represent inventory IDs
 app.get('/inventoryRequest/:start/:end', async (req, res) => {
   try {
     const start = parseInt(req.params.start);
@@ -84,6 +85,7 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
   }
 });
 
+//Fetch orders from database where start and end are dates
 app.get('/orderRequest/:start/:end', async (req, res) => {
   try {
     const start = parseInt(req.params.start);
@@ -94,7 +96,7 @@ app.get('/orderRequest/:start/:end', async (req, res) => {
       queryToUse = 'SELECT * FROM orders ORDER BY order_id';
     }
     else{
-      queryToUse = 'SELECT * FROM inventory_item WHERE order_id >= ' + start + ' AND order_id <= ' + end + ' ORDER BY order_id';
+      queryToUse = 'SELECT * FROM inventory_item WHERE date_ordered >= ' + start + ' AND date_ordered <= ' + end + ' ORDER BY order_id';
     }
     console.log(queryToUse); 
     const { rows } = await pool.query(queryToUse);

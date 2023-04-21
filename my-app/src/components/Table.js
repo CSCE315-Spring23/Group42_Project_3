@@ -4,13 +4,12 @@ import './Table.css';
 
 const Table = () => {
     const [activeTab, setActiveTab] = useState(0);
-    const userdata = GetInventoryList(0,0);
-    console.log(userdata);
+    const inventoryData = GetInventoryList(0,0);
 
     const tabs = [
         { id: 0, name: 'Inventory', 
           headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: userdata
+          tableData: inventoryData
         },
         { id: 1, name: 'MenuItems', 
           headers: ["ID", "Item Name", "Item Cost", "Quantity Sold"],
@@ -25,7 +24,7 @@ const Table = () => {
             { invenotry_id: 2, item_name: 'item2', invenotryID: 1, menuID: 1, amt_used: 1 },
         ]},
         { id: 3, name: 'Orders', 
-          headers: ["ID", "Item Name", "Menu ID", "Amount Used"],
+          headers: ["ID", "date_ordered", "order_cost"],
           tableData: [
             { inventory_id: 1, item_name: 'person1', menuID: 1, amt_used: 1 },
             { invenotry_id: 2, item_name: 'person2', menuID: 1, amt_used: 1 },
