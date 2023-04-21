@@ -3,6 +3,8 @@ const { Pool } = require('pg');
 const cors = require('cors');
 const uuid = require('uuid').v4;
 const path = require('path');
+const { copyFileSync } = require('fs');
+const { GetInventoryList } = require('./databaseFunctions');
 // Set up server
 const app = express();
 app.use(express.json());
@@ -246,6 +248,51 @@ app.get('/getCart/:id', async (req, res) => {
     const myID = req.params.id;
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
     res.json(result);
+  } catch (err) {
+    console.error("Read failed with error in getCart " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
+  try {
+    const menuItems = req.params.menuItems; 
+    const ingredientList = req.params.ingredientList;
+    const cost = req.params.cost;
+
+    //get new order ID
+    let newOrderID = parseInt(await pool.query('SELECT MAX(order_id) FROM orders'));
+    newOrderID += 1;
+
+    //get current date and time
+    const now = new Date(); 
+    let dateForDatabase = now.getFullYear + "-" + now.getMonth + "-" + now.getDate;
+
+    const updateResult = await pool.query("INSERT INTO orders (order_id, date_ordered, order_cost) VALUES ($1, '$2', $3)", [newOrderID, dateForDatabase, cost]);
+
+    for (let i = 0; i < menuItems.length; i++){
+      MenuId = menuItems.get(i).ID
+      // newOrderID = orderID
+      quantity = menuItems.get(i).second;
+
+      let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
+      let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, MenuId, newOrderID, quantity]);
+      let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= '$1'", [MenuId]);
+      let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = %d", MenuId);
+      //  check getInventoryItemsForMenu if this doesnt work
+      const inventoryItemsForMenuItemsArray = inventoryItemsForMenuItems.rows.map((item) => item.inventory_item_name);
+
+      for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++){
+        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [inventoryItemsForMenuItemsArray.get(i).amt_used, vector2.get(i)]);
+      }
+
+    }
+    for (let i = 0; i < GetInventoryList.length; i++){
+
+    }
+    
+
+    res.status(200).json({ message: 'Added Order!' });
   } catch (err) {
     console.error("Read failed with error in getCart " +err);
     res.status(500).json({ error: 'Internal server error' });
