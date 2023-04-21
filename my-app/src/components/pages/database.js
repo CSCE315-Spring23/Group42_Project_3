@@ -278,12 +278,14 @@ app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
       let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
       let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, MenuId, newOrderID, quantity]);
       let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= '$1'", [MenuId]);
-      let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = %d", MenuId);
+      let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [MenuId]);
       //  check getInventoryItemsForMenu if this doesnt work
-      const inventoryItemsForMenuItemsArray = inventoryItemsForMenuItems.rows.map((item) => item.inventory_item_name);
+      const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
+      const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
 
+      //update inventory item by adding a menu item.
       for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++){
-        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [inventoryItemsForMenuItemsArray.get(i).amt_used, vector2.get(i)]);
+        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used.get(i), inventory_id.get(i)]);
       }
 
     }
