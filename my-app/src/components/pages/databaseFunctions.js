@@ -182,6 +182,7 @@ function createOrder(type, name, quantity, price) {
   if(myCart !== null) {
     for (let i = 0; i < myCart.length; i++) {
       const element = JSON.parse(myCart[i]);
+      element.
       let pair = { first: element.id, second: element.qty};
       if(element.type === "item") {
         cost += item.price;
