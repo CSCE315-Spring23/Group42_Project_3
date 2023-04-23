@@ -1,6 +1,6 @@
 .footer-container {
     background-color: rgba(92,0,32,255);
-    padding: 4rem 0 2rem 0;
+    padding: 2rem 0 2rem 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -60,7 +60,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 16px;
+    margin-left: 90px;
+    margin-right: 90px;
     text-align: left;
     width: 160px;
     box-sizing: border-box;
@@ -93,43 +94,23 @@
     color: #b1b1b1;
   }
   
-  /* Social Icons */
-  .social-icon-link {
-    color: #fff;
-    font-size: 24px;
-  }
-  
-  .social-media {
-    max-width: 1000px;
-    width: 100%;
-  }
-  
   .social-media-wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 90%;
     max-width: 1000px;
-    margin: 40px auto 0 auto;
+    margin: 20px auto 0 auto;
   }
-  
-  .social-icons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 240px;
-  }
-  
-  .social-logo {
-    color: #fff;
-    justify-self: start;
+    
+  .footer-img {
     margin-left: 20px;
     cursor: pointer;
-    text-decoration: none;
-    font-size: 2rem;
     display: flex;
     align-items: center;
     margin-bottom: 16px;
+    width: 20%;
+    height: 30%;
   }
   
   .website-rights {
@@ -157,6 +138,10 @@
     .social-media-wrap {
       flex-direction: column;
     }
+  }
+
+  .loginB{
+    padding-left: 100px;
   }
   
   @media screen and (max-width: 768px) {
