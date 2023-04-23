@@ -88,11 +88,11 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
 //Fetch orders from database where start and end are dates
 app.get('/orderRequest/:start/:end', async (req, res) => {
   try {
-    const start = parseInt(req.params.start);
-    const end = parseInt(req.params.end);
+    const start = parseString(req.params.start);
+    const end = parseString(req.params.end);
 
     var queryToUse;
-    if((start === 0) && (end === 0)){
+    if((start === "") && (end === "")){
       queryToUse = 'SELECT * FROM orders ORDER BY order_id';
     }
     else{
