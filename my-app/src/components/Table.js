@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import {GetInventoryList} from './pages/databaseFunctions';
+import {GetInventoryList, GetOrdersList, GetRestockReport} from './pages/databaseFunctions';
 import './Table.css';
 
 const Table = () => {
     const [activeTab, setActiveTab] = useState(0);
     const inventoryData = GetInventoryList(0,0);
+    const orderData = GetOrdersList();
+    const restockData = GetRestockReport();
+
 
     const tabs = [
         { id: 0, name: 'Inventory', 
@@ -25,10 +28,12 @@ const Table = () => {
         ]},
         { id: 3, name: 'Orders', 
           headers: ["ID", "date_ordered", "order_cost"],
-          tableData: [
-            { inventory_id: 1, item_name: 'person1', menuID: 1, amt_used: 1 },
-            { invenotry_id: 2, item_name: 'person2', menuID: 1, amt_used: 1 },
-        ]},
+          tableData: orderData
+        },
+        { id: 4, name: 'Restock', 
+          headers: ["ID", "Item Name", "Cost", "Quantity"],
+          tableData: restockData
+        },
     ];
 
 
