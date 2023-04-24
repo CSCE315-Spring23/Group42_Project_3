@@ -64,6 +64,24 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
         label6: "Gig-em Sauce",
         show: "n",
     },
+    {
+        label1: "None",
+        label2: "Fries",
+        label3: "Kettle Chips",
+        label4: "",
+        label5: "",
+        label6: "",
+        show: "n",
+    },
+    {
+        label1: "None",
+        label2: "Fountain Drink",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        show: "n",
+    },
   ];
 
   function getButtonsIndex(ingredient) {
@@ -75,6 +93,12 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
     }
     if(ingredient === "x"){
       return 3;
+    }
+    if(ingredient === "Combo"){
+      return 4;
+    }
+    if(ingredient === "Basket Combo"){
+      return 5;
     }
     return 0;
   }
@@ -88,6 +112,9 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
     }
     if(ingredient === "x"){
       return "";
+    }
+    if(ingredient === "Basket Combo"){
+      return "Combo";
     }
     return ingredient;
   }

@@ -12,7 +12,7 @@ function CartItem({ id, name, price, qty, updateQty, mods }) {
       <div className="CartItem">
         <div>({id})</div>
         <div>{name}</div>
-        <div>${price}</div>
+        <div>${price.toFixed(2)}</div>
         <div>
           <button onClick={subOne} disabled={qty <= 0}>
             -

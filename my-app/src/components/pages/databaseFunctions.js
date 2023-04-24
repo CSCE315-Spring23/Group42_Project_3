@@ -201,6 +201,16 @@ function GetCartItems(){
             if(element.quantity === -1)
               modlist.push("SUB Black Bean Patty");
           }
+          else if(element.name === "Combo") {
+            if(element.quantity === 0)
+              modlist.push("Fries Combo (+1.90)");
+            if(element.quantity === 1)
+              modlist.push("Chips Combo (+1.90)");
+          }
+          else if(element.name === "Basket Combo") {
+            if(element.quantity === 0)
+              modlist.push("Drink Combo (+1.10)");
+          }
           else if(element.name === "Vanilla Ice Cream") {
             if(element.quantity === -1)
               modlist.push("CHOCOLATE");
@@ -267,7 +277,7 @@ function GetCartItems(){
 //         menuItems.push(pair);
 //         ingredientList.length = 0;
 //         j++;
-//       } 
+//       }
 //       else {
 //           if(element.name === "Beef Patty") {
 //             if(element.quantity === -1){
@@ -359,5 +369,5 @@ function GetCartItems(){
 // }
 
 
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList, 
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList,
           GetRestockReport, GetRecipesList, GetMenuTable};

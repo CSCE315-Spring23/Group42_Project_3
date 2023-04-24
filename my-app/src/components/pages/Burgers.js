@@ -21,12 +21,16 @@ function Burgers() {
 
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
+    const ingr = ingredientsArr[i];
+    if (!ingr.includes("Combo")) {
+      ingr.push("Combo");
+    }
     const card = {
       image: item.image_link,
       text: item.menu_item_name,
       label: item.menu_item_cost,
       //path: "",
-      ingredients: ingredientsArr[i]
+      ingredients: ingr
     };
     cardData.cards.push(card);
   }
