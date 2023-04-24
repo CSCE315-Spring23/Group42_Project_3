@@ -9,7 +9,7 @@ import Loading from '../Loading';
 */ }
 
 const MenuBoard = () => {
-  var menuItems = GetMenuList(1, 26);
+  var menuItems = GetMenuList(1, 60);
   const ingredientsToHide = ["Tray Paper", "Black Bean Patty", "Straws", "Cups", "Fountain Drink Syrup", "Drink Lids"];
   var ingredientsArr = GetIngredients(1, 26);
   // var ingredientsArr = GetIngredients(1, 26);
@@ -30,7 +30,7 @@ const MenuBoard = () => {
   }
   
   const basketsArr = [];
-  for (let i = 4; i < 6; i++) {
+  for (let i = 4; i < 7; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,
@@ -41,7 +41,7 @@ const MenuBoard = () => {
   }
 
   const sandwichesArr = [];
-  for (let i = 7; i < 12; i++) {
+  for (let i = 7; i < 10; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,
@@ -64,14 +64,16 @@ const MenuBoard = () => {
 
   //silverware is 25 but seasonal is not working
   const seasonalArr = [];
-  for (let i = 25; i < 25; i++) {
+  for (let i = 26; i < 60; i++) {
     const item = menuItems[i];
-    const card = {
-      name: item.menu_item_name,
-      price: item.menu_item_cost,
-      ingredients: []
-    };
-    seasonalArr.push(card);
+    if (item) {
+      const card = {
+        name: item.menu_item_name,
+        price: item.menu_item_cost,
+        ingredients: []
+      };
+      seasonalArr.push(card);
+    }
   }
 
   {/* HTML structure*/ }

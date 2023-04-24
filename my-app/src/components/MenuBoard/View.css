@@ -43,29 +43,16 @@ body {
 }
 
 .menu-column {
-  /* position: absolute; */
   align-items: flex-start;
   justify-content: flex-start;
   flex-basis: 33.33%;
-}
-
-.one {
-  align-self: flex-start;
-  top: 0%;
-  /* position: absolute; */
-  padding-right: 5%;
-  padding-left: 3%;
-}
-
-.two {
   padding-right: 4%;
   padding-left: 4%;
 }
 
-.three {
+.one, .three {
   align-self: flex-start;
-  padding-left: 4%;
-  padding-right: 4%;
+  padding-top: 5%;
 }
 
 h2, .mb-text, ul {
@@ -80,7 +67,7 @@ h2 {
 }
 
 .mb-text{
-  font-size: 13px;
+  font-size: 13.5px;
   font-style: italic;
 }
 
