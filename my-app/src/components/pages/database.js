@@ -254,58 +254,58 @@ app.get('/getCart/:id', async (req, res) => {
   }
 });
 
-// app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
-//   try {
-//     const menuItems = req.params.menuItems; 
-//     const ingredientList = req.params.ingredientList;
-//     const cost = req.params.cost;
+app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
+  try {
+    const menuItems = req.params.menuItems; 
+    const ingredientList = req.params.ingredientList;
+    const cost = req.params.cost;
 
-//     //get new order ID
-//     let newOrderID = parseInt(await pool.query('SELECT MAX(order_id) FROM orders'));
-//     newOrderID += 1;
+    //get new order ID
+    let newOrderID = parseInt(await pool.query('SELECT MAX(order_id) FROM orders'));
+    newOrderID += 1;
 
-//     //get current date and time
-//     const now = new Date(); 
-//     let dateForDatabase = now.getFullYear + "-" + now.getMonth + "-" + now.getDate;
+    //get current date and time
+    const now = new Date(); 
+    let dateForDatabase = now.getFullYear + "-" + now.getMonth + "-" + now.getDate;
 
-//     const updateResult = await pool.query("INSERT INTO orders (order_id, date_ordered, order_cost) VALUES ($1, '$2', $3)", [newOrderID, dateForDatabase, cost]);
+    const updateResult = await pool.query("INSERT INTO orders (order_id, date_ordered, order_cost) VALUES ($1, '$2', $3)", [newOrderID, dateForDatabase, cost]);
     
-//     let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
-//     for (let i = 0; i < menuItems.length; i++){//adding menu items
-//       newItemID += 1;
-//       let MenuId = menuItems.get(i).first;
-//       // newOrderID = orderID
-//       let quantity = menuItems.get(i).second;
+    let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
+    for (let i = 0; i < menuItems.length; i++){//adding menu items
+      newItemID += 1;
+      let MenuId = menuItems.get(i).first;
+      // newOrderID = orderID
+      let quantity = menuItems.get(i).second;
 
-//       newItemID += 1; //increment itemid
-//       let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, MenuId, newOrderID, quantity]);
-//       let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= '$1'", [MenuId]);
-//       let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [MenuId]);
-//       //  check getInventoryItemsForMenu if this doesnt work
-//       const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
-//       const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
+      newItemID += 1; //increment itemid
+      let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, MenuId, newOrderID, quantity]);
+      let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= '$1'", [MenuId]);
+      let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [MenuId]);
+      //  check getInventoryItemsForMenu if this doesnt work
+      const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
+      const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
 
-//       //update inventory item by adding a menu item.
-//       for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++){//update the inventory based off of what is in each 
-//         let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used.get(i), inventory_id.get(i)]);
-//       }
+      //update inventory item by adding a menu item.
+      for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++){//update the inventory based off of what is in each 
+        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used.get(i), inventory_id.get(i)]);
+      }
 
-//     }
-//     for (let i = 0; i < ingredientList.length; i++){//adding inventory items
-//       newItemID += 1;
-//       let inventoryID = ingredientList.get(i).first;
-//       let quantity = ingredientList.get(i).second;
-//       let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, inventoryID, newOrderID, quantity]);
-//       let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [quantity, inventoryID]);
-//     }
+    }
+    for (let i = 0; i < ingredientList.length; i++){//adding inventory items
+      newItemID += 1;
+      let inventoryID = ingredientList.get(i).first;
+      let quantity = ingredientList.get(i).second;
+      let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, inventoryID, newOrderID, quantity]);
+      let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [quantity, inventoryID]);
+    }
     
 
-//     res.status(200).json({ message: 'Added Order!' });
-//   } catch (err) {
-//     console.error("Read failed with error in getCart " +err);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
+    res.status(200).json({ message: 'Added Order!' });
+  } catch (err) {
+    console.error("Read failed with error in getCart " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.get('*', (req, res) => {
   console.log("sent unknown request");
