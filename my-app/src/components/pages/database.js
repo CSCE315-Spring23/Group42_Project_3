@@ -269,13 +269,14 @@ app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
     let dateForDatabase = now.getFullYear + "-" + now.getMonth + "-" + now.getDate;
 
     const updateResult = await pool.query("INSERT INTO orders (order_id, date_ordered, order_cost) VALUES ($1, '$2', $3)", [newOrderID, dateForDatabase, cost]);
-
+    
+    let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
     for (let i = 0; i < menuItems.length; i++){
       MenuId = menuItems.get(i).ID
       // newOrderID = orderID
       quantity = menuItems.get(i).second;
 
-      let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
+      newItemID += 1; //increment itemid
       let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, MenuId, newOrderID, quantity]);
       let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= '$1'", [MenuId]);
       let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [MenuId]);
