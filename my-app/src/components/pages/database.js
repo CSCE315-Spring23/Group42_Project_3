@@ -88,25 +88,33 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
 });
 
 //Fetch orders from database where start and end are dates
-app.get('/orderRequest/:start/:end', async (req, res) => {
+app.get('/orderRequest', async (req, res) => {
   try {
-    const start = parseString(req.params.start);
-    const end = parseString(req.params.end);
-
     var queryToUse;
-    if((start === "") && (end === "")){
-      queryToUse = 'SELECT * FROM orders ORDER BY order_id';
-    }
-    else{
-      queryToUse = 'SELECT * FROM inventory_item WHERE date_ordered >= ' + start + ' AND date_ordered <= ' + end + ' ORDER BY order_id';
-    }
+    queryToUse = 'SELECT * FROM orders ORDER BY order_id LIMIT 20';
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+    res.json(rows);
+    //console.table(rows);
+
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Fetch Restock Report which are Inventory items from database that need to be restock
+app.get('/restockRequest', async (req, res) => {
+  try {
+    var queryToUse;
+    queryToUse = 'SELECT * FROM inventory_item WHERE inventory_item_quantity <= 50';
     console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
     //console.log(rows);
 
   } catch (err) {
-    //console.log("error!");
     console.error("Read failed with error in inventoryRequest: " +err);
     res.status(500).json({ error: 'Internal server error' });
   }

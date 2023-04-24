@@ -41,21 +41,40 @@ function GetInventoryList(start, end){
 }
 
 /* Fetch orders from list to display in table */
-function GetOrdersList(start, end){
+function GetOrdersList(){
   const [orders, setOrders] = useState([]);
+  console.log("Bug test1");
 
   useEffect(() => {
     async function fetchOrders() {
-      const response = await fetch(`${host}/orderRequest/${start}/${end}`);
+      const response = await fetch(`${host}/orderRequest`);
       const data = await response.json();
       setOrders(data);
       console.table(data);
     }
 
     fetchOrders();
-  }, [start, end]);
+  }, []);
 
   return orders;
+}
+
+/* Fetch inventory list that needs restock to display in table */
+function GetRestockReport(){
+  const [restock, setRestocks] = useState([]);
+
+  useEffect(() => {
+    async function fetchRestocks() {
+      const response = await fetch(`${host}/restockRequest`);
+      const data = await response.json();
+      setRestocks(data);
+      console.table(data);
+    }
+
+    fetchRestocks();
+  }, []);
+
+  return restock;
 }
 
 //fetch all menu items from database table
@@ -304,4 +323,4 @@ function GetCartItems(){
 // }
 
 
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList};
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList, GetRestockReport};
