@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {GetInventoryList, GetOrdersList, GetRestockReport} from './pages/databaseFunctions';
+import {GetInventoryList, GetOrdersList, GetRestockReport, GetRecipesList, GetMenuTable} from './pages/databaseFunctions';
 import './Table.css';
 
 const Table = () => {
@@ -7,6 +7,8 @@ const Table = () => {
     const inventoryData = GetInventoryList(0,0);
     const orderData = GetOrdersList();
     const restockData = GetRestockReport();
+    const recipeData = GetRecipesList();
+    const menuData = GetMenuTable();
 
 
     const tabs = [
@@ -15,25 +17,41 @@ const Table = () => {
           tableData: inventoryData
         },
         { id: 1, name: 'MenuItems', 
-          headers: ["ID", "Item Name", "Item Cost", "Quantity Sold"],
-          tableData: [
-            { invenotry_id: 1, item_name: 'item', cost: 0.5, qtySold: 5 },
-            { invenotry_id: 2, item_name: 'item2', cost: 1.5, qtySold: 20 },
-        ]},
+          headers: ["ID", "Item Name", "Item Cost"],
+          tableData: menuData
+        },
         { id: 2, name: 'RecipeItems', 
           headers: ["ID", "Item Name", "Inventory ID", "Menu ID", "Amount Used"],
-          tableData: [
-            { inventory_id: 1, item_name: 'item', inventoryID: 9, menuID: 1, amt_used: 1 },
-            { invenotry_id: 2, item_name: 'item2', invenotryID: 1, menuID: 1, amt_used: 1 },
-        ]},
+          tableData: recipeData
+        },
         { id: 3, name: 'Orders', 
           headers: ["ID", "date_ordered", "order_cost"],
           tableData: orderData
         },
-        { id: 4, name: 'Restock', 
+        { id: 4, name: 'X/Y Reports', 
+          headers: ["ID", "Item Name", "Cost", "Quantity"],
+          tableData: [
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+          ]
+        },
+        { id: 5, name: 'Restock Report', 
           headers: ["ID", "Item Name", "Cost", "Quantity"],
           tableData: restockData
         },
+        { id: 6, name: 'Sales Report', 
+          headers: ["ID", "Item Name", "Cost", "Quantity"],
+          tableData: [
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+          ]
+        },
+        { id: 7, name: 'Excess Report', 
+          headers: ["ID", "Item Name", "Cost", "Quantity"],
+          tableData: [
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+          ]},
     ];
 
 

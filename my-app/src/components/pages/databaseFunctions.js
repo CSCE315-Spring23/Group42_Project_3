@@ -59,6 +59,42 @@ function GetOrdersList(){
   return orders;
 }
 
+/* Fetch Menu list from menu */
+function GetMenuTable(){
+  const [menuList, setMenuList] = useState([]);
+
+  useEffect(() => {
+    async function fetchMenuList() {
+      const response = await fetch(`${host}/menuListRequest`);
+      const data = await response.json();
+      setMenuList(data);
+      console.table(data);
+    }
+
+    fetchMenuList();
+  }, []);
+
+  return menuList;
+}
+
+/* Fetch recipe list from menu */
+function GetRecipesList(){
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    async function fetchRecipes() {
+      const response = await fetch(`${host}/recipeRequest`);
+      const data = await response.json();
+      setRecipes(data);
+      console.table(data);
+    }
+
+    fetchRecipes();
+  }, []);
+
+  return recipes;
+}
+
 /* Fetch inventory list that needs restock to display in table */
 function GetRestockReport(){
   const [restock, setRestocks] = useState([]);
@@ -325,4 +361,5 @@ function CreateOrder() {
 }
 
 
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList, GetRestockReport, CreateOrder};
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList, 
+          GetRestockReport, GetRecipesList, GetMenuTable, CreateOrder};
