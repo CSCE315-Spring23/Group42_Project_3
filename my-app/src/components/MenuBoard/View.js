@@ -12,14 +12,14 @@ const MenuBoardView = ({burgers, baskets, sandwiches, sides, seasonal}) => {
           <div className='menu-column one'>
             <h2>BURGERS</h2>
             <p className='mb-text'>Choose a Beef or Chipotle Black Bean Patty</p>
-            <p className='mb-text'>All Combos include a Fountain Drink and Fries or Kettle Chips</p>
+            <p className='mb-text'>All Combos include a Fountain Drink and Fries or Kettle Chips + $1.90</p>
             <ul>
               {burgers.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
               ))}
             </ul>
             <h2>SANDWICHES</h2>
-            <p className='mb-text'>All Combos include a Fountain Drink and Fries or Kettle Chips</p>
+            <p className='mb-text'>All Combos include a Fountain Drink and Fries or Kettle Chips + $1.90</p>
             <ul>
               {sandwiches.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
@@ -30,7 +30,7 @@ const MenuBoardView = ({burgers, baskets, sandwiches, sides, seasonal}) => {
           <img className='logo' src='images/Revs-logo.png' alt="Rev's American Grill" />
         <div className='stripe'></div>
             <h2>BASKETS</h2>
-            <p className='mb-text'>All Combos include a Fountain Drink</p>
+            <p className='mb-text'>All Combos include a Fountain Drink + $1.10</p>
             <ul>
               {baskets.map((item) => (
                 <Item key={item.name} name={item.name} price={item.price} ingredients={item.ingredients} />
