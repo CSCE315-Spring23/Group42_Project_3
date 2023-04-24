@@ -30,7 +30,10 @@ const Table = () => {
         },
         { id: 4, name: 'X/Y Reports', 
           headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: 
+          tableData: [
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+          ]
         },
         { id: 5, name: 'Restock Report', 
           headers: ["ID", "Item Name", "Cost", "Quantity"],
@@ -38,12 +41,17 @@ const Table = () => {
         },
         { id: 6, name: 'Sales Report', 
           headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: 
+          tableData: [
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+          ]
         },
         { id: 7, name: 'Excess Report', 
           headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: 
-        },
+          tableData: [
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+          ]},
     ];
 
 
