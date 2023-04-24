@@ -37,10 +37,10 @@ function Footer() {
           <div className='footer-link-items'>
             <h2>Employee Login</h2>
             <LoginButton className = "loginB"/>
-            {/* <Link to='/home'>Order Now</Link>
+            <Link to='/home'>Order Now</Link>
             <Link to='/EmployeeView'>Employee View</Link>
             <Link to='/Menuboard'>Menuboard View</Link>
-            <Link to='/ManagerView'>Manager View</Link> */}
+            <Link to='/ManagerView'>Manager View</Link>
           </div>
           <div className='footer-link-items'>
             <h2>Contact Us</h2>
