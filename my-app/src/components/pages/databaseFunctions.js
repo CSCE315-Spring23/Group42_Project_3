@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 const isLocalhost = window.location.hostname === 'localhost'; // Check if current hostname is localhost
 const host = isLocalhost ? 'http://localhost:3001' : 'https://revs-american-grill-z267.onrender.com/'; // Set host based on current environment
 
-const response = await fetch(`${host}/menuRequest/${start}/${end}`); // Use dynamic URL string based on current environment
+//const response = await fetch(`${host}/menuRequest/${start}/${end}`); // Use dynamic URL string based on current environment
 /* Fetch menu items from list to display in table */
 function GetMenuList(start, end){
   const [menuItems, setMenuItems] = useState([]);

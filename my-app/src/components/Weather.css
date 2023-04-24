@@ -1,7 +1,6 @@
 :root {
     --primary: #fff;
     --secondary: rgb(249, 187, 18);
-    color: var(--primary);
     font: 2rem;
 }
 
@@ -15,19 +14,13 @@
     text-align: center;
     justify-content: right;
     bottom: 0;
+    color: var(--primary);
   }
   
 .weathericon {
     margin-right: 20px;
     font-size: 2rem;
-    color: white;
-  }
-  
-  .weather-description {
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 5px;
+    color: var(--primary);
   }
   
   .weather-temperature {

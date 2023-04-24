@@ -35,83 +35,48 @@ function Footer() {
       <div className='footer-links'>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <h2>User Login</h2>
-            <Link to='/home'>Order Now</Link>
+            <h2>Employee Login</h2>
+            <LoginButton className = "loginB"/>
+            {/* <Link to='/home'>Order Now</Link>
             <Link to='/EmployeeView'>Employee View</Link>
             <Link to='/Menuboard'>Menuboard View</Link>
-            <Link to='/ManagerView'>Manager View</Link>
+            <Link to='/ManagerView'>Manager View</Link> */}
           </div>
           <div className='footer-link-items'>
             <h2>Contact Us</h2>
-            <Link to='/'>Contact</Link>
+            <Link to='/Menuboard'>Menuboard View</Link>
+            {/* <Link to='/'>Contact</Link>
             <Link to='/'>Support</Link>
-            <Link to='/'>Terms of Service</Link>
+            <Link to='/'>Terms of Service</Link> */}
           </div>
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             <h2>Social Media</h2>
-            <Link to='/'>Instagram</Link>
+            <Link to='/'>Google Translate</Link>
+            {/* <Link to='/'>Instagram</Link>
             <Link to='/'>Facebook</Link>
             <Link to='/'>Youtube</Link>
-            <Link to='/'>Twitter</Link>
+            <Link to='/'>Twitter</Link> */}
           </div>
         </div>
       </div>
       <section className='social-media'>
         <div className='social-media-wrap'>
           <div className='footer-logo'>
-            <Link to='/' className='social-logo'>
+            {/* <Link to='/' className='social-logo'>
               Rev's
               <i className='fab fa-typo3' />
-            </Link>
+            </Link> */}
+          <Link to='/'>
+            <img className = 'footer-img' src = 'images/Revs-logo.png' alt = "Rev's American Grill"></img>
+          </Link>
           </div>
           <small className='website-rights'>Rev's © 2020</small>
-          <div className='social-icons'>
-            <Link
-              className='social-icon-link facebook'
-              to='/'
-              target='_blank'
-              aria-label='Facebook'
-            >
-              <i className='fab fa-facebook-f' />
-            </Link>
-            <Link
-              className='social-icon-link instagram'
-              to='/'
-              target='_blank'
-              aria-label='Instagram'
-            >
-              <i className='fab fa-instagram' />
-            </Link>
-            <Link
-              className='social-icon-link youtube'
-              to='/'
-              target='_blank'
-              aria-label='Youtube'
-            >
-              <i className='fab fa-youtube' />
-            </Link>
-            <Link
-              className='social-icon-link twitter'
-              to='/'
-              target='_blank'
-              aria-label='Twitter'
-            >
-              <i className='fab fa-twitter' />
-            </Link>
-            <Link
-              className='social-icon-link twitter'
-              to='/'
-              target='_blank'
-              aria-label='LinkedIn'
-            >
-              <i className='fab fa-linkedin' />
-            </Link>
-          </div>
+          <Weather />
         </div>
-        <LoginButton />
-        <Weather />
+        {/* <LoginButton /> */}
+        
       </section>
     </div>
   );
