@@ -104,6 +104,38 @@ app.get('/orderRequest', async (req, res) => {
   }
 });
 
+//Fetch list of recipes on the menu
+app.get('/recipeRequest', async (req, res) => {
+  try {
+    var queryToUse;
+    queryToUse = 'SELECT * FROM recipe_item ORDER BY recipe_id';
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+    res.json(rows);
+    //console.log(rows);
+
+  } catch (err) {
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Fetch the whole menu list order by their id
+app.get('/menuListRequest', async (req, res) => {
+  try {
+    var queryToUse;
+    queryToUse = 'SELECT menu_item_id, menu_item_name, menu_item_cost FROM menu ORDER BY menu_item_id';
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+    res.json(rows);
+    //console.log(rows);
+
+  } catch (err) {
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 //Fetch Restock Report which are Inventory items from database that need to be restock
 app.get('/restockRequest', async (req, res) => {
   try {
