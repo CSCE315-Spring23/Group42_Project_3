@@ -19,14 +19,14 @@ function Popup({text, ingredients, onClose, price}) {
       if(quantities[i] !== 0 || visibleIngredients[i] === "Vanilla Ice Cream" || visibleIngredients[i] === "x" || visibleIngredients[i] === "Combo" || visibleIngredients[i] === "Basket Combo")
         AddToCart("mod", visibleIngredients[i], quantities[i], 0);
     }
-    if(visibleIngredients.includes("Combo") && quantities[visibleIngredients.indexOf("Combo")] !== -1){
-      //AddToCart("mod", "Combo", quantities[visibleIngredients.indexOf("Combo")], 0);
-      price += 1.90;
-    }
-    if(visibleIngredients.includes("Basket Combo") && quantities[visibleIngredients.indexOf("Basket Combo")] !== -1){
-      //AddToCart("mod", "Basket Combo", quantities[visibleIngredients.indexOf("Basket Combo")], 0);
-      price += 1.10;
-    }
+    // if(visibleIngredients.includes("Combo") && quantities[visibleIngredients.indexOf("Combo")] !== -1){
+    //   //AddToCart("mod", "Combo", quantities[visibleIngredients.indexOf("Combo")], 0);
+    //   price += 1.90;
+    // }
+    // if(visibleIngredients.includes("Basket Combo") && quantities[visibleIngredients.indexOf("Basket Combo")] !== -1){
+    //   //AddToCart("mod", "Basket Combo", quantities[visibleIngredients.indexOf("Basket Combo")], 0);
+    //   price += 1.10;
+    // }
     AddToCart("item", text, 1, price);
   }
 
