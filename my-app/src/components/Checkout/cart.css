@@ -85,6 +85,13 @@
 
 .popup-content h2 {
   margin-top: 0;
+  align-items: center;
+}
+
+.popup-content loginB {
+  margin-top: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .popup-content p {
