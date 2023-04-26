@@ -2,6 +2,7 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  background-color: white;
 }
 .container{
   display: flex;
@@ -13,11 +14,17 @@ table {
   height: auto;
 }
 th, td {
-  border: 0.5px solid black;
+  border: 0px solid black;
   text-align: left;
   padding: 8px;
 }
-
+input {
+  border-collapse: collapse;
+  font-size: small;
+  padding: 2px;
+  width: 100%;
+  border: 0;
+}
 /* Set the width of the columns */
 td:nth-child(1),
 th:nth-child(1) {
@@ -39,7 +46,7 @@ th:nth-child(4) {
 
 .table-header-space{
   background-color: rgba(92,0,32,255);
-  height: 100px;
+  height: 50px;
   position: fixed;
   top: 0;
   left: 0;

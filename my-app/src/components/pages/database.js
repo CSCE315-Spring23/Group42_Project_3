@@ -88,18 +88,26 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
 });
 
 //Fetch orders from database where start and end are dates
-app.get('/orderRequest', async (req, res) => {
+app.get('/orderRequest/:start/:end', async (req, res) => {
   try {
-    var queryToUse;
-    queryToUse = 'SELECT * FROM orders ORDER BY order_id LIMIT 20';
-    console.log(queryToUse);
-    const { rows } = await pool.query(queryToUse);
-    res.json(rows);
+    const start = req.params.start;
+    const end = req.params.end;
+    console.log("start:", start);
+    console.log("end:", end);
+    if(start === '2020-01-01' && end === '2023-04-01'){
+      console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
+      const {rows} = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
+      res.json(rows);
+    } else{
+      console.log('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id');
+      const {rows} = await pool.query('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id', [start,end]);
+      res.json(rows);
+    }
     //console.table(rows);
 
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in orderRequest: " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

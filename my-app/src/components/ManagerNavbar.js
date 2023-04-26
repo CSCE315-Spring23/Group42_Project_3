@@ -37,7 +37,7 @@ function Navbar() {
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
               <Link to='/ManagerView' className='nav-links' onClick={closeMobileMenu}>
-                Charts And Reports
+                View and Edit Database
               </Link>
             </li>
             <li className='nav-item'>
@@ -46,7 +46,7 @@ function Navbar() {
               className='nav-links'
               onClick={closeMobileMenu}
             >
-              View and Edit Database
+              Reports
               </Link>
             </li>
             <li className='nav-item'>

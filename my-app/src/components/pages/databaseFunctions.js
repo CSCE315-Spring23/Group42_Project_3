@@ -41,20 +41,20 @@ function GetInventoryList(start, end){
 }
 
 /* Fetch orders from list to display in table */
-function GetOrdersList(){
+function GetOrdersList(start, end){
   const [orders, setOrders] = useState([]);
-  console.log("Bug test1");
-
+  console.log(`${host}/orderRequest/${start}/${end}`);
   useEffect(() => {
     async function fetchOrders() {
-      const response = await fetch(`${host}/orderRequest`);
+      const response = await fetch(`${host}/orderRequest/${start}/${end}`);
+      console.log("Bug test1");
       const data = await response.json();
       setOrders(data);
       console.table(data);
     }
 
     fetchOrders();
-  }, []);
+  }, [start, end]);
 
   return orders;
 }
