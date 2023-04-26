@@ -1,0 +1,35 @@
+:root {
+    --primary: #fff;
+    --secondary: rgb(249, 187, 18);
+    font: 2rem;
+}
+
+.weather-widget {
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: right;
+    bottom: 0;
+    color: var(--primary);
+  }
+  
+.weathericon {
+    margin-right: 20px;
+    font-size: 2rem;
+    color: var(--primary);
+  }
+  
+  .weather-temperature {
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 10px;
+    /* font-weight: bold; */
+  }
+  

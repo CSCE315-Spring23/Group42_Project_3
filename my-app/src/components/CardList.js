@@ -3,6 +3,7 @@ import './Cards.css';
 import CardItem from './CardItem';
 
 function CardList({cardData, title} ) {
+  const sze = cardData.cards.length;
 
   return (
     <div className='cards'>
@@ -10,7 +11,7 @@ function CardList({cardData, title} ) {
       <div className='cards__container'>
         <div className='cards__wrapper'>
           <ul className='cards__items'>
-            {cardData.cards.slice(0, 2).map((card, index) => {
+            {cardData.cards.slice(0, sze /2).map((card, index) => {
               return (
                 <CardItem
                   src={card.image}
@@ -24,7 +25,7 @@ function CardList({cardData, title} ) {
             })}
           </ul>
           <ul className='cards__items'>
-            {cardData.cards.slice(2).map((card, index) => {
+            {cardData.cards.slice(sze / 2).map((card, index) => {
               return (
                 <CardItem
                   src={card.image}

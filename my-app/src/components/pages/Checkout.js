@@ -1,25 +1,29 @@
-import React from 'react';
-import Card from '../Cards';
-import Navbar from '../CustomerNavbar';
+//import React, { useState } from "react";
+import {GetCartItems, CreateOrder} from "../pages/databaseFunctions";
 
-/*
-* Shows the final chechout screen where customers can view their orders
-* @author
-*/
-function Checkout({ selectedIngredients }) {
+// import React from "react";
+import Cart from "../Checkout/Cart";
+import Navbar from "../CustomerNavbar";
+import Footer from "../Footer"; 
+
+// const old = [
+//   { id: 1, name: "Treats", price: 4.99, qty: 5 },
+//   { id: 2, name: "Catnip", price: 1.49, qty: 3 },
+//   { id: 3, name: "Bed", price: 14.99, qty: 1 },
+//   { id: 4, name: "asdkjfhakjd", price: 14.99, qty: 1 }
+// ];
+
+function CartApp() {
+  const list = GetCartItems();
+
   return (
-    <div>
-      {selectedIngredients.map((ingredient, index) => (
-        <Card
-          key={index}
-          title={ingredient.title}
-          text={`Quantity: ${ingredient.quantity}`}
-          image={ingredient.image}
-          ingredients={ingredient.ingredients}
-        />
-      ))}
-    </div>
+    <>
+      <Navbar/>
+      <Cart initialItems={list} />
+      <Footer />
+    </>
   );
 }
 
-export default Checkout;
+export default CartApp;
+

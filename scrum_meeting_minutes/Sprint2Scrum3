@@ -1,0 +1,43 @@
+SCRUM Meeting 3 for Project 3 
+Prepared by: 
+Meeting Date: 04/17/2023
+Meeting Attendees
+Whole team in attendance.
+Meeting Agenda Items
+Assign new tasks and modify timeline for sprint conclusion
+Discuss path forward
+Set short term and long term deliverable goals
+Status Update Since Last Meeting
+Accomplishments:
+ Google OAuth
+Employee View backend
+Customer View UI improvements
+
+Tasks Completed:        
+Task Description        Assigned to         Completed? (yes/no)
+Connect Google OAuth    Bryan Yan           no
+Connect Weather API     Daniela Santos      yes
+Update customer view    Ariela Mitrani      yes
+Employee View           Srikar Potlapalli   yes
+Manager Database View   Daniela Martinez    no
+
+Before The Next Meeting
+Plans:
+Finish sprint deliverables
+Finish core functionality of manager view
+Complete google oauth implementation
+Fix recipe items for seasonal items
+Github release
+Debug render
+
+Task Assignments:
+Task Description                            Assigned to
+Github release                              Arjun Kurkal
+Debug deployment on Render                  Arjun Kurkal
+Fix recipe items for seasonal items         Srikar Potlapalli
+Finish sprint deliverables                  all
+Complete oauth implementation               Bryan Yan
+Finish core functionality of manager view      Daniela Martinez
+
+Minutes from Previous Meeting
+Previous meeting, we checked up on our status in the current sprint, and reaffirmed some ongoing, larger tasks that are still in progress.  Additionally, we restructured the distribution of tasks in the manager's view to better reflect their workload, and planned the remainder of the sprint in terms of tasks to be completed, and their distribution.  

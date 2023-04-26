@@ -21,7 +21,7 @@ function Seasonal() {
     const card = {
       image: "images/seasonal-img-1.jpg",
       text: item.menu_item_name,
-      //label: "Label 1",
+      label: item.menu_item_cost,
       //path: "",
       ingredients: []
     };

@@ -5,6 +5,9 @@ import Navbar from '../CustomerNavbar';
 import Loading from '../Loading';
 
 function Burgers() {
+  //var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*\s*([^;]*).*$)|^.*$/, "$1");
+  //console.log(myID);
+  //CreateSession(myID);
   var menuItems = GetMenuList(1, 4);
   var ingredientsArr = GetIngredients(1, 4);
 
@@ -18,12 +21,16 @@ function Burgers() {
 
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
+    const ingr = ingredientsArr[i];
+    if (!ingr.includes("Combo")) {
+      ingr.push("Combo");
+    }
     const card = {
       image: item.image_link,
       text: item.menu_item_name,
-      //label: "Label 1",
+      label: item.menu_item_cost,
       //path: "",
-      ingredients: ingredientsArr[i]
+      ingredients: ingr
     };
     cardData.cards.push(card);
   }

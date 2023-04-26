@@ -2,6 +2,7 @@ import React from 'react';
 import '../App.css';
 import { Button } from './Button';
 import './HeroSection.css';
+import Weather from './Weather';
 // import { useHistory } from 'react-router-dom';
 
 /*
@@ -26,10 +27,11 @@ function HeroSection() {
           buttonStyle='btn--outline'
           buttonSize='btn--large'
           onClick={handleOnClick}
-          path='#cards'
+          path='/Menu'
         >
           GET STARTED
         </Button>
+        <Weather/>
       </div>
     </div>
   );
