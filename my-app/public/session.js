@@ -1,5 +1,5 @@
 const isLocalhost = window.location.hostname === 'localhost'; // Check if current hostname is localhost
-const host = isLocalhost ? 'http://localhost:3001' : 'https://revs-american-grill-backend.onrender.com'; // Set host based on current environment
+const host = isLocalhost ? 'http://localhost:10000' : 'https://revs-american-grill-backend.onrender.com'; // Set host based on current environment
 
 var oldID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 console.log("old cookie: " + oldID);

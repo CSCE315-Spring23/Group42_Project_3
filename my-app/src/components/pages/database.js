@@ -362,6 +362,6 @@ app.get('*', (req, res) => {
 
 
 // Start the server
-app.listen(3001, () => {
-  console.log('Server listening on port 3001');
+app.listen(10000, () => {
+  console.log('Server listening on port 10000');
 });

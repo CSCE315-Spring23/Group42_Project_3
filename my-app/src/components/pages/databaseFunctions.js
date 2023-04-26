@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 const isLocalhost = window.location.hostname === 'localhost'; // Check if current hostname is localhost
-const host = isLocalhost ? 'http://localhost:3001' : 'https://revs-american-grill-backend.onrender.com'; // Set host based on current environment
+const host = isLocalhost ? 'http://localhost:10000' : 'https://revs-american-grill-backend.onrender.com'; // Set host based on current environment
 
 //const response = await fetch(`${host}/menuRequest/${start}/${end}`); // Use dynamic URL string based on current environment
 /* Fetch menu items from list to display in table */
@@ -119,7 +119,7 @@ function GetRestockReport() {
 
 //   useEffect(() => {
 //     async function fetchMenuItems() {
-//       const response = await fetch(`http://localhost:3001/menuRequestAll/`);
+//       const response = await fetch(`http://localhost:10000/menuRequestAll/`);
 //       const data = await response.json();
 //       setMenuItems(data);
 //     }
@@ -266,7 +266,7 @@ function CreateOrder() {
 
   useEffect(() => {
     async function fetchCart() {
-      const response = await fetch(`http://localhost:3001/getCart/${myID}`);
+      const response = await fetch(`http://localhost:10000/getCart/${myID}`);
       const data = await response.json();
       setCart(data.rows[0].orderlist);
       //console.log("cart in func: " + data.rows[0].orderlist);
@@ -367,7 +367,7 @@ function CreateOrder() {
     };
 
     createOrderPromise = createOrderPromise.then(async () => {
-      const response = await fetch(`http://localhost:3001/createOrder/${menuItems}/${ingredientList}${cost}`, {
+      const response = await fetch(`http://localhost:10000/createOrder/${menuItems}/${ingredientList}${cost}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
