@@ -1,22 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import {GetInventoryList, GetOrdersList, GetRestockReport, GetRecipesList, GetMenuTable} from './pages/databaseFunctions';
+import React, { useState } from 'react';
+import {GetInventoryList, GetRecipesList, GetMenuTable} from './pages/databaseFunctions';
 import './Table.css';
+
+function TableInfo(props) {
+    const [tableData, setTableData] = useState(props.tableData);
+
+    const handleInputChange = (event) => {
+        // update the state based on user input
+        const newData = [...tableData];
+        newData[event.target.dataset.row][event.target.dataset.field] = event.target.value;
+        setTableData(newData);
+    }
+
+    return (
+        <div>
+          <table>
+            <thead>
+              <tr>
+                {props.headers.map((header) =>(
+                  <th key={header}>{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {props.tableData.map((data, rowIndex) => (
+                <tr key={data.id}>
+                  {Object.keys(data).map((key, colIndex) => (
+                    <td key={key}>
+                      <input
+                        type="text"
+                        value={data[key]}
+                        onChange={handleInputChange}
+                        data-row={rowIndex}
+                        data-field={key}
+                      />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+    );
+}
 
 const Table = () => {
     const [activeTab, setActiveTab] = useState(0);
     const inventoryData = GetInventoryList(0,0);
-    console.log("orders");
-    const orderData = GetOrdersList('2023-03-08','2023-03-08');
-    const restockData = GetRestockReport();
     const recipeData = GetRecipesList();
     const menuData = GetMenuTable();
-    const formattedOrderData = orderData.map((row) => {
-        return {
-          order_id: row.order_id,
-          date_ordered: new Date(row.date_ordered).toLocaleDateString(), // use the desired date format here
-          order_cost: row.order_cost
-        };
-    });
 
     const tabs = [
         { id: 0, name: 'Inventory', 
@@ -31,34 +63,6 @@ const Table = () => {
           headers: ["ID", "Item Name", "Inventory ID", "Menu ID", "Amount Used"],
           tableData: recipeData
         },
-        { id: 3, name: 'Orders', 
-          headers: ["ID", "Date", "Cost"],
-          tableData: formattedOrderData
-        },
-        { id: 4, name: 'X/Y Reports', 
-          headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
-          ]
-        },
-        { id: 5, name: 'Restock Report', 
-          headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: restockData
-        },
-        { id: 6, name: 'Sales Report', 
-          headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
-          ]
-        },
-        { id: 7, name: 'Excess Report', 
-          headers: ["ID", "Item Name", "Cost", "Quantity"],
-          tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
-          ]},
     ];
 
 
@@ -89,7 +93,8 @@ const Table = () => {
                 <div>
                     {tabs.map((tab) => (
                         <div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>
-                            <table>
+                        <TableInfo headers={tab.headers} tableData={tab.tableData} />
+                            {/* <table>
                                 <thead>
                                     <tr>
                                         {tab.headers.map((header) =>(
@@ -107,7 +112,7 @@ const Table = () => {
                                     ))}
                                 </tbody>
                                 
-                            </table>
+                            </table> */}
                         </div>
                     ))}
                 </div>
