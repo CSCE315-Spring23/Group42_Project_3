@@ -19,7 +19,7 @@ function CardItem(props) {
             <figure className='ci__pic-wrap' data-category={props.label}>
               <img
                 className='ci__img'
-                alt='Food item image'
+                alt='Food item'
                 src={props.src}
               />
             </figure>
@@ -32,7 +32,7 @@ function CardItem(props) {
             <figure className='ci__pic-wrap' data-category={props.label}>
               <img
                 className='ci__img'
-                alt='Food item image'
+                alt='Food item'
                 src={props.src}
               />
             </figure>

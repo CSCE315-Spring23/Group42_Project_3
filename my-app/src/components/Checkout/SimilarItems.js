@@ -1,34 +1,36 @@
 import React from 'react';
 import './SimilarItem.css';
 import CardItem from './CardItem';
+import {GetMenuList, GetIngredients} from '../pages/databaseFunctions'
+import Loading from '../Loading';
 import './cart.css'
 
 function SimilarItems() {
-    const cardData = {
-        cards: [
-          {
-            image: "images/burger-img-1.jpg",
-            text: "Burgers",
-            label: "",
-            path: "",
-            ingredients: [],
-          },
-          {
-            image: "images/sandwich-img-1.jpg",
-            text: "Sandwiches",
-            label: "",
-            path: "",
-            ingredients: [],
-          },
-          {
-            image: "images/basket-img-1.jpg",
-            text: "Baskets",
-            label: "",
-            path: "",
-            ingredients: [],
-          },
-        ],
-      };
+  var menuItems = GetMenuList(5, 7);
+  var ingredientsArr = GetIngredients(5, 7);
+
+  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+    return <Loading />;
+  }
+
+  const cardData = {
+    cards: []
+  };
+
+  for (let i = 0; i < menuItems.length; i++) {
+    const item = menuItems[i];
+    const ingr = ingredientsArr[i];
+    if (!ingr.includes("Combo")) {
+      ingr.push("Combo");
+    }
+    const card = {
+      image: item.image_link,
+      text: item.menu_item_name,
+      label: item.menu_item_cost,
+      ingredients: ingr
+    };
+    cardData.cards.push(card);
+  }
 
   const sze = cardData.cards.length;
 
@@ -44,7 +46,6 @@ function SimilarItems() {
                   src={card.image}
                   text={card.text}
                   label={card.label}
-                  path={card.path}
                   key={index}
                   ingredients = {card.ingredients}
                 />

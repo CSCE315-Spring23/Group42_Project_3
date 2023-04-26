@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 //import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import {AddToCart} from './pages/databaseFunctions'
+//import CartApp from './pages/Checkout'
 import {IngredientForm} from './IngredientForm';
 //import {GetItemPrice} from './pages/databaseFunctions';
 import './Popup.css';
@@ -13,6 +14,7 @@ function Popup({text, ingredients, onClose, price}) {
   const visibleIngredients = ingredients.filter((ingredient) => !ingredientsToHide.includes(ingredient));
 
   function checkoutClick() {
+    console.log("Adding to cart: ",text, price);
     console.log("Ingr list: " + visibleIngredients);
     console.log("quant list: " + quantities);
     for (let i = 0; i < visibleIngredients.length; i++) {
@@ -28,6 +30,10 @@ function Popup({text, ingredients, onClose, price}) {
     //   price += 1.10;
     // }
     AddToCart("item", text, 1, price);
+    localStorage.setItem("checkout", "true");
+    if (window.location.pathname === "/checkout") {
+      window.location.reload();
+    }
   }
 
   //get these from database by passing in name
