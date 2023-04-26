@@ -52,7 +52,7 @@ body {
 
 .one, .three {
   align-self: flex-start;
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 h2, .mb-text, ul {
@@ -67,7 +67,7 @@ h2 {
 }
 
 .mb-text{
-  font-size: 13.5px;
+  font-size: 13px;
   font-style: italic;
 }
 
