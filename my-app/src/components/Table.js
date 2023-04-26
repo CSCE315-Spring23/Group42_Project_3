@@ -5,11 +5,18 @@ import './Table.css';
 const Table = () => {
     const [activeTab, setActiveTab] = useState(0);
     const inventoryData = GetInventoryList(0,0);
-    const orderData = GetOrdersList();
+    console.log("orders");
+    const orderData = GetOrdersList('2023-03-08','2023-03-08');
     const restockData = GetRestockReport();
     const recipeData = GetRecipesList();
     const menuData = GetMenuTable();
-
+    const formattedOrderData = orderData.map((row) => {
+        return {
+          order_id: row.order_id,
+          date_ordered: new Date(row.date_ordered).toLocaleDateString(), // use the desired date format here
+          order_cost: row.order_cost
+        };
+    });
 
     const tabs = [
         { id: 0, name: 'Inventory', 
@@ -25,8 +32,8 @@ const Table = () => {
           tableData: recipeData
         },
         { id: 3, name: 'Orders', 
-          headers: ["ID", "date_ordered", "order_cost"],
-          tableData: orderData
+          headers: ["ID", "Date", "Cost"],
+          tableData: formattedOrderData
         },
         { id: 4, name: 'X/Y Reports', 
           headers: ["ID", "Item Name", "Cost", "Quantity"],
