@@ -1,5 +1,5 @@
 const isLocalhost = window.location.hostname === 'localhost'; // Check if current hostname is localhost
-const host = isLocalhost ? 'http://localhost:3001' : 'https://revs-american-grill-z267.onrender.com/'; // Set host based on current environment
+const host = isLocalhost ? 'http://localhost:10000' : 'https://revs-american-grill-backend.onrender.com'; // Set host based on current environment
 
 if(localStorage.getItem("checkout") !== "true") { //not on the checkout page trying to reload
   var oldID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
