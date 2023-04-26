@@ -1,7 +1,6 @@
 import React from 'react';
 import './SimilarItem.css';
 import CardItem from './CardItem';
-import './cart.css'
 
 function SimilarItems() {
     const cardData = {
