@@ -3,10 +3,11 @@ import CartItem from "./CartItem";
 import './cart.css'
 import { Button } from "../Button";
 import { Link } from 'react-router-dom';
+import SimilarItems from "./SimilarItems";
 
 function Cart({ initialItems }) {
   const [showPopup, setShowPopup] = useState(false);
-  //console.log("II: " + JSON.stringify(initialItems));
+
   function checkoutClick() {
     //PLACE ORDER!
     setShowPopup(true);
@@ -15,7 +16,6 @@ function Cart({ initialItems }) {
   const handleClose = () => {
    setShowPopup(false);
    window.location.reload();
-
  }
 
   const [items, setItems] = useState(initialItems);
@@ -23,8 +23,6 @@ function Cart({ initialItems }) {
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);
-
-  //console.log("Items: " + items);
 
   const updateQty = (id, newQty) => {
     const newItems = items.map((item) => {
@@ -41,26 +39,32 @@ function Cart({ initialItems }) {
     .toFixed(2);
 
   return (
-    <div className="Cart">
-      <h1 className="Cart-title">Shopping Cart</h1>
-      <div className="Cart-itemList">
-        {items.map((item) => (
-          <CartItem key={item.id} updateQty={updateQty} {...item} />
-        ))}
-      </div>
-      <h2 className="Cart-total">Total: ${total}</h2>
-      <Button className='btn--cart' buttonStyle={'btn--primary'} buttonSize={'btn--large'} onClick={() => { checkoutClick(); }}>Checkout</Button>
-      {showPopup &&
-        <div className="popup">
-          <div className="popup-content">
-            <h2>Order Placed</h2>
-            <p className="carttext">''</p>
-            <Button onClick={handleClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none' }}>
-            Start Over
-            </Link></Button>
-          </div>
+    <div className= 'check'>
+      <div className="Cart1">
+        <h1 className="Cart-title">Shopping Cart</h1>
+        <div className="Cart-itemList">
+          {items.map((item) => (
+            <CartItem key={item.id} updateQty={updateQty} {...item} />
+          ))}
         </div>
-      }
+        {items.length > 0 && <SimilarItems />}
+      </div>
+      <div className="Cart2">
+        <h1 className="Cart-title">Order Summary</h1>
+        <div className="price">Total: ${total}</div>
+        <Button className='btn--Total' buttonStyle={'btn--primary'} buttonSize={'btn--large'} onClick={() => { checkoutClick(); }}>Checkout</Button>
+        {showPopup &&
+          <div className="popup">
+            <div className="popup-content">
+              <h2>Order Placed</h2>
+              <p className="Totaltext">''</p>
+              <Button onClick={handleClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none', position: 'absolute'}}>
+              Start Over
+              </Link></Button>
+            </div>
+          </div>
+        }
+      </div>
     </div>
   );
 }
