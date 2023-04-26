@@ -15,7 +15,7 @@ function Cart({ initialItems }) {
   const handleClose = () => {
    setShowPopup(false);
    window.location.reload();
-   
+
  }
 
   const [items, setItems] = useState(initialItems);
@@ -48,7 +48,7 @@ function Cart({ initialItems }) {
           <CartItem key={item.id} updateQty={updateQty} {...item} />
         ))}
       </div>
-      <h2 className="Cart-total">Total: {total}</h2>
+      <h2 className="Cart-total">Total: ${total}</h2>
       <Button className='btn--cart' buttonStyle={'btn--primary'} buttonSize={'btn--large'} onClick={() => { checkoutClick(); }}>Checkout</Button>
       {showPopup &&
         <div className="popup">

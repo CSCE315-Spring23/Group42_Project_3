@@ -193,6 +193,16 @@ function GetCartItems(){
       const element = JSON.parse(myCart[i]);
       if(element.type === "item") {
         const item = { id: j, name: element.name, price: element.price, qty: 1, mods: [...modlist]}
+        console.log("Mod list: ", item.mods);
+        if(item.mods.indexOf("Fries Combo (+$1.90)") !== -1) {
+          item.price += 1.9;
+        }
+        if(item.mods.indexOf("Chips Combo (+$1.90)") !== -1) {
+          item.price += 1.9;
+        }
+        if(item.mods.indexOf("Drink Combo (+$1.10)") !== -1) {
+          item.price += 1.1;
+        }
         items.push(item);
         modlist.length = 0;
         j++;
@@ -202,14 +212,15 @@ function GetCartItems(){
               modlist.push("SUB Black Bean Patty");
           }
           else if(element.name === "Combo") {
-            if(element.quantity === 0)
-              modlist.push("Fries Combo (+1.90)");
+            if(element.quantity === 0) {
+              modlist.push("Fries Combo (+$1.90)");
+            }
             if(element.quantity === 1)
-              modlist.push("Chips Combo (+1.90)");
+              modlist.push("Chips Combo (+$1.90)");
           }
           else if(element.name === "Basket Combo") {
             if(element.quantity === 0)
-              modlist.push("Drink Combo (+1.10)");
+              modlist.push("Drink Combo (+$1.10)");
           }
           else if(element.name === "Vanilla Ice Cream") {
             if(element.quantity === -1)
@@ -279,7 +290,7 @@ function CreateOrder() {
         menuItems.push(pair);
         ingredientList.length = 0;
         j++;
-      } 
+      }
       else {
           if(element.name === "Beef Patty") {
             if(element.quantity === -1){
