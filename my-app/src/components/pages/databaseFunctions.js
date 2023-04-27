@@ -21,8 +21,10 @@ function GetMenuList(start, end){
   return menuItems;
 }
 
+/************* POPULATE TABLES ***************/
+
 /* Fetch menu items from list to display in table */
-function GetInventoryList(start, end){
+function GetInventoryTable(start, end){
   const [inventoryItems, setInventoryItems] = useState([]);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ function GetInventoryList(start, end){
 }
 
 /* Fetch orders from list to display in table */
-function GetOrdersList(start, end){
+function GetOrdersTable(start, end){
   const [orders, setOrders] = useState([]);
   console.log(`${host}/orderRequest/${start}/${end}`);
   useEffect(() => {
@@ -78,7 +80,7 @@ function GetMenuTable(){
 }
 
 /* Fetch recipe list from menu */
-function GetRecipesList(){
+function GetRecipesTable(){
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -111,6 +113,63 @@ function GetRestockReport(){
   }, []);
 
   return restock;
+}
+
+/**************** EDIT TABLE ****************/
+
+/* Update the inventory_item table with new values */
+async function UpdateInventoryTable(id, name, cost, quantity) {
+  try {
+    const response = await fetch(`${host}/inventoryUpdate/${id}/${name}/${cost}/${quantity}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const data = await response.json();
+    console.log(data);
+  } catch (err) {
+    console.error('Error updating inventory item: ' + err);
+  }
+}
+
+/* Update the menu table with new values */
+function UpdateMenuTable(ID, name, cost){
+  const [inventoryItems, setInventoryItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchInventoryItems() {
+      const response = await fetch(`${host}/menuUpdate/${ID}/${name}`);
+      const data = await response.json();
+      setInventoryItems(data);
+      console.table(data);
+    }
+
+    fetchInventoryItems();
+  }, [ID, name, cost]);
+
+  //console.table(inventoryItems);
+  return inventoryItems;
+}
+
+/* Update the Recipes table with new values */
+function UpdateRecipesTable(ID, name, invID, menuID, quantity){
+  const [inventoryItems, setInventoryItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchInventoryItems() {
+      const response = await fetch(`${host}/recipeUpdate/${ID}/${name}`);
+      const data = await response.json();
+      setInventoryItems(data);
+      console.table(data);
+    }
+
+    fetchInventoryItems();
+  }, [ID, name, invID, menuID, quantity]);
+
+  //console.table(inventoryItems);
+  return inventoryItems;
 }
 
 //fetch all menu items from database table
@@ -371,5 +430,5 @@ function CreateOrder() {
 }
 
 
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList,
-          GetRestockReport, GetRecipesList, GetMenuTable, CreateOrder};
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable,
+          GetRestockReport, GetRecipesTable, GetMenuTable, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable};
