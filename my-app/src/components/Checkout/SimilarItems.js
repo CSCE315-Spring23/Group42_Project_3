@@ -7,6 +7,7 @@ import './cart.css'
 
 function SimilarItems() {
   const soldTogether = GetSoldTogether();
+  //bacon cheeseburger and tots to replicate issue
   const myCart = GetCartItems();
   var menuItems = GetMenuList(1, 25);
   var ingredientsArr = GetIngredients(1, 25);
@@ -34,21 +35,22 @@ function SimilarItems() {
   //   console.log("Cart length: ", myCart.length);
   // }
   const numRecs = Math.min(filteredData.length, 3);
-  //console.log("Data: ", filteredData);
   //console.log(filteredData[0].menuItem1);
   for(let i = 0; i < numRecs; i++){
       recsList.push(filteredData[i].menuItem1);
       recsList.push(filteredData[i].menuItem2);
   }
   recsList = recsList.filter(item => !myCart.some(cartItem => cartItem.name === item));
-
+  console.log("Recs list: ", recsList);
   const menuItemsFiltered = menuItems.filter(menuItem => {
     return recsList.indexOf(menuItem.menu_item_name) !== -1;
   });
+  console.log("filtered: ", menuItemsFiltered);
+  const numMenuItems = menuItemsFiltered.length; //if we have duplicates
 
   var ingredientsArrFiltered = [];
   var ids = [];
-  for(let i = 0; i < numRecs; i++){
+  for(let i = 0; i < numMenuItems; i++){
       ids.push(menuItemsFiltered[i].menu_item_id-1);
       ingredientsArrFiltered.push(ingredientsArr[ids[i]]);
   }
@@ -59,7 +61,7 @@ function SimilarItems() {
     cards: []
   };
 
-  for (let i = 0; i < numRecs; i++) {
+  for (let i = 0; i < numMenuItems; i++) {
     const item = menuItemsFiltered[i];
     const ingr = ingredientsArrFiltered[i];
     if (!ingr.includes("Combo") && ids[i] < 11) {

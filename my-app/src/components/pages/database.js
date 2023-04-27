@@ -181,7 +181,8 @@ app.get('/soldTogether', async (req, res) => {
       //console.log(menuItem1);
       const combo = {ID: i, menuItem1: menuItem1, menuItem2: menuItem2, comboCount: comboCount};
       i++;
-      popularCombos.push(combo);
+      if(menuItem1 != "Burger/Sandwich Combo" && menuItem1 != "Basket Combo" && menuItem1 != "Silverware" && menuItem2 != "Burger/Sandwich Combo" && menuItem2 != "Basket Combo" && menuItem2 != "Silverware")
+        popularCombos.push(combo);
     }
     res.json(popularCombos);
     //console.log(popularCombos);
