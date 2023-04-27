@@ -1,8 +1,8 @@
-/* body {
-    background: maroon;
-  } */
-  .Cart {
-    width: 750px;
+  .check{
+    display: flex;
+    padding: 1.5em;
+  }
+  .Cart1, .Cart2 {
     background: white;
     margin: 0 auto;
     border-radius: 10px;
@@ -13,6 +13,15 @@
     text-align: center;
   }
 
+  .Cart1{
+    flex-basis: 70.33%;
+  }
+
+  .Cart2{
+    flex-basis: 20.33%;
+    height: 200px;
+  }
+
   .Cart-title {
     border-bottom: 2px solid rgba(92,0,32,255);
     font-weight: 200;
@@ -20,6 +29,11 @@
   }
   .Cart-total {
     text-align: center;
+  }
+
+  .price{
+    padding: 1rem;
+    font-size: 22px;
   }
 
   .CartItem {
@@ -134,6 +148,12 @@
   .popup-content > *:nth-child(n+4):nth-last-child(-n+2) {
     margin-top: 0;
   }
+}
+
+.ci__info {
+  padding: 20px 30px 30px;
+  background-color: #fff;
+  height: 100%;
 }
 
 .popup-content::before {

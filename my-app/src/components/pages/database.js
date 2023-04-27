@@ -11,10 +11,19 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../../public')));
 
 
-const allowedOrigins = ['https://revs-american-grill-z267.onrender.com/', 'http://localhost:3000']
+const allowedOrigins = ['https://revs-american-grill.onrender.com', 'http://localhost:3000']
 app.use(cors({
   origin: allowedOrigins
 }));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  res.header('Access-Control-Allow-Credentials', '*');
+  next();
+});
+
 
 
 //app.options('*', cors());
@@ -30,10 +39,10 @@ const pool = new Pool({
 });
 pool.connect((err, client, done) => {
   if (err) {
-       console.error("Database connection failed with error " + err.stack);
-       return;
-     }
-     console.log("Connection to database successful");
+    console.error("Database connection failed with error " + err.stack);
+    return;
+  }
+  console.log("Connection to database successful");
 });
 
 // Define an endpoint that returns data from the 'users' table
@@ -45,10 +54,10 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
     const userId = req.params.id;
 
     var queryToUse;
-    if((start === 0) && (end === 0)){
+    if ((start === 0) && (end === 0)) {
       queryToUse = 'SELECT * FROM Menu ORDER BY MENU_ITEM_ID';
     }
-    else{
+    else {
       queryToUse = 'SELECT * FROM Menu WHERE MENU_ITEM_ID >= ' + start + ' AND MENU_ITEM_ID <= ' + end + ' ORDER BY MENU_ITEM_ID';
     }
     console.log(queryToUse);
@@ -57,7 +66,7 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
     //console.log(rows);
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error in menuRequest: " +err);
+    console.error("Read failed with error in menuRequest: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -69,10 +78,10 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
     const end = parseInt(req.params.end);
 
     var queryToUse;
-    if((start === 0) && (end === 0)){
+    if ((start === 0) && (end === 0)) {
       queryToUse = 'SELECT * FROM inventory_item ORDER BY inventory_id';
     }
-    else{
+    else {
       queryToUse = 'SELECT * FROM inventory_item WHERE inventory_id >= ' + start + ' AND inventory_id <= ' + end + ' ORDER BY inventory_id';
     }
     console.log(queryToUse);
@@ -82,7 +91,7 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
 
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in inventoryRequest: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -94,20 +103,20 @@ app.get('/orderRequest/:start/:end', async (req, res) => {
     const end = req.params.end;
     console.log("start:", start);
     console.log("end:", end);
-    if(start === '2020-01-01' && end === '2023-04-01'){
+    if (start === '2020-01-01' && end === '2023-04-01') {
       console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
-      const {rows} = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
+      const { rows } = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
       res.json(rows);
-    } else{
+    } else {
       console.log('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id');
-      const {rows} = await pool.query('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id', [start,end]);
+      const { rows } = await pool.query('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id', [start, end]);
       res.json(rows);
     }
     //console.table(rows);
 
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error in orderRequest: " +err);
+    console.error("Read failed with error in orderRequest: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -123,7 +132,7 @@ app.get('/recipeRequest', async (req, res) => {
     //console.log(rows);
 
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in inventoryRequest: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -139,12 +148,51 @@ app.get('/menuListRequest', async (req, res) => {
     //console.log(rows);
 
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in inventoryRequest: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 //Fetch Restock Report which are Inventory items from database that need to be restock
+app.get('/soldTogether', async (req, res) => {
+  try {
+    var popularCombos = [];
+    var queryToUse;
+    var initialDateString = "2000-01-01";
+    var finalDateString = "2025-01-01";
+    queryToUse = "SELECT m1.MENU_ITEM_NAME AS MENU_ITEM_NAME_1, m2.MENU_ITEM_NAME AS MENU_ITEM_NAME_2, COUNT(*) AS combo_count " +
+                    "FROM item_sold s1 " +
+                    "JOIN item_sold s2 ON s1.ORDER_ID = s2.ORDER_ID AND s1.MENU_ITEM_ID < s2.MENU_ITEM_ID " +
+                    "JOIN Menu m1 ON s1.MENU_ITEM_ID = m1.MENU_ITEM_ID " +
+                    "JOIN Menu m2 ON s2.MENU_ITEM_ID = m2.MENU_ITEM_ID " +
+                    "WHERE s1.ORDER_ID IN (SELECT ORDER_ID FROM orders WHERE DATE_ORDERED BETWEEN '" + initialDateString
+                    + "' AND '" + finalDateString + "') " +
+                    "GROUP BY m1.MENU_ITEM_NAME, m2.MENU_ITEM_NAME " +
+                    "ORDER BY combo_count DESC";
+    console.log(queryToUse);
+    var i = 1;
+    const { rows } = await pool.query(queryToUse);
+    for (let row of rows) {
+      //console.log(row);
+      const menuItem1 = row.menu_item_name_1;
+      const menuItem2 = row.menu_item_name_2;
+      const comboCount = row.combo_count;
+      //console.log(row.MENU_ITEM_NAME_1);
+      //console.log(menuItem1);
+      const combo = {ID: i, menuItem1: menuItem1, menuItem2: menuItem2, comboCount: comboCount};
+      i++;
+      if(menuItem1 != "Burger/Sandwich Combo" && menuItem1 != "Basket Combo" && menuItem1 != "Silverware" && menuItem2 != "Burger/Sandwich Combo" && menuItem2 != "Basket Combo" && menuItem2 != "Silverware")
+        popularCombos.push(combo);
+    }
+    res.json(popularCombos);
+    //console.log(popularCombos);
+
+  } catch (err) {
+    console.error("Read failed with error in inventoryRequest: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/restockRequest', async (req, res) => {
   try {
     var queryToUse;
@@ -155,7 +203,7 @@ app.get('/restockRequest', async (req, res) => {
     //console.log(rows);
 
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in inventoryRequest: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -217,27 +265,27 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
     const inventoryItems = [];
     const start = parseInt(req.params.start);
     var end = parseInt(req.params.end);
-    if((start === 0) && (end === 0)){
+    if ((start === 0) && (end === 0)) {
       start = 1;
-        const sizeOfMenuQuery = `SELECT MAX(menu_item_id) FROM menu`;
-        const sizeOfMenuResult = await pool.query(sizeOfMenuQuery);
-        end = sizeOfMenuResult.rows.map((item) => parseInt(item.menu_item_id));
+      const sizeOfMenuQuery = `SELECT MAX(menu_item_id) FROM menu`;
+      const sizeOfMenuResult = await pool.query(sizeOfMenuQuery);
+      end = sizeOfMenuResult.rows.map((item) => parseInt(item.menu_item_id));
     }
 
-      for (let i = start; i <= end; i++) {
-        //console.log("item :" + i);
-        const recipeItemsQuery = `SELECT inventory_id FROM Recipe_Item WHERE menu_id = ${i}`;
-        const recipeItemsResult = await pool.query(recipeItemsQuery);
-        const inventoryIds = recipeItemsResult.rows.map((item) => parseInt(item.inventory_id));
-        //console.log(inventoryIds);
-        const inventoryItemsQuery = `SELECT * FROM inventory_item WHERE inventory_id IN (${inventoryIds.join(",")})`;
-        const inventoryItemsResult = await pool.query(inventoryItemsQuery);
-        const inventoryItemsForMenu = inventoryItemsResult.rows.map((item) => item.inventory_item_name);
-        inventoryItems.push(inventoryItemsForMenu);
-        //console.log("item :" + i);
-        //console.log(inventoryItemsForMenu);
-        inventoryIds.length = 0;
-      }
+    for (let i = start; i <= end; i++) {
+      //console.log("item :" + i);
+      const recipeItemsQuery = `SELECT inventory_id FROM Recipe_Item WHERE menu_id = ${i}`;
+      const recipeItemsResult = await pool.query(recipeItemsQuery);
+      const inventoryIds = recipeItemsResult.rows.map((item) => parseInt(item.inventory_id));
+      //console.log(inventoryIds);
+      const inventoryItemsQuery = `SELECT * FROM inventory_item WHERE inventory_id IN (${inventoryIds.join(",")})`;
+      const inventoryItemsResult = await pool.query(inventoryItemsQuery);
+      const inventoryItemsForMenu = inventoryItemsResult.rows.map((item) => item.inventory_item_name);
+      inventoryItems.push(inventoryItemsForMenu);
+      //console.log("item :" + i);
+      //console.log(inventoryItemsForMenu);
+      inventoryIds.length = 0;
+    }
 
     res.json(inventoryItems);
     //console.log(inventoryItems);
@@ -256,14 +304,14 @@ app.get('/checkSession/:id', async (req, res) => {
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
 
     if (result.rowCount === 0) {
-    await pool.query('INSERT INTO cart (sessionid) VALUES ($1)', [myID]);
-    res.status(200).json({ message: 'Session ID added to cart.' });
-  } else {
-    res.status(200).json({ message: 'Session ID already exists in cart.' });
-  }
+      await pool.query('INSERT INTO cart (sessionid) VALUES ($1)', [myID]);
+      res.status(200).json({ message: 'Session ID added to cart.' });
+    } else {
+      res.status(200).json({ message: 'Session ID already exists in cart.' });
+    }
   } catch (err) {
     console.error('Error checking session ID:', err);
-    res.status(500).json({message:'Internal server error.'});
+    res.status(500).json({ message: 'Internal server error.' });
   }
 });
 
@@ -274,16 +322,16 @@ app.get('/endSession/:id', async (req, res) => {
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
 
     if (result.rowCount === 0) {
-      res.status(200).json({message:'Session ID does not exist in cart.'});
+      res.status(200).json({ message: 'Session ID does not exist in cart.' });
       //console.log("doesnt exist to delete!");
     } else {
       await pool.query('DELETE FROM cart WHERE sessionid = $1', [myID]);
-      res.status(200).json({message: 'Session ID removed from cart.'});
+      res.status(200).json({ message: 'Session ID removed from cart.' });
       //console.log("deleted!");
     }
   } catch (err) {
     console.error('Error checking session ID:', err);
-    res.status(500).json({message:'Internal server error.'});
+    res.status(500).json({ message: 'Internal server error.' });
   }
 });
 
@@ -305,6 +353,7 @@ app.post('/addToCart/:id', async (req, res) => {
       //console.log("Updated:" + JSON.stringify(updateResult));
       //console.log(item);
       res.status(200).json({ message: 'Added to cart!' });
+      console.log("Added to cart: ", item);
     }
   } catch (err) {
     console.error('Error adding to cart:', err);
@@ -318,14 +367,14 @@ app.get('/getCart/:id', async (req, res) => {
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
     res.json(result);
   } catch (err) {
-    console.error("Read failed with error in getCart " +err);
+    console.error("Read failed with error in getCart " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
   try {
-    const menuItems = req.params.menuItems; 
+    const menuItems = req.params.menuItems;
     const ingredientList = req.params.ingredientList;
     const cost = req.params.cost;
 
@@ -334,13 +383,13 @@ app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
     newOrderID += 1;
 
     //get current date and time
-    const now = new Date(); 
+    const now = new Date();
     let dateForDatabase = now.getFullYear + "-" + now.getMonth + "-" + now.getDate;
 
     const updateResult = await pool.query("INSERT INTO orders (order_id, date_ordered, order_cost) VALUES ($1, '$2', $3)", [newOrderID, dateForDatabase, cost]);
-    
+
     let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
-    for (let i = 0; i < menuItems.length; i++){//adding menu items
+    for (let i = 0; i < menuItems.length; i++) {//adding menu items
       newItemID += 1;
       let MenuId = menuItems.get(i).first;
       // newOrderID = orderID
@@ -355,23 +404,23 @@ app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
       const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
 
       //update inventory item by adding a menu item.
-      for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++){//update the inventory based off of what is in each 
+      for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++) {//update the inventory based off of what is in each
         let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used.get(i), inventory_id.get(i)]);
       }
 
     }
-    for (let i = 0; i < ingredientList.length; i++){//adding inventory items
+    for (let i = 0; i < ingredientList.length; i++) {//adding inventory items
       newItemID += 1;
       let inventoryID = ingredientList.get(i).first;
       let quantity = ingredientList.get(i).second;
       let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, inventoryID, newOrderID, quantity]);
       let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [quantity, inventoryID]);
     }
-    
+
 
     res.status(200).json({ message: 'Added Order!' });
   } catch (err) {
-    console.error("Read failed with error in getCart " +err);
+    console.error("Read failed with error in getCart " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -383,6 +432,6 @@ app.get('*', (req, res) => {
 
 
 // Start the server
-app.listen(3001, () => {
-  console.log('Server listening on port 3001');
+app.listen(10000, () => {
+  console.log('Server listening on port 10000');
 });

@@ -93,7 +93,7 @@ function Footer() {
               </div>
             }
             <Link to='/EmployeeView'>Employee View</Link>
-            <Link to='/Menuboard'>Menuboard View</Link>
+            <Link to='/Menuboard' target="_blank">Menuboard View</Link>
             <Link to='/ManagerView'>Manager View</Link>
           </div>
           <div className='footer-link-items'>
