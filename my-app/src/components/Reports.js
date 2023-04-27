@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {GetOrdersList, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
+import {GetOrdersTable, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
 import './Reports.css';
 
 const Reports = () => {

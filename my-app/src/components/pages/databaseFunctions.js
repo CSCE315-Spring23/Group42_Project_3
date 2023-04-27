@@ -475,5 +475,5 @@ function CreateOrder() {
 }
 
 
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable,
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether,
           GetRestockReport, GetRecipesTable, GetMenuTable, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable};
