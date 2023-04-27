@@ -173,7 +173,7 @@ app.get('/soldTogether', async (req, res) => {
     var i = 1;
     const { rows } = await pool.query(queryToUse);
     for (let row of rows) {
-      console.log(row);
+      //console.log(row);
       const menuItem1 = row.menu_item_name_1;
       const menuItem2 = row.menu_item_name_2;
       const comboCount = row.combo_count;

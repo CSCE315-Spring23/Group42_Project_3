@@ -113,23 +113,6 @@ function GetRestockReport() {
   return restock;
 }
 
-function GetSoldTogether() {
-  const [sold, setSold] = useState([]);
-
-  useEffect(() => {
-    async function fetchSoldTogether() {
-      const response = await fetch(`${host}/soldTogether`);
-      const data = await response.json();
-      setSold(data);
-      console.table(data);
-    }
-
-    fetchSoldTogether();
-  }, []);
-
-  return sold;
-}
-
 //fetch all menu items from database table
 // function GetAllMenuList(){
 //   const [menuItems, setMenuItems] = useState([]);
@@ -290,6 +273,23 @@ function GetCartItems() {
     };
   }
   return items;
+}
+
+function GetSoldTogether() {
+  const [sold, setSold] = useState([]);
+
+  useEffect(() => {
+    async function fetchSoldTogether() {
+      const response = await fetch(`${host}/soldTogether`);
+      const data = await response.json();
+      setSold(data);
+      //console.table(data);
+    }
+
+    fetchSoldTogether();
+  }, []);
+
+  return sold;
 }
 
 let createOrderPromise = Promise.resolve(); //synchronization thing

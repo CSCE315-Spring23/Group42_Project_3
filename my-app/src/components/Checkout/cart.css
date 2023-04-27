@@ -150,6 +150,12 @@
   }
 }
 
+.ci__info {
+  padding: 20px 30px 30px;
+  background-color: #fff;
+  height: 100%;
+}
+
 .popup-content::before {
   content: '';
   position: absolute;
