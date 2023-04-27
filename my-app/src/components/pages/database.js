@@ -208,6 +208,27 @@ app.get('/restockRequest', async (req, res) => {
   }
 });
 
+//Update Inventory items from *********WORK IN PROGRESS
+app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID) + 1;
+    const name = req.params.name;
+    const cost = parseFloat(req.params.cost);
+    const quantity = parseInt(req.params.quantity);
+
+    var queryToUse = `UPDATE inventory_item SET INVENTORY_ITEM_NAME = $1, INVENTORY_ITEM_COST = $2, INVENTORY_ITEM_QUANTITY = $3 WHERE inventory_id = $4`;
+    const updateValues = [name, cost, quantity, ID];
+    await pool.query(queryToUse, updateValues);
+    //console.log('Inventory_item table updated sucessfully!');
+    res.status(200).json({ message: 'Inventory item updated successfully' });
+
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // app.get('/menuRequest/:name', async (req, res) => {
 //   try {
 //     const name = req.params.name;

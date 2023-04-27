@@ -5,7 +5,7 @@ import './Reports.css';
 const Reports = () => {
     const [activeTab, setActiveTab] = useState(0);
     console.log("orders");
-    const orderData = GetOrdersList('2023-03-08','2023-03-08');
+    const orderData = GetOrdersTable('2023-03-08','2023-03-08');
     const restockData = GetRestockReport();
     const soldTogether = GetSoldTogether();
     const formattedOrderData = orderData.map((row) => {
