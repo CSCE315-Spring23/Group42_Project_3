@@ -154,6 +154,44 @@ app.get('/menuListRequest', async (req, res) => {
 });
 
 //Fetch Restock Report which are Inventory items from database that need to be restock
+app.get('/soldTogether', async (req, res) => {
+  try {
+    var popularCombos = [];
+    var queryToUse;
+    var initialDateString = "2000-01-01";
+    var finalDateString = "2025-01-01";
+    queryToUse = "SELECT m1.MENU_ITEM_NAME AS MENU_ITEM_NAME_1, m2.MENU_ITEM_NAME AS MENU_ITEM_NAME_2, COUNT(*) AS combo_count " +
+                    "FROM item_sold s1 " +
+                    "JOIN item_sold s2 ON s1.ORDER_ID = s2.ORDER_ID AND s1.MENU_ITEM_ID < s2.MENU_ITEM_ID " +
+                    "JOIN Menu m1 ON s1.MENU_ITEM_ID = m1.MENU_ITEM_ID " +
+                    "JOIN Menu m2 ON s2.MENU_ITEM_ID = m2.MENU_ITEM_ID " +
+                    "WHERE s1.ORDER_ID IN (SELECT ORDER_ID FROM orders WHERE DATE_ORDERED BETWEEN '" + initialDateString
+                    + "' AND '" + finalDateString + "') " +
+                    "GROUP BY m1.MENU_ITEM_NAME, m2.MENU_ITEM_NAME " +
+                    "ORDER BY combo_count DESC";
+    console.log(queryToUse);
+    var i = 1;
+    const { rows } = await pool.query(queryToUse);
+    for (let row of rows) {
+      console.log(row);
+      const menuItem1 = row.menu_item_name_1;
+      const menuItem2 = row.menu_item_name_2;
+      const comboCount = row.combo_count;
+      //console.log(row.MENU_ITEM_NAME_1);
+      //console.log(menuItem1);
+      const combo = {ID: i, menuItem1: menuItem1, menuItem2: menuItem2, comboCount: comboCount};
+      i++;
+      popularCombos.push(combo);
+    }
+    res.json(popularCombos);
+    //console.log(popularCombos);
+
+  } catch (err) {
+    console.error("Read failed with error in inventoryRequest: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/restockRequest', async (req, res) => {
   try {
     var queryToUse;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {GetOrdersList, GetRestockReport,} from './pages/databaseFunctions';
+import {GetOrdersList, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
 import './Reports.css';
 
 const Reports = () => {
@@ -7,6 +7,7 @@ const Reports = () => {
     console.log("orders");
     const orderData = GetOrdersList('2023-03-08','2023-03-08');
     const restockData = GetRestockReport();
+    const soldTogether = GetSoldTogether();
     const formattedOrderData = orderData.map((row) => {
         return {
           order_id: row.order_id,
@@ -16,34 +17,38 @@ const Reports = () => {
     });
 
     const tabs = [
-        { id: 0, name: 'Orders', 
+        { id: 0, name: 'Orders',
           headers: ["ID", "Date", "Cost"],
           tableData: formattedOrderData
         },
-        { id: 1, name: 'X/Y Reports', 
+        { id: 1, name: 'X/Y Reports',
           headers: ["ID", "Item Name", "Cost", "Quantity"],
           tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
           ]
         },
-        { id: 2, name: 'Restock Report', 
+        { id: 2, name: 'Restock Report',
           headers: ["ID", "Item Name", "Cost", "Quantity"],
           tableData: restockData
         },
-        { id: 3, name: 'Sales Report', 
+        { id: 3, name: 'Sales Report',
           headers: ["ID", "Item Name", "Cost", "Quantity"],
           tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
           ]
         },
-        { id: 4, name: 'Excess Report', 
+        { id: 4, name: 'Excess Report',
           headers: ["ID", "Item Name", "Cost", "Quantity"],
           tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6}, 
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6}, 
+            {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
+            {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
           ]},
+        { id: 5, name: 'Sold Together',
+          headers: ["ID", "Item 1", "Item 2", "# of Times Sold Together"],
+          tableData: soldTogether
+        },
     ];
 
 
@@ -66,7 +71,7 @@ const Reports = () => {
                                 padding: '10px',
                                 cursor: 'pointer',
                             }}
-                        > 
+                        >
                             {tab.name}
                         </div>
                     ))}
@@ -91,14 +96,14 @@ const Reports = () => {
                                         </tr>
                                     ))}
                                 </tbody>
-                                
+
                             </table>
                         </div>
                     ))}
                 </div>
             </div>
-        </div>    
-        </React.Fragment>    
+        </div>
+        </React.Fragment>
     )
 }
 
