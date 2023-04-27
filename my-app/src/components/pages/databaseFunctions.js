@@ -148,39 +148,41 @@ function GetIngredients(start, end) {
   return ingredientArr;
 }
 
-// let addToCartPromise = Promise.resolve(); //synchronization thing
-// function AddToCart(type, name, quantity, price) {
-//   const myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
-//   //console.log("Adding " +quantity + " units of "+ type + ": " + name+ " to cart for user " + myID + " with price " + price);
-//   const item = { type, name, quantity, price };
-//
-//   addToCartPromise = addToCartPromise.then(async () => {
-//     const response = await fetch(`${host}/addToCart/${myID}`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(item)
-//     });
-//     const data = await response.json();
-//     console.log(data.message);
-//   });
-// }
-
-async function AddToCart(type, name, quantity, price) {
+let addToCartPromise = Promise.resolve(); //synchronization thing
+function AddToCart(type, name, quantity, price) {
   const myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
-
+  //console.log("Adding " +quantity + " units of "+ type + ": " + name+ " to cart for user " + myID + " with price " + price);
   const item = { type, name, quantity, price };
-  const response = await fetch(`${host}/addToCart/${myID}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(item)
+
+  addToCartPromise = addToCartPromise.then(async () => {
+    const response = await fetch(`${host}/addToCart/${myID}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    });
+    const data = await response.json();
+    console.log(data.message);
   });
-  const data = await response.json();
-  console.log(data.message);
 }
+
+// async function AddToCart(type, name, quantity, price) {
+//   const myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
+//
+//   const item = { type, name, quantity, price };
+//   console.log("adding type ", type, " name ", name);
+//   const response = await fetch(`${host}/addToCart/${myID}`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(item)
+//   });
+//   const data = await response.json();
+//   console.log("added");
+//   console.log(data.message);
+// }
 
 
 function GetCartItems() {

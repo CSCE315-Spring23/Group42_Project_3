@@ -290,6 +290,7 @@ app.post('/addToCart/:id', async (req, res) => {
       //console.log("Updated:" + JSON.stringify(updateResult));
       //console.log(item);
       res.status(200).json({ message: 'Added to cart!' });
+      console.log("Added to cart: ", item);
     }
   } catch (err) {
     console.error('Error adding to cart:', err);
@@ -340,7 +341,7 @@ app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
       const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
 
       //update inventory item by adding a menu item.
-      for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++) {//update the inventory based off of what is in each 
+      for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++) {//update the inventory based off of what is in each
         let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used.get(i), inventory_id.get(i)]);
       }
 
