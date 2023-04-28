@@ -4,6 +4,7 @@ import './Table.css';
 
 function TableInfo(props) {
   const [tableData, setTableData] = useState([props.tableData]);
+  const [newAttribute, setNewAttribute] = useState('');
   const tab_id = props.id;
 
   useEffect(() => {
@@ -16,7 +17,12 @@ function TableInfo(props) {
     newData[event.target.dataset.row][event.target.dataset.field] = event.target.value;
     setTableData(newData);
     console.log("change");
-  }
+  };
+  const handleNewAttributeChange = (event) => {
+    // update the new attribute state
+    const { name, value } = event.target;
+    setNewAttribute(prevState => ({ ...prevState, [name]: value }));
+  };
 
   const handleKeyPress = (event, data) => {
     if (event.key === "Enter") {
@@ -32,14 +38,39 @@ function TableInfo(props) {
     }
   };
 
+  const handleAddAttribute = (event) => {
+    // update the state based on user input
+    const newAttributeData = {};
+    props.headers.forEach(header => {
+      newAttributeData[header] = newAttribute[header] || '';
+    });
+    setTableData([...tableData, newAttributeData]);
+    setNewAttribute({}); // clear new attribute state
+  };
+  const handleDeleteAttribute = (event) => {
+    // update the state based on user input
+    const newData = [...tableData];
+    newData[event.target.dataset.row][event.target.dataset.field] = event.target.value;
+    setTableData(newData);
+    console.log("change");
+  };
+
   return (
     <div>
       {props.headers.map((header) =>(
-        //Input statements based on table headers to add or delete items in the table
-        // <input 
-        // type="text"
-        // value= {header}/>
+        <div key={header} style={{ display: 'inline-block', margin: '10px' }}>
+          <input
+            type="text"
+            value={newAttribute[header] || header} // set default value to header name
+            name={header}
+            onChange={handleNewAttributeChange}
+          />
+        </div>
       ))}
+      <div style={{ display: 'inline-block', margin: '10px' }}>
+          <button onClick={handleAddAttribute}>Add Attribute</button>
+          <button onClick={handleDeleteAttribute}>Delete</button>
+      </div>
       <table>
         <thead>
           <tr>
