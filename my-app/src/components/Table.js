@@ -8,6 +8,12 @@ function TableInfo(props) {
   useEffect(() => {
     setTableData(props.tableData);
   }, [props.tableData]);
+
+  function UpdateTable(data) {
+    if(data.length){
+
+    }
+  }
   
   const handleInputChange = (event) => {
     // update the state based on user input
@@ -20,13 +26,8 @@ function TableInfo(props) {
   const handleKeyPress = (event, data) => {
     if (event.key === "Enter") {
       // trigger the desired action
-      const {id1, name, cost1, quantity1} = data;
-      const id = parseInt(id1);
-      const cost = parseFloat(cost1);
-      const quantity = parseInt(quantity1);
       console.log("pressed Enter", data);
-      console.log(id, cost, quantity, name);
-      //UpdateInventoryTable(id, name, cost, quantity);
+      UpdateInventoryTable(data['inventory_id'], data['inventory_item_name'], data['inventory_item_cost'], data['inventory_item_quantity']);
     }
   };
 
