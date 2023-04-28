@@ -49,7 +49,7 @@ function Navbar() {
               Reports
               </Link>
             </li>
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
             <Link
               to='/Menu'
               className='nav-links'
@@ -57,7 +57,7 @@ function Navbar() {
             >
               Database Access and Edit
               </Link>
-            </li>
+            </li> */}
             {button && <Button buttonStyle='btn--outline' path='/Home'>SIGN OUT</Button>}
           </ul>
         </div>
