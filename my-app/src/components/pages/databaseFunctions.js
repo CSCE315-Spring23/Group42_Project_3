@@ -237,22 +237,25 @@ function GetCartItems(){
   return items;
 }
 
-let createOrderPromise = Promise.resolve(); //synchronization thing
-function CreateOrder() {
-  const [myCart, setCart] = useState([]);
+// let createOrderPromise = Promise.resolve(); //synchronization thing
+async function CreateOrderVectors() {
+  // const [myCart, setCart] = useState([]);
+  let myCart = [];
   var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
   //console.log("getting cart");
-
-  useEffect(() => {
+  // var myID = 12;
+  // useEffect(() => {
     async function fetchCart() {
       const response = await fetch(`http://localhost:3001/getCart/${myID}`);
       const data = await response.json();
-      setCart(data.rows[0].orderlist);
+      myCart = data.rows[0].orderlist;
+      // setCart(data.rows[0].orderlist);
+      console.log("myCart: " + myCart);
       //console.log("cart in func: " + data.rows[0].orderlist);
     }
-    fetchCart();
-  }, [myID]);
-
+    var temp = await fetchCart();
+  // }, [myID]);
+  console.log("here 3.");
   //console.log("cart: " + myCart); // should log an array of cart items
   const menuItems = [];
   const ingredientList = [];
@@ -263,7 +266,9 @@ function CreateOrder() {
     for (let i = 0; i < myCart.length; i++) {
       const element = JSON.parse(myCart[i]);
       const item = { id: j, name: element.name, price: element.price, qty: 1}
-      let pair = { first: element.id, second: element.qty};
+      let pair = { first: item.name, second: item.qty};
+      // console.log("element id: " + item.name + " element quantity: " + item.qty);
+      console.log("pair is: " + pair + " -- first: " + pair.first + " second: " + pair.second);
       if(element.type === "item") {
         cost += item.price;
         menuItems.push(pair);
@@ -343,23 +348,38 @@ function CreateOrder() {
             }
           }
         }
-    };
+    }
+  }
+  console.log("here 4.");
+  console.log("menuItems: " + menuItems);
+    console.log("ingredientsList" + ingredientList);
+    console.log(" cost: " + cost);
+  return [menuItems, ingredientList, cost];
+}
 
-    createOrderPromise = createOrderPromise.then(async () => {
-      const response = await fetch(`http://localhost:3001/createOrder/${menuItems}/${ingredientList}${cost}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        // body: JSON.stringify(item)
-      });
-      const data = await response.json();
-      console.log(data.message);
-    });
+// let createOrderPromise = Promise.resolve(); //synchronization thing
+async function CreateOrder(menuItems, ingredientList, cost) {
+  const requestBody = {
+    menuItems: menuItems,
+    ingredientList: ingredientList,
+    cost: cost
+  };
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestBody)
+  };
+
+  async function ordercreat() {
+  const response = fetch(`http://localhost:3001/createOrder`, requestOptions);
+  // const data = await response.json();
+      // console.log(data.message);
+  }
+  await ordercreat();
   }
   // return items;
-}
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList, 
-          GetRestockReport, GetRecipesList, GetMenuTable, CreateOrder};
+          GetRestockReport, GetRecipesList, GetMenuTable, CreateOrderVectors, CreateOrder};

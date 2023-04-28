@@ -294,26 +294,34 @@ app.get('/getCart/:id', async (req, res) => {
   }
 });
 
-app.get('/createOrder/:menuItems/:ingredientList/:cost', async (req, res) => {
+app.get('/createOrder/:menuItemsJSON/:ingredientListJson/:cost', async (req, res) => {
   try {
-    const menuItems = req.params.menuItems; 
-    const ingredientList = req.params.ingredientList;
+    console.log("here 1.");
+    const menuItems = req.params.menuItemsJSON; 
+    const ingredientList = req.params.ingredientListJSON;
     const cost = req.params.cost;
-
+    console.log("here 2.");
     //get new order ID
     let newOrderID = parseInt(await pool.query('SELECT MAX(order_id) FROM orders'));
     newOrderID += 1;
-
+    console.log("value of newOrderID = " + newOrderID);
     //get current date and time
     const now = new Date(); 
-    let dateForDatabase = now.getFullYear + "-" + now.getMonth + "-" + now.getDate;
-
+    console.log("now: " + now);
+    let year = now.getFullYear;
+    let month = now.getMonth;
+    let date = now.getDate;
+    console.log("year/month/date: " + year + month + date);
+    let dateForDatabase =  year + "-" + month + "-" + date;
+    console.log("current date: " + dateForDatabase);
     const updateResult = await pool.query("INSERT INTO orders (order_id, date_ordered, order_cost) VALUES ($1, '$2', $3)", [newOrderID, dateForDatabase, cost]);
-    
+    console.log("order created");
     let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
     for (let i = 0; i < menuItems.length; i++){//adding menu items
       newItemID += 1;
-      let MenuId = menuItems.get(i).first;
+      let Menu_item_name = menuItems.get(i).first;
+
+      let MenuId = parseInt(await pool.query("SELECT menu_item_id FROM menu WHERE menu_item_name = $1", [Menu_item_name]));
       // newOrderID = orderID
       let quantity = menuItems.get(i).second;
 
