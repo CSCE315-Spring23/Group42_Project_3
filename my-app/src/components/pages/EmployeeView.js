@@ -3,6 +3,9 @@ import Footer from '../Footer';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import EmployeeCardList from '../EmployeeCardList';
 import { Button } from '../Button';
+import Navbar from '../EmployeeNavbar';
+// import './EmployeeView.css';
+
 
 {/*
 * Shows Employee View so they can log in and access features not visible for customers
@@ -182,7 +185,7 @@ import { Button } from '../Button';
 
 
     return (<>
-        {/* <Navbar /> */}
+        <Navbar />
         <div id="employeemenu">
             <EmployeeCardList cardData={cardData} title="Employee View" />
 
