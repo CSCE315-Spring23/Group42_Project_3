@@ -24,25 +24,31 @@ function Login({ onClose, popupStyle }) {
   return (
     <>
         <div className='loginContent'>Login</div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <input
-          className="footer-input"
+          className="footer-input xt"
           name="username"
           type="email"
           placeholder="email"
         />
         <input
-          className="footer-input"
+          className="footer-input xt"
           name="password"
           type="password"
           placeholder="password"
         />
-        <div className='loginContent'>Or Sign In with Google</div>
-        <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
         {' '}
         Log In
         </Button>
+        {/* <div className='loginContent'>Or Sign In with Google</div> */}
+        <span className="or">
+          <hr />
+          <span>OR</span>
+          <hr />
+        </span>
+        <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
+        
       {/* <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
           X
       </Button> */}
