@@ -23,31 +23,29 @@ function Login({ onClose, popupStyle }) {
 
   return (
     <>
-        <div className="login-content">
-            <h2>Log In</h2>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <input
-            className="footer-input"
-            name="username"
-            type="email"
-            placeholder="email"
-            />
-            <input
-            className="footer-input"
-            name="password"
-            type="password"
-            placeholder="password"
-            />
-            <h2>Or sign in with Google</h2>
-            <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
-            <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
-            {' '}
-            Log In
-            </Button>
-        </div>
-        <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
-            X
+        <div className='loginContent'>Login</div>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <input
+          className="footer-input"
+          name="username"
+          type="email"
+          placeholder="email"
+        />
+        <input
+          className="footer-input"
+          name="password"
+          type="password"
+          placeholder="password"
+        />
+        <div className='loginContent'>Or sign in with Google</div>
+        <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
+        <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
+        {' '}
+        Log In
         </Button>
+      <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
+          X
+      </Button>
     </>
   );
 }

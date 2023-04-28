@@ -5,6 +5,7 @@ import {CreateOrderVectors, CreateOrder} from '../pages/databaseFunctions'
 import { Button } from "../Button";
 import { Link } from 'react-router-dom';
 import SimilarItems from "./SimilarItems";
+import Popup from "../Popups/Popup";
 
 function Cart({ initialItems }) {
   const [showPopup, setShowPopup] = useState(false);
@@ -20,16 +21,16 @@ function Cart({ initialItems }) {
     setShowPopup(true);
   }
 
-  const handleClose = () => {
-    setShowPopup(false);
-    window.location.reload();
-  }
-
   const [items, setItems] = useState(initialItems);
 
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    window.location.reload();
+  }
 
   const updateQty = (id, newQty) => {
     const newItems = items.map((item) => {
@@ -93,15 +94,16 @@ function Cart({ initialItems }) {
           </>
         ) : null}
         {showPopup &&
-          <div className="popup">
-            <div className="popup-content">
-              <h2>Order Placed</h2>
-              <p className="Totaltext">''</p>
-              <Button onClick={handleClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none', position: 'absolute'}}>
-              Start Over
-              </Link></Button>
-            </div>
-          </div>
+          <Popup popupStyle="style3" onClose={handleClose}/>
+          // <div className="popup">
+          //   <div className="popup-content">
+          //     <h2>Order Placed</h2>
+          //     <p className="Totaltext">''</p>
+          //     <Button onClick={handleClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none', position: 'absolute'}}>
+          //     Start Over
+          //     </Link></Button>
+          //   </div>
+          // </div>
         }
       </div>
     </div>

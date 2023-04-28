@@ -150,7 +150,6 @@
   .popup-content > *:nth-child(n+4) {
     margin-top: 10px;
     margin-right: 10px;
-    width: calc(50% - 5px);
   }
   .popup-content > *:nth-child(n+4):nth-last-child(-n+2) {
     margin-top: 0;

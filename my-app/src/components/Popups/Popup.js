@@ -3,6 +3,7 @@ import { Button } from '../Button';
 import { AddToCart } from '../pages/databaseFunctions';
 import { IngredientForm } from '../IngredientForm';
 import {Login} from './Login'
+import { Link } from 'react-router-dom';
 import './Popup.css';
 
 function Popup({ text, ingredients, onClose, price, popupStyle = 'style1'}) {
@@ -29,7 +30,7 @@ function Popup({ text, ingredients, onClose, price, popupStyle = 'style1'}) {
     }, 1000);
   }
 
-  const STYLES = ['style1', 'style2'];
+  const STYLES = ['style1', 'style2', 'style3'];
   const checkPopupStyle = STYLES.includes(popupStyle) ? popupStyle : STYLES[0];
 
   return (
@@ -48,6 +49,14 @@ function Popup({ text, ingredients, onClose, price, popupStyle = 'style1'}) {
       )}
       {checkPopupStyle === "style2" && (
         <Login />
+      )}
+      {checkPopupStyle === "style3" && (
+        <>
+          <h2>Order Placed</h2>
+          <Button onClick={onClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none', position: 'absolute'}} /> Start Over
+          {/* Start Over */}
+          </Button>
+        </>
       )}
       </div>
     </div>

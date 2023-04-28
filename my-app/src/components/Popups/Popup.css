@@ -13,3 +13,13 @@
     right: 10px;
     font-size: 100px;
   }
+
+  .loginContent{
+    /* color: #fff; */
+    text-decoration: none;
+    margin-bottom: 1rem;
+    font-size: 34px;
+    color: #d9ad56;
+    padding-top: 5%;
+    font-weight: 700;
+  }
