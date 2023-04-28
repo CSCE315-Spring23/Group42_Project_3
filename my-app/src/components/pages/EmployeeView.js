@@ -182,6 +182,7 @@ import { Button } from '../Button';
 
 
     return (<>
+        {/* <Navbar /> */}
         <div id="employeemenu">
             <EmployeeCardList cardData={cardData} title="Employee View" />
 

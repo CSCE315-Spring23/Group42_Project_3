@@ -334,12 +334,6 @@ function GetCartItems() {
   return items;
 }
 
-<<<<<<< HEAD
-// let createOrderPromise = Promise.resolve(); //synchronization thing
-async function CreateOrderVectors() {
-  // const [myCart, setCart] = useState([]);
-  let myCart = [];
-=======
 function GetSoldTogether() {
   const [sold, setSold] = useState([]);
 
@@ -357,10 +351,10 @@ function GetSoldTogether() {
   return sold;
 }
 
-let createOrderPromise = Promise.resolve(); //synchronization thing
-function CreateOrder() {
-  const [myCart, setCart] = useState([]);
->>>>>>> aa0730180967101e28bf93a7e7b2a31dfa8e1204
+// let createOrderPromise = Promise.resolve(); //synchronization thing
+async function CreateOrderVectors() {
+  // const [myCart, setCart] = useState([]);
+  let myCart = [];
   var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
   //console.log("getting cart");
   // var myID = 12;
@@ -385,17 +379,11 @@ function CreateOrder() {
   if (myCart !== null) {
     for (let i = 0; i < myCart.length; i++) {
       const element = JSON.parse(myCart[i]);
-<<<<<<< HEAD
       const item = { id: j, name: element.name, price: element.price, qty: 1}
       let pair = { first: item.name, second: item.qty};
       // console.log("element id: " + item.name + " element quantity: " + item.qty);
       console.log("pair is: " + pair + " -- first: " + pair.first + " second: " + pair.second);
       if(element.type === "item") {
-=======
-      const item = { id: j, name: element.name, price: element.price, qty: 1 }
-      let pair = { first: element.id, second: element.qty };
-      if (element.type === "item") {
->>>>>>> aa0730180967101e28bf93a7e7b2a31dfa8e1204
         cost += item.price;
         menuItems.push(pair);
         ingredientList.length = 0;
@@ -473,7 +461,7 @@ function CreateOrder() {
             ingredientList.push(pair); //push item with given quanity
           }
         }
-<<<<<<< HEAD
+      }
     }
   }
   console.log("here 4.");
@@ -503,30 +491,9 @@ async function CreateOrder(menuItems, ingredientList, cost) {
       // console.log(data.message);
   }
   await ordercreat();
-=======
-      }
-    };
-
-    createOrderPromise = createOrderPromise.then(async () => {
-      const response = await fetch(`http://localhost:10000/createOrder/${menuItems}/${ingredientList}${cost}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        // body: JSON.stringify(item)
-      });
-      const data = await response.json();
-      console.log(data.message);
-    });
->>>>>>> aa0730180967101e28bf93a7e7b2a31dfa8e1204
   }
   // return items;
 
 
-<<<<<<< HEAD
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryList, GetOrdersList, 
-          GetRestockReport, GetRecipesList, GetMenuTable, CreateOrderVectors, CreateOrder};
-=======
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether,
-          GetRestockReport, GetRecipesTable, GetMenuTable, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable};
->>>>>>> aa0730180967101e28bf93a7e7b2a31dfa8e1204
+          GetRestockReport, GetRecipesTable, GetMenuTable, CreateOrderVectors, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable};

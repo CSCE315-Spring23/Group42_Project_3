@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "./CartItem";
-import {CreateOrderVectors, createOrder} from './databaseFunctions'
+import {CreateOrderVectors, CreateOrder} from '../pages/databaseFunctions'
 import './cart.css'
 import { Button } from "../Button";
 import { Link } from 'react-router-dom';
