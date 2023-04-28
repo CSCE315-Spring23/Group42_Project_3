@@ -30,7 +30,7 @@ const MenuBoard = () => {
   }
   
   const basketsArr = [];
-  for (let i = 4; i < 6; i++) {
+  for (let i = 4; i < 7; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,
@@ -41,7 +41,7 @@ const MenuBoard = () => {
   }
 
   const sandwichesArr = [];
-  for (let i = 7; i < 12; i++) {
+  for (let i = 7; i < 10; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,

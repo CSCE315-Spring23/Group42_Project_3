@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 import Footer from '../Footer';
 import Navbar from '../ManagerNavbar';
+import Reports from '../Reports';
 
 
 {/*
@@ -12,7 +13,8 @@ import Navbar from '../ManagerNavbar';
 function ManagerDatabaseAccess() {
     return (<> 
         <Navbar />
-<div id="database"></div>
+        <div id="database"></div>
+        <Reports/>
         <Footer/>
       </>);
 }

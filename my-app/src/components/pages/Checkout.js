@@ -4,7 +4,7 @@ import {GetCartItems} from "../pages/databaseFunctions";
 // import React from "react";
 import Cart from "../Checkout/Cart";
 import Navbar from "../CustomerNavbar";
-import Footer from "../Footer"; 
+import Footer from "../Footer";
 
 // const old = [
 //   { id: 1, name: "Treats", price: 4.99, qty: 5 },
@@ -13,7 +13,7 @@ import Footer from "../Footer";
 //   { id: 4, name: "asdkjfhakjd", price: 14.99, qty: 1 }
 // ];
 
-function CartApp() {
+function Checkout() {
   const list = GetCartItems();
 
   return (
@@ -25,5 +25,4 @@ function CartApp() {
   );
 }
 
-export default CartApp;
-
+export default Checkout;
