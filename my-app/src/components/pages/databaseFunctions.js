@@ -120,15 +120,10 @@ function GetRestockReport() {
 /* Update the inventory_item table with new values */
 async function UpdateInventoryTable(id, name, cost, quantity) {
   try {
-    const response = await fetch(`${host}/inventoryUpdate/${id}/${name}/${cost}/${quantity}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
+    const response = await fetch(`${host}/inventoryUpdate/${id}/${name}/${cost}/${quantity}`);
     const data = await response.json();
     console.log(data);
+
   } catch (err) {
     console.error('Error updating inventory item: ' + err);
   }
