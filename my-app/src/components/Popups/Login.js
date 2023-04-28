@@ -17,37 +17,41 @@ function Login({ onClose, popupStyle }) {
     } else if (userData && userData.email === 'employee@example.com') {
       // Navigate to employee view page
     } else {
-      setErrorMessage('Credentials not found');
+      setErrorMessage('Invalid credentials');
     }
   };
 
   return (
     <>
-        <div className="login-content">
-            <h2>Log In</h2>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <input
-            className="footer-input"
-            name="username"
-            type="email"
-            placeholder="email"
-            />
-            <input
-            className="footer-input"
-            name="password"
-            type="password"
-            placeholder="password"
-            />
-            <h2>Or sign in with Google</h2>
-            <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
-            <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
-            {' '}
-            Log In
-            </Button>
-        </div>
-        <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
-            X
+        <div className='loginContent'>Employee Log In</div>
+        <input
+          className="footer-input xt"
+          name="username"
+          type="email"
+          placeholder="email"
+        />
+        <input
+          className="footer-input xt"
+          name="password"
+          type="password"
+          placeholder="password"
+        />
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
+        {' '}
+        Log In
         </Button>
+        {/* <div className='loginContent'>Or Sign In with Google</div> */}
+        <span className="or">
+          <hr />
+          <span>OR</span>
+          <hr />
+        </span>
+        <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
+        
+      {/* <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
+          X
+      </Button> */}
     </>
   );
 }

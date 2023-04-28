@@ -1,5 +1,3 @@
-
-
   p{
     color: aliceblue;
   }
@@ -13,3 +11,84 @@
     right: 10px;
     font-size: 100px;
   }
+
+  .loginContent{
+    /* color: #fff; */
+    text-decoration: none;
+    margin-bottom: 1rem;
+    font-size: 34px;
+    color: #d9ad56;
+    text-align: center;
+    padding-top: 5%;
+    font-weight: 700;
+    min-width: 300px;
+  }
+
+  .xt{
+    background-color: rgb(243, 238, 227);
+  }
+
+  input:focus {
+    /* border: 12px; */
+    border-color: #d9ad56;
+    border-width: 3px;
+  }
+
+  .logo {
+    color: #fff;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  .loginWithGoogleButton {
+    transition: 0.3s;
+    min-width: 300px;
+    padding: 14px 10px;
+    outline: none;
+    border: 1px solid rgb(243, 238, 227);
+    background-color: transparent;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:rgb(243, 238, 227);
+    font-weight: 500;
+  }
+
+  .or {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    color: rgb(243, 238, 227);
+    padding-top: 2em;
+    padding-bottom: 2em;
+    font-size: 0.8rem;
+  }
+
+    hr {
+      width: 40%;
+      height: 1px;
+      background-color: rgb(243, 238, 227);
+      border: none;
+      align-self: center;
+    }
+
+    .svg {
+      width: 20px;
+      margin-right: 100px;
+      padding-right: 100px;
+    }
+
+    .loginWithGoogleButton:hover {
+      transform: scale(1.05);
+    }
+
+    .error-message{
+      color: rgb(243, 238, 227);
+    }
+
+    .logintxt{
+      padding-left: 1em;
+    }

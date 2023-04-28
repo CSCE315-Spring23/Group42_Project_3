@@ -27,7 +27,10 @@
 
   .btn--outlinee{
     /* padding: 1em; */
-    margin-top: 1em;
+    background-color: var(--secondary);
+    color: var(--primary);
+    border: 1px solid var(--secondary);
+    padding-bottom: 30px;
   }
 
   .btn--third {
@@ -54,6 +57,10 @@
     background: #fff;
     color: rgba(92,0,32,255);
     transition: 250ms;
+  }
+
+  .btn--outlinee:hover{
+    transform: scale(1.05);
   }
 
   .btn--primary:hover{

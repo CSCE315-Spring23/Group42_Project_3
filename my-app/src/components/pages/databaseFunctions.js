@@ -120,56 +120,37 @@ function GetRestockReport() {
 /* Update the inventory_item table with new values */
 async function UpdateInventoryTable(id, name, cost, quantity) {
   try {
-    const response = await fetch(`${host}/inventoryUpdate/${id}/${name}/${cost}/${quantity}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
+    const response = await fetch(`${host}/inventoryUpdate/${id}/${name}/${cost}/${quantity}`);
     const data = await response.json();
     console.log(data);
+
   } catch (err) {
     console.error('Error updating inventory item: ' + err);
   }
 }
 
 /* Update the menu table with new values */
-function UpdateMenuTable(ID, name, cost){
-  const [inventoryItems, setInventoryItems] = useState([]);
+async function UpdateMenuTable(id, name, cost){
+  try {
+    const response = await fetch(`${host}/menuUpdate/${id}/${name}/${cost}`);
+    const data = await response.json();
+    console.log(data);
 
-  useEffect(() => {
-    async function fetchInventoryItems() {
-      const response = await fetch(`${host}/menuUpdate/${ID}/${name}`);
-      const data = await response.json();
-      setInventoryItems(data);
-      console.table(data);
-    }
-
-    fetchInventoryItems();
-  }, [ID, name, cost]);
-
-  //console.table(inventoryItems);
-  return inventoryItems;
+  } catch (err) {
+    console.error('Error updating menu item: ' + err);
+  }
 }
 
 /* Update the Recipes table with new values */
-function UpdateRecipesTable(ID, name, invID, menuID, quantity){
-  const [inventoryItems, setInventoryItems] = useState([]);
+async function UpdateRecipesTable(id, name, invID, menuID, quantity){
+  try {
+    const response = await fetch(`${host}/recipesUpdate/${id}/${name}/${invID}/${menuID}/${quantity}`);
+    const data = await response.json();
+    console.log(data);
 
-  useEffect(() => {
-    async function fetchInventoryItems() {
-      const response = await fetch(`${host}/recipeUpdate/${ID}/${name}`);
-      const data = await response.json();
-      setInventoryItems(data);
-      console.table(data);
-    }
-
-    fetchInventoryItems();
-  }, [ID, name, invID, menuID, quantity]);
-
-  //console.table(inventoryItems);
-  return inventoryItems;
+  } catch (err) {
+    console.error('Error updating recipe item: ' + err);
+  }
 }
 
 //fetch all menu items from database table
