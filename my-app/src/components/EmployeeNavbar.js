@@ -19,8 +19,17 @@ function Navbar() {
     }
   };
 
+  function checkIfManager(){
+    localStorage.setItem('isManager', true)
+    const isBooleanTrue = localStorage.getItem('isManager') === 'true';
+    if(!isBooleanTrue){
+      document.getElementById("managerViewTab").style.display = 'none';
+    }
+  }
+
   useEffect(() => {
     showButton();
+    checkIfManager();
   }, []);
 
   window.addEventListener('resize', showButton);
@@ -36,29 +45,19 @@ function Navbar() {
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+            <li id="managerViewTab" className='nav-item'>
+              
+                <Link to='/ManagerView' className='nav-links' onClick={closeMobileMenu} >
+                  ManagerView
+                </Link>
+              </li>
             <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className='nav-item'>
-            <Link
-              to='/Menu'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Menu
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                to='/OrderFood'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
+              <Link to='/EmployeeView' className='nav-links' onClick={closeMobileMenu}>
                 OrderFood
               </Link>
             </li>
+            
+            
             
 
 
