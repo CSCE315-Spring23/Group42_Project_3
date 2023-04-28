@@ -17,13 +17,13 @@ function Login({ onClose, popupStyle }) {
     } else if (userData && userData.email === 'employee@example.com') {
       // Navigate to employee view page
     } else {
-      setErrorMessage('Credentials not found');
+      setErrorMessage('Invalid credentials');
     }
   };
 
   return (
     <>
-        <div className='loginContent'>Login</div>
+        <div className='loginContent'>Employee Log In</div>
         <input
           className="footer-input xt"
           name="username"

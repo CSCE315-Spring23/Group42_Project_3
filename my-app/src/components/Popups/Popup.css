@@ -20,8 +20,10 @@
     margin-bottom: 1rem;
     font-size: 34px;
     color: #d9ad56;
+    text-align: center;
     padding-top: 5%;
     font-weight: 700;
+    min-width: 300px;
   }
 
   .xt{
