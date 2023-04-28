@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../../public')));
 
 
-const allowedOrigins = ['https://revs-american-grill.onrender.com', 'http://localhost:3000']
+const allowedOrigins = ['https://revs-american-grill-z267.onrender.com', 'http://localhost:3000']
 app.use(cors({
   origin: allowedOrigins
 }));
