@@ -37,15 +37,15 @@ function Login({ onClose, popupStyle }) {
           type="password"
           placeholder="password"
         />
-        <div className='loginContent'>Or sign in with Google</div>
+        <div className='loginContent'>Or Sign In with Google</div>
         <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
         <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
         {' '}
         Log In
         </Button>
-      <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
+      {/* <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
           X
-      </Button>
+      </Button> */}
     </>
   );
 }

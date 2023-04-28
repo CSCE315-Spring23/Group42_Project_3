@@ -95,15 +95,6 @@ function Cart({ initialItems }) {
         ) : null}
         {showPopup &&
           <Popup popupStyle="style3" onClose={handleClose}/>
-          // <div className="popup">
-          //   <div className="popup-content">
-          //     <h2>Order Placed</h2>
-          //     <p className="Totaltext">''</p>
-          //     <Button onClick={handleClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none', position: 'absolute'}}>
-          //     Start Over
-          //     </Link></Button>
-          //   </div>
-          // </div>
         }
       </div>
     </div>

@@ -23,3 +23,11 @@
     padding-top: 5%;
     font-weight: 700;
   }
+
+  input:focus {
+    /* border: 12px; */
+    border-color: #d9ad56;
+    border-width: 3px;
+  }
+
+  

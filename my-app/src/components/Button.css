@@ -28,6 +28,8 @@
   .btn--outlinee{
     /* padding: 1em; */
     margin-top: 1em;
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
   }
 
   .btn--third {
@@ -49,7 +51,7 @@
     font-size: 20px;
   }
   
-  .btn--outline:hover{
+  .btn--outline:hover,  .btn--outlinee:hover{
     transition: all 0.3s ease-out;
     background: #fff;
     color: rgba(92,0,32,255);
