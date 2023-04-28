@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Popup from '../Popup';
+import Popup from '../Popups/Popup';
 import './cart.css'
 
 //Used for displaying menu items in our menu page

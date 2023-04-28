@@ -17,12 +17,26 @@
     border: 1px solid var(--secondary);
   }
   
-  .btn--outline {
+  .btn--outline, .btn--outlinee{
     background-color: transparent;
     color: #fff;
     padding: 8px 20px;
     border: 1px solid var(--primary);
     transition: all 0.3s ease-out;
+  }
+
+  .btn--outlinee{
+    /* padding: 1em; */
+    margin-top: 1em;
+  }
+
+  .btn--third {
+    background-color: transparent;
+    color: rgba(92,0,32,255);
+    padding: 8px 20px;
+    border: 1px solid rgba(92,0,32,255);
+    transition: all 0.3s ease-out;
+    margin: 10px;
   }
   
   .btn--medium {
@@ -35,10 +49,23 @@
     font-size: 20px;
   }
   
-  .btn--large:hover,
-  .btn--medium:hover {
+  .btn--outline:hover{
     transition: all 0.3s ease-out;
     background: #fff;
-    color: #242424;
+    color: rgba(92,0,32,255);
+    transition: 250ms;
+  }
+
+  .btn--primary:hover{
+    transition: all 0.3s ease-out;
+    background: #fff;
+    color: var(--secondary);
+    transition: 250ms;
+  }
+
+  .btn--third:hover{
+    transition: all 0.3s ease-out;
+    background: rgba(92,0,32,255);
+    color: #fff;
     transition: 250ms;
   }

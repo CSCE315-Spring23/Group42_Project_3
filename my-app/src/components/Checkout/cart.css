@@ -1,4 +1,6 @@
-  .check{
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css);
+
+.check{
     display: flex;
     padding: 1.5em;
   }
@@ -19,7 +21,7 @@
 
   .Cart2{
     flex-basis: 20.33%;
-    height: 200px;
+    height: 300px;
   }
 
   .Cart-title {
@@ -34,6 +36,11 @@
   .price{
     padding: 1rem;
     font-size: 22px;
+  }
+
+  .items-count{
+    padding: 1rem;
+    font-size: 18px;
   }
 
   .CartItem {
@@ -53,7 +60,7 @@
     width: 25%;
   }
 
-  .CartItem button {
+  .change-quantity {
     margin: 0 0.5em;
     width: 30px;
     height: 30px;
@@ -64,11 +71,11 @@
     outline: none;
   }
 
-  .CartItem button:hover {
+  .change-quantity:hover {
     background-color: rgba(92,0,32,255);
   }
 
-  .CartItem button:disabled {
+  .change-quantity:disabled {
     background-color: silver;
   }
 
@@ -167,4 +174,35 @@
   z-index: -1;
   border-radius: 5px;
   margin: -10px;
+}
+
+.cart-empty-text{
+  margin-bottom: 0;
+  color: #bdbdbd;
+  font-size: 16px;
+}
+
+
+.cart-empty {
+  padding-top: 1em;
+  font-size: 45px;
+  color: #d5d6d8;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.delete{
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  background-color: #fde6e7;
+  color: rgba(92,0,32,255);
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.delete:hover {
+  background-color: rgba(92,0,32,255);
+  color: #fff;
 }

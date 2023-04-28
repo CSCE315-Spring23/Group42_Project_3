@@ -1,0 +1,15 @@
+
+
+  p{
+    color: aliceblue;
+  }
+  ul{
+    color: aliceblue;
+  }
+
+
+  .close {
+    top: 10px;
+    right: 10px;
+    font-size: 100px;
+  }
