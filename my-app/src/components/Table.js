@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {GetInventoryTable, GetRecipesTable, GetMenuTable, UpdateInventoryTable} from './pages/databaseFunctions';
+import {GetInventoryTable, GetRecipesTable, GetMenuTable, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable} from './pages/databaseFunctions';
 import './Table.css';
 
 function TableInfo(props) {
   const [tableData, setTableData] = useState([props.tableData]);
+  const tab_id = props.id;
 
   useEffect(() => {
     setTableData(props.tableData);
   }, [props.tableData]);
-
-  function UpdateTable(data) {
-    if(data.length){
-
-    }
-  }
   
   const handleInputChange = (event) => {
     // update the state based on user input
@@ -26,13 +21,25 @@ function TableInfo(props) {
   const handleKeyPress = (event, data) => {
     if (event.key === "Enter") {
       // trigger the desired action
-      console.log("pressed Enter", data);
-      UpdateInventoryTable(data['inventory_id'], data['inventory_item_name'], data['inventory_item_cost'], data['inventory_item_quantity']);
+      console.log("pressed Enter", data, tab_id);
+      if(tab_id === 0){
+        UpdateInventoryTable(data['inventory_id'], data['inventory_item_name'], data['inventory_item_cost'], data['inventory_item_quantity']);
+      }else if(tab_id === 1){
+        UpdateMenuTable(data['menu_item_id'], data['menu_item_name'], data['menu_item_cost']);
+      }else if(tab_id === 2){
+        UpdateRecipesTable(data['recipe_id'], data['recipe_item_name'], data['inventory_id'], data['menu_id'], data['amt_used']);
+      }
     }
   };
 
   return (
     <div>
+      {props.headers.map((header) =>(
+        //Input statements based on table headers to add or delete items in the table
+        // <input 
+        // type="text"
+        // value= {header}/>
+      ))}
       <table>
         <thead>
           <tr>
@@ -116,7 +123,7 @@ const Table = () => {
         <div>
           {tabs.map((tab) => (
             <div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>
-            <TableInfo tableData={tab.tableData} headers={tab.headers}/>
+            <TableInfo tableData={tab.tableData} headers={tab.headers} id={tab.id}/>
                 {/* <table>
                     <thead>
                         <tr>

@@ -238,9 +238,10 @@ app.get('/menuUpdate/:ID/:name/:cost', async (req, res) => {
     const cost = parseFloat(req.params.cost);
     //console.log(ID, name, cost);
 
-    var queryString = 'UPDATE menu SET MENU_ITEM_NAME = $1, MENU_ITEM_COST = $2, WHERE menu_item_id = $3';
+    var queryString = 'UPDATE menu SET MENU_ITEM_NAME = $1, MENU_ITEM_COST = $2 WHERE menu_item_id = $3';
     const queryValues = [name, cost, ID];
 
+    console.log(queryString, queryValues);
     await pool.query(queryString, queryValues);
     //console.log('Inventory_item table updated sucessfully!');
     res.status(200).json({ message: 'Menu item updated successfully' });
