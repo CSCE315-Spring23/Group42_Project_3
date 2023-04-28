@@ -104,7 +104,7 @@ app.get('/orderRequest/:start/:end', async (req, res) => {
     console.log("start:", start);
     console.log("end:", end);
     if (start === '2020-01-01' && end === '2023-04-01') {
-      console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
+      console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 30');
       const { rows } = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
       res.json(rows);
     } else {
@@ -203,7 +203,29 @@ app.get('/restockRequest', async (req, res) => {
     //console.log(rows);
 
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " + err);
+    console.error("Read failed with error in Restock Request: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Fetch sales history from database where start and end are dates
+app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
+  try {
+    const start = req.params.start;
+    const end = req.params.end;
+    console.log("start:", start);
+    console.log("end:", end);
+    var queryToUse = 'SELECT Menu.MENU_ITEM_ID, Menu.MENU_ITEM_NAME, SUM(item_sold.ITEM_SOLD_QUANTITY) AS TOTAL_QUANTITY FROM item_sold ' +
+              'JOIN Menu ON Menu.MENU_ITEM_ID = item_sold.MENU_ITEM_ID JOIN Orders ON Orders.ORDER_ID = item_sold.ORDER_ID '+
+              'WHERE Orders.DATE_ORDERED BETWEEN $1 AND $2 GROUP BY Menu.MENU_ITEM_ID, Menu.MENU_ITEM_NAME';
+    const queryValues = [start, end];
+
+    console.log(queryToUse, queryValues);
+    const { rows } = await pool.query(queryToUse, queryValues);
+    res.json(rows);
+
+  } catch (err) {
+    console.error("Read failed with error in sales history Request: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

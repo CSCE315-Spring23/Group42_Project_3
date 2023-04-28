@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {GetOrdersTable, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
 import './Reports.css';
 
 const Reports = () => {
     const [activeTab, setActiveTab] = useState(0);
-    console.log("orders");
+    const [startDate, setStartDate] = useState('2020-01-01');
+    const [endDate, setEndDate] = useState('2023-04-01');
     const orderData = GetOrdersTable('2023-03-08','2023-03-08');
+
+    //const orderData = ;
     const restockData = GetRestockReport();
     const soldTogether = GetSoldTogether();
+
     const formattedOrderData = orderData.map((row) => {
         return {
           order_id: row.order_id,
@@ -22,7 +26,7 @@ const Reports = () => {
           tableData: formattedOrderData
         },
         { id: 1, name: 'X/Y Reports',
-          headers: ["ID", "Item Name", "Cost", "Quantity"],
+          headers: ["Report ID", "Order ID", "Cost", "Quantity"],
           tableData: [
             {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
             {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
@@ -33,17 +37,17 @@ const Reports = () => {
           tableData: restockData
         },
         { id: 3, name: 'Sales Report',
-          headers: ["ID", "Item Name", "Cost", "Quantity"],
+          headers: ["ID", "Item Name", "Quantity"],
           tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
+            {id: 1, item_name: "hello", quantity: 6},
+            {id: 2, item_name: "item2", quantity: 6},
           ]
         },
         { id: 4, name: 'Excess Report',
-          headers: ["ID", "Item Name", "Cost", "Quantity"],
+          headers: ["ID", "Item Name"],
           tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
+            {id: 1, item_name: "hello"},
+            {id: 2, item_name: "item2"},
           ]},
         { id: 5, name: 'Sold Together',
           headers: ["ID", "Item 1", "Item 2", "# of Times Sold Together"],
@@ -79,6 +83,8 @@ const Reports = () => {
                 <div>
                     {tabs.map((tab) => (
                         <div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>
+                            <div style={{ display: activeTab === 0 ? 'block' : 'none'}}>
+                            </div>
                             <table>
                                 <thead>
                                     <tr>
