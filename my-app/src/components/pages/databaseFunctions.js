@@ -467,7 +467,7 @@ async function CreateOrder(menuItems, ingredientList, cost) {
   };
 
   async function ordercreat() {
-  const response = fetch(`http://localhost:3001/createOrder`, requestOptions);
+  const response = fetch(`${host}/createOrder`, requestOptions);
   // const data = await response.json();
       // console.log(data.message);
   }
