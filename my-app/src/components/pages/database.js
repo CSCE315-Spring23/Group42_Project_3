@@ -216,10 +216,11 @@ app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
     const cost = parseFloat(req.params.cost);
     const quantity = parseInt(req.params.quantity);
     console.log(ID, name, cost, quantity);
-    var queryToUse = 'UPDATE inventory_item SET INVENTORY_ITEM_NAME = ' + name + ', INVENTORY_ITEM_COST = ' + cost + ', INVENTORY_ITEM_QUANTITY = ' + quantity + ' WHERE inventory_id = ' + ID;
-    //console.log("test 1", queryToUse);
 
-    await pool.query(queryToUse);
+    var queryString = 'UPDATE inventory_item SET INVENTORY_ITEM_NAME = $1, INVENTORY_ITEM_COST = $2, INVENTORY_ITEM_QUANTITY = $3 WHERE inventory_id = $4';
+    const queryValues = [name, cost, quantity, ID];
+
+    await pool.query(queryString, queryValues);
     //console.log('Inventory_item table updated sucessfully!');
     res.status(200).json({ message: 'Inventory item updated successfully' });
   } catch (err) {
