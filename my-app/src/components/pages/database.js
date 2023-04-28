@@ -208,14 +208,14 @@ app.get('/restockRequest', async (req, res) => {
   }
 });
 
-//Update Inventory items from *********WORK IN PROGRESS
+//Update Inventory items from table
 app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
   try {
     const ID = parseInt(req.params.ID);
     const name = req.params.name;
     const cost = parseFloat(req.params.cost);
     const quantity = parseInt(req.params.quantity);
-    console.log(ID, name, cost, quantity);
+    //console.log(ID, name, cost, quantity);
 
     var queryString = 'UPDATE inventory_item SET INVENTORY_ITEM_NAME = $1, INVENTORY_ITEM_COST = $2, INVENTORY_ITEM_QUANTITY = $3 WHERE inventory_id = $4';
     const queryValues = [name, cost, quantity, ID];
@@ -223,6 +223,50 @@ app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
     await pool.query(queryString, queryValues);
     //console.log('Inventory_item table updated sucessfully!');
     res.status(200).json({ message: 'Inventory item updated successfully' });
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Update Menu items from table
+app.get('/menuUpdate/:ID/:name/:cost', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    const name = req.params.name;
+    const cost = parseFloat(req.params.cost);
+    //console.log(ID, name, cost);
+
+    var queryString = 'UPDATE menu SET MENU_ITEM_NAME = $1, MENU_ITEM_COST = $2, WHERE menu_item_id = $3';
+    const queryValues = [name, cost, ID];
+
+    await pool.query(queryString, queryValues);
+    //console.log('Inventory_item table updated sucessfully!');
+    res.status(200).json({ message: 'Menu item updated successfully' });
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in inventoryRequest: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Update Recipe items from table
+app.get('/recipesUpdate/:ID/:name/:invID/:menuID/:quantity', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    const name = req.params.name;
+    const invID = parseInt(req.params.invID);
+    const menuID = parseInt(req.params.menuID);
+    const quantity = parseInt(req.params.quantity);
+    //console.log(ID, name, cost);
+
+    var queryString = 'UPDATE recipe_item SET RECIPE_ITEM_NAME = $1, INVENTORY_ID = $2, MENU_ID = $3, AMT_USED = $4 WHERE recipe_id = $5';
+    const queryValues = [name, invID, menuID, quantity, ID];
+
+    await pool.query(queryString, queryValues);
+    //console.log('Inventory_item table updated sucessfully!');
+    res.status(200).json({ message: 'Menu item updated successfully' });
   } catch (err) {
     //console.log("error!");
     console.error("Read failed with error in inventoryRequest: " +err);
