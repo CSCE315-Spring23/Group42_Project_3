@@ -1,83 +1,6 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-import {CreateOrderVectors, CreateOrder} from "../pages/databaseFunctions";
-import CartItem from "./CartItem";
-import './cart.css'
-import { Button } from "../Button";
-import { Link } from 'react-router-dom';
-
-function Cart({ initialItems }) {
-  const [showPopup, setShowPopup] = useState(false);
-  //console.log("II: " + JSON.stringify(initialItems));
-  async function checkoutClick() {
-    //PLACE ORDER!
-    // console.log("here 1.");
-    const [menuItems, ingredientList, cost] = await CreateOrderVectors();
-    console.log(menuItems);
-    console.log(ingredientList);
-    console.log(cost);
-    await CreateOrder(menuItems, ingredientList, cost);
-    console.log("orderC");
-    setShowPopup(true);
-  }
-
-  const handleClose = () => {
-   setShowPopup(false);
-   window.location.reload();
-   
- }
-
-  const [items, setItems] = useState(initialItems);
-
-  useEffect(() => {
-    setItems(initialItems);
-  }, [initialItems]);
-
-  //console.log("Items: " + items);
-
-  const updateQty = (id, newQty) => {
-    const newItems = items.map((item) => {
-      if (item.id === id) {
-        return { ...item, qty: newQty };
-      }
-      return item;
-    });
-    setItems(newItems);
-  };
-
-  const total = items
-    .reduce((total, item) => total + item.price * item.qty, 0)
-    .toFixed(2);
-
-  return (
-    <div className="Cart">
-      <h1 className="Cart-title">Shopping Cart</h1>
-      <div className="Cart-itemList">
-        {items.map((item) => (
-          <CartItem key={item.id} updateQty={updateQty} {...item} />
-        ))}
-      </div>
-      <h2 className="Cart-total">Total: {total}</h2>
-      <Button className='btn--cart' buttonStyle={'btn--primary'} buttonSize={'btn--large'} onClick={() => { checkoutClick(); }}>Checkout</Button>
-      {showPopup &&
-        <div className="popup">
-          <div className="popup-content">
-            <h2>Order Placed</h2>
-            <p className="carttext">''</p>
-            <Button onClick={handleClose}><Link to='/'  style={{ color: 'white', textDecoration: 'none' }}>
-            Start Over
-            </Link></Button>
-          </div>
-        </div>
-      }
-    </div>
-  );
-}
-
-export default Cart;
-=======
 import React, { useEffect, useState } from "react";
 import CartItem from "./CartItem";
+import {CreateOrderVectors, createOrder} from './databaseFunctions'
 import './cart.css'
 import { Button } from "../Button";
 import { Link } from 'react-router-dom';
@@ -86,8 +9,14 @@ import SimilarItems from "./SimilarItems";
 function Cart({ initialItems }) {
   const [showPopup, setShowPopup] = useState(false);
 
-  function checkoutClick() {
+  async function checkoutClick() {
     //PLACE ORDER!
+    const [menuItems, ingredientList, cost] = await CreateOrderVectors();
+    console.log(menuItems);
+    console.log(ingredientList);
+    console.log(cost);
+    await CreateOrder(menuItems, ingredientList, cost);
+    console.log("orderC");
     setShowPopup(true);
   }
 
@@ -148,4 +77,3 @@ function Cart({ initialItems }) {
 }
 
 export default Cart;
->>>>>>> aa0730180967101e28bf93a7e7b2a31dfa8e1204
