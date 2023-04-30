@@ -4,17 +4,22 @@ import { LoginButton } from './LoginButton';
 import './Popup.css';
 
 function Login({ onClose, popupStyle }) {
-  const [userData, setUserData] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
+  const [userPassword, setUserPassword] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleUserUpdate = (user) => {
-    setUserData(user);
+    setUserEmail(user);
+    setUserPassword(user);
   };
 
   const handleClose = () => {
-    if (userData && userData.email === 'manager@example.com') {
+    console.log(userEmail)
+    console.log(userPassword)
+    if (userEmail === 'manager@example.com') {
       // Navigate to manager view page
-    } else if (userData && userData.email === 'employee@example.com') {
+      
+    } else if (userEmail === 'employee@example.com') {
       // Navigate to employee view page
     } else {
       setErrorMessage('Invalid credentials');
@@ -29,12 +34,16 @@ function Login({ onClose, popupStyle }) {
           name="username"
           type="email"
           placeholder="email"
+          value={userEmail}
+          onChange={(event)=>setUserEmail(event.target.value)}
         />
         <input
           className="footer-input xt"
           name="password"
           type="password"
           placeholder="password"
+          value={userPassword}
+          onChange={(event)=>setUserPassword(event.target.value)}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
