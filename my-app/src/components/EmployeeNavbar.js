@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 //Navbar personalized to fit Employee's View
-function Navbar() {
+function EmployeeNavbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -20,10 +20,11 @@ function Navbar() {
   };
 
   function checkIfManager(){
-    localStorage.setItem('isManager', true)
+    document.getElementById("managerViewTab").style.display = 'none';
+    // localStorage.setItem('isManager', false)
     const isBooleanTrue = localStorage.getItem('isManager') === 'true';
-    if(!isBooleanTrue){
-      document.getElementById("managerViewTab").style.display = 'none';
+    if(isBooleanTrue){
+      document.getElementById("managerViewTab").style.display = 'unset';
     }
   }
 
@@ -53,7 +54,7 @@ function Navbar() {
               </li>
             <li className='nav-item'>
               <Link to='/EmployeeView' className='nav-links' onClick={closeMobileMenu}>
-                OrderFood
+                OrderAsEmployee
               </Link>
             </li>
             
@@ -78,4 +79,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default EmployeeNavbar;
