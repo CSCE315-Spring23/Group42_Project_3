@@ -96,31 +96,6 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
   }
 });
 
-//Fetch orders from database where start and end are dates
-app.get('/orderRequest/:start/:end', async (req, res) => {
-  try {
-    const start = req.params.start;
-    const end = req.params.end;
-    console.log("start:", start);
-    console.log("end:", end);
-    if (start === '2020-01-01' && end === '2023-04-01') {
-      console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 30');
-      const { rows } = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
-      res.json(rows);
-    } else {
-      console.log('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id');
-      const { rows } = await pool.query('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id', [start, end]);
-      res.json(rows);
-    }
-    //console.table(rows);
-
-  } catch (err) {
-    //console.log("error!");
-    console.error("Read failed with error in orderRequest: " + err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
 //Fetch list of recipes on the menu
 app.get('/recipeRequest', async (req, res) => {
   try {
@@ -153,7 +128,32 @@ app.get('/menuListRequest', async (req, res) => {
   }
 });
 
-//Fetch Restock Report which are Inventory items from database that need to be restock
+//Fetch orders from database where start and end are dates
+app.get('/orderRequest/:start/:end', async (req, res) => {
+  try {
+    const start = req.params.start;
+    const end = req.params.end;
+    console.log("start:", start);
+    console.log("end:", end);
+    if (start === '2020-01-01' && end === '2023-04-01') {
+      console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 30');
+      const { rows } = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
+      res.json(rows);
+    } else {
+      console.log('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id');
+      const { rows } = await pool.query('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id', [start, end]);
+      res.json(rows);
+    }
+    //console.table(rows);
+
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in orderRequest: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Fetch menu items that are more commonly sold together
 app.get('/soldTogether', async (req, res) => {
   try {
     var popularCombos = [];
@@ -188,11 +188,13 @@ app.get('/soldTogether', async (req, res) => {
     //console.log(popularCombos);
 
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " + err);
+    console.error("Read failed with error in soldTogetherRequest: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
+//Fetch Restock Report which are Inventory items from database that need to be restock
+//*********WORK IN PROGRESS */
 app.get('/restockRequest', async (req, res) => {
   try {
     var queryToUse;
@@ -208,6 +210,7 @@ app.get('/restockRequest', async (req, res) => {
   }
 });
 
+//************WORK IN PROGRESS */
 //Fetch sales history from database where start and end are dates
 app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
   try {
@@ -230,6 +233,33 @@ app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
   }
 });
 
+//Fetch orders from database where start and end are dates
+//*********WORK IN PROGRESS */
+app.get('/excessRequest/:start/:end', async (req, res) => {
+  try {
+    const start = req.params.start;
+    const end = req.params.end;
+    console.log("start:", start);
+    console.log("end:", end);
+    if (start === '2020-01-01' && end === '2023-04-01') {
+      console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 30');
+      const { rows } = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
+      res.json(rows);
+    } else {
+      console.log('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id');
+      const { rows } = await pool.query('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id', [start, end]);
+      res.json(rows);
+    }
+    //console.table(rows);
+
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in excessRequest: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 //Update Inventory items from table
 app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
   try {
@@ -247,7 +277,7 @@ app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
     res.status(200).json({ message: 'Inventory item updated successfully' });
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in inventoryUpdate: " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -269,7 +299,7 @@ app.get('/menuUpdate/:ID/:name/:cost', async (req, res) => {
     res.status(200).json({ message: 'Menu item updated successfully' });
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in menuUpdate: " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -292,32 +322,155 @@ app.get('/recipesUpdate/:ID/:name/:invID/:menuID/:quantity', async (req, res) =>
     res.status(200).json({ message: 'Menu item updated successfully' });
   } catch (err) {
     //console.log("error!");
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in recipesUpdate: " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 //Add Inventory items to table
-app.get('/inventoryAddItem/:ID/:name/:cost/:quantity', async (req, res) => {
+app.get('/inventoryAddItem/:name/:cost/:quantity', async (req, res) => {
   try {
-    const ID = parseInt(req.params.ID);
+    //get next inventory id
+    var queryToUse = "SELECT MAX(INVENTORY_ID) as max_id FROM inventory_item";
+    console.log(queryToUse);
+    const {rows} = await pool.query(queryToUse);
+    //console.log(rows[0]['max_id']);
+
+    const ID = parseInt(rows[0]['max_id']) + 1;
+    console.log(ID);
+
     const name = req.params.name;
     const cost = parseFloat(req.params.cost);
     const quantity = parseInt(req.params.quantity);
     //console.log(ID, name, cost, quantity);
 
-    var queryString = 'UPDATE inventory_item SET INVENTORY_ITEM_NAME = $1, INVENTORY_ITEM_COST = $2, INVENTORY_ITEM_QUANTITY = $3 WHERE inventory_id = $4';
-    const queryValues = [name, cost, quantity, ID];
+    var queryString = 'INSERT INTO inventory_item (inventory_ID, inventory_ITEM_NAME, inventory_item_cost, inventory_item_quantity) VALUES ($1, $2, $3, $4)';
+    const queryValues = [ID, name, cost, quantity];
 
     await pool.query(queryString, queryValues);
-    //console.log('Inventory_item table updated sucessfully!');
-    res.status(200).json({ message: 'Inventory item updated successfully' });
+    res.status(200).json({ message: 'Inventory item added successfully' });
+
   } catch (err) {
-    //console.log("error!");
-    console.error("Read failed with error in inventoryRequest: " +err);
+    console.error("Read failed with error in inventoryAddItem: " +err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+//Add Menu items to table
+app.get('/menuAddItem/:name/:cost', async (req, res) => {
+  try {
+    //get next inventory id
+    var queryToUse = "SELECT MAX(MENU_ITEM_ID) as max_id FROM menu";
+    console.log(queryToUse);
+    const {rows} = await pool.query(queryToUse);
+    //console.log(rows[0]['max_id']);
+
+    const ID = parseInt(rows[0]['max_id']) + 1;
+    console.log(ID);
+
+    const name = req.params.name;
+    const cost = parseFloat(req.params.cost);
+    //console.log(ID, name, cost);
+
+    var queryString = 'INSERT INTO Menu (MENU_ITEM_ID, MENU_ITEM_NAME, MENU_ITEM_COST) VALUES ($1, $2, $3)';
+    const queryValues = [ID, name, cost];
+
+    await pool.query(queryString, queryValues);
+    res.status(200).json({ message: 'Menu item added successfully' });
+
+  } catch (err) {
+    console.error("Read failed with error in menuAddItem: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Add Recipe items to table
+app.get('/recipesAddItem/:name/:invID/:menuID/:quantity', async (req, res) => {
+  try {
+    //get next inventory id
+    var queryToUse = "SELECT MAX(RECIPE_ID) as max_id FROM recipe_item";
+    console.log(queryToUse);
+    const {rows} = await pool.query(queryToUse);
+    //console.log(rows[0]['max_id']);
+
+    const ID = parseInt(rows[0]['max_id']) + 1;
+    console.log(ID);
+
+    const name = req.params.name;
+    const invID = parseInt(req.params.invID);
+    const menuID = parseInt(req.params.menuID);
+    const quantity = parseInt(req.params.quantity);
+    //console.log(ID, name, cost);
+
+    var queryString = 'INSERT INTO recipe_item (RECIPE_ID, RECIPE_ITEM_NAME, INVENTORY_ID, MENU_ID, AMT_USED) VALUES ($1, $2, $3, $4, $5)';
+    const queryValues = [ID, name, invID, menuID, quantity];
+
+    await pool.query(queryString, queryValues);
+    res.status(200).json({ message: 'Recipe item added successfully' });
+
+  } catch (err) {
+    console.error("Read failed with error in recipesAddItem: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Delete Inventory items from table
+app.get('/inventoryDeleteItem/:ID', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    //console.log(ID);
+
+    var queryString = 'DELETE FROM inventory_item WHERE inventory_id = $1';
+    const queryValues = [ID];
+
+    await pool.query(queryString, queryValues);
+    //console.log('Inventory_item table updated sucessfully!');
+    res.status(200).json({ message: 'Inventory item removed successfully' });
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in inventoryDeleteItem: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Delete Menu items from table
+app.get('/menuDeleteItem/:ID', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    //console.log(ID);
+
+    var queryString = 'DELETE FROM menu WHERE menu_item_id = $1';
+    const queryValues = [ID];
+
+    await pool.query(queryString, queryValues);
+    //console.log('Inventory_item table updated sucessfully!');
+    res.status(200).json({ message: 'Menu item removed successfully' });
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in menuDeleteItem: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Delete Recipes items from table
+app.get('/recipesDeleteItem/:ID', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    //console.log(ID);
+
+    var queryString = 'DELETE FROM recipe_item WHERE recipe_id = $1';
+    const queryValues = [ID];
+
+    await pool.query(queryString, queryValues);
+    //console.log('Inventory_item table updated sucessfully!');
+    res.status(200).json({ message: 'Recipe item removed successfully' });
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in recipesDeleteItem: " +err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // app.get('/menuRequest/:name', async (req, res) => {
 //   try {
 //     const name = req.params.name;
