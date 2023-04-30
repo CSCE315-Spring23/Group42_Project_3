@@ -58,7 +58,7 @@ th:nth-child(5) {
 
 .table-header-space{
   background-color: rgba(92,0,32,255);
-  height: 50px;
+  height: 5px;
   position: fixed;
   top: 0;
   left: 0;
@@ -66,7 +66,7 @@ th:nth-child(5) {
 }
 
 .table-tab{
-  margin-top: 150px;
+  margin-top: 20px;
   background-color: whitesmoke;
 }
 

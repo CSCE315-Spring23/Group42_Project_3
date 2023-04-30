@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {GetInventoryTable, GetRecipesTable, GetMenuTable, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable} from './pages/databaseFunctions';
+import {GetInventoryTable, GetRecipesTable, GetMenuTable, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable,
+        AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem} from './pages/databaseFunctions';
 import './Table.css';
 
 function TableInfo(props) {
@@ -16,12 +17,56 @@ function TableInfo(props) {
     const newData = [...tableData];
     newData[event.target.dataset.row][event.target.dataset.field] = event.target.value;
     setTableData(newData);
-    console.log("change");
+    //console.log("change");
   };
+
   const handleNewAttributeChange = (event) => {
     // update the new attribute state
     const { name, value } = event.target;
     setNewAttribute(prevState => ({ ...prevState, [name]: value }));
+    console.log(newAttribute);
+  };
+
+  const handleAddAttribute = (event) => {
+    // update the state based on user input
+    console.log(newAttribute);
+    if(tab_id === 0){
+      const name = newAttribute['Item Name'];
+      const cost = parseFloat(newAttribute['Cost']);
+      const quantity = parseInt(newAttribute['Quantity']);
+      //console.log(name, cost, quantity);
+      AddInventoryItem(name, cost, quantity);
+    } else if (tab_id === 1){
+      const name = newAttribute['Item Name'];
+      const cost = parseFloat(newAttribute['Cost']);
+      //console.log(name, cost);
+      AddMenuItem(name, cost);
+    } else if(tab_id === 2){
+      const name = newAttribute['Item Name'];
+      const invID = parseInt(newAttribute['Inventory ID']);
+      const menuID = parseInt(newAttribute['Menu ID']);
+      const quantity = parseInt(newAttribute['Amount Used']);
+      AddRecipesItem(name, invID, menuID, quantity);
+    }
+    setNewAttribute({});
+  };
+
+  const handleDeleteAttribute = (event) => {
+    // update the state based on user input
+    if(tab_id === 0){
+      const ID = newAttribute['Inventory ID'];
+      console.log(ID);
+      DeleteInventoryItem(ID);
+    } else if (tab_id === 1){
+      const ID = newAttribute['Menu ID'];
+      console.log(ID);
+      DeleteMenuItem(ID);
+    } else if(tab_id === 2){
+      const ID = newAttribute['Recipe ID'];
+      console.log(ID);
+      DeleteRecipesItem(ID);
+    }
+    setNewAttribute({});
   };
 
   const handleKeyPress = (event, data) => {
@@ -38,23 +83,6 @@ function TableInfo(props) {
     }
   };
 
-  const handleAddAttribute = (event) => {
-    // update the state based on user input
-    const newAttributeData = {};
-    props.headers.forEach(header => {
-      newAttributeData[header] = newAttribute[header] || '';
-    });
-    setTableData([...tableData, newAttributeData]);
-    setNewAttribute({}); // clear new attribute state
-  };
-  const handleDeleteAttribute = (event) => {
-    // update the state based on user input
-    const newData = [...tableData];
-    newData[event.target.dataset.row][event.target.dataset.field] = event.target.value;
-    setTableData(newData);
-    console.log("change");
-  };
-
   return (
     <div>
       {props.headers.map((header) =>(
@@ -67,7 +95,7 @@ function TableInfo(props) {
           />
         </div>
       ))}
-      <div style={{ display: 'inline-block', margin: '10px' }}>
+      <div style={{ display: 'inline-block', margin: '10px', border: '5px' }}>
           <button onClick={handleAddAttribute}>Add Attribute</button>
           <button onClick={handleDeleteAttribute}>Delete</button>
       </div>
@@ -155,24 +183,6 @@ const Table = () => {
           {tabs.map((tab) => (
             <div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>
             <TableInfo tableData={tab.tableData} headers={tab.headers} id={tab.id}/>
-                {/* <table>
-                    <thead>
-                        <tr>
-                            {tab.headers.map((header) =>(
-                                <th key={header}>{header}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tab.tableData.map((data) => (
-                            <tr key={data.id}>
-                                {Object.keys(data).map((key) => (
-                                    <td key={key}>{data[key]}</td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table> */}
             </div>
           ))}
         </div>
