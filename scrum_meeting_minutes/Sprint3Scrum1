@@ -1,0 +1,40 @@
+SCRUM Meeting 1 for Project 3
+Prepared by: Daniela Martinez
+Meeting Date: 04/21/2023
+
+Meeting Attendees
+Whole team in attendance
+
+Meeting Agenda Items
+Discuss plans for this sprint
+Set deliverables before scrum meeting 2
+Update progress from all members
+
+Status Update Since Last Meeting
+Accomplishments:
+Manager View: All tables have been populated with database
+Weather API has been implemented to the table
+Google sign-in API implemented
+
+Tasks Completed:
+Task Description                  Assigned to       Completed? (yes/no)
+Tables connection to database     Daniela M         yes
+Weather API                       Daniela S         yes
+
+Before The Next Meeting
+Plans:
+Editing and deleting items from manager charts
+Deploy our website
+
+Task Assignments:
+Task Description                                      Assigned to
+Editing and deleting items from manager charts        Daniela M
+Deploy our website                                    Arjun
+Google Translate API                                  Arjun
+Create Order interaction with database                Srikar
+Employee view checkout cart                           Srikar
+Combos implementation                                 Ariela
+Debugging and updating footer                         Daniela S
+
+Minutes from Previous Meeting
+Previous meeting, we finalize all of our deadlines for the 2nd sprint and completed some of our larger tasks we wanted to get done before the start of sprint 3. We all gave updated on our progress and redistributed tasks for the next sprint. Additionally, we updated the tasks that needed to be completed and added to task in terms of errors/bugs handling we encountered throughout the last sprint.
