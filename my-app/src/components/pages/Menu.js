@@ -1,7 +1,8 @@
 import React from 'react';
 import Footer from '../Footer';
 import CardList from '../CardList';
-import Navbar from '../CustomerNavbar';
+import Navbar from '../Navbar';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 
 {/*
 * Shows all the menu options for customers to choose from and add to their orders

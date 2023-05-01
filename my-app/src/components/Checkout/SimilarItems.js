@@ -1,6 +1,6 @@
 import React from 'react';
 import './SimilarItem.css';
-import CardItem from './CardItem';
+import CardItem from '../CardItem';
 import {GetMenuList, GetIngredients, GetSoldTogether, GetCartItems} from '../pages/databaseFunctions'
 import Loading from '../Loading';
 import './cart.css'
@@ -93,6 +93,7 @@ function SimilarItems() {
           label={card.label}
           key={index}
           ingredients={card.ingredients}
+          style = 'ci'
         />
       );
     });

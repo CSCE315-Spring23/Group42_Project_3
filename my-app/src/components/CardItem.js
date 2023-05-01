@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Popup from './Popups/Popup';
 
+const STYLES = ['cards__item', 'ci'];
+
 /**
   * React Component for displaying menu items in our menu page
   * @param {Object} props - The props that were passed to the component
@@ -15,6 +17,10 @@ import Popup from './Popups/Popup';
 function CardItem(props) {
   const [showPopup, setShowPopup] = useState(false);
 
+  const checkStyle = STYLES.includes(props.style)
+    ? props.style
+    : STYLES[0];
+
   /**
     * Function for toggling the display of the popup
   */
@@ -24,37 +30,37 @@ function CardItem(props) {
 
   return (
     <>
-      <li className='cards__item'>
+      <li className={checkStyle}>
         {props.path ? (
-          <Link className='cards__item__link' to={props.path}>
-            <figure className='cards__item__pic-wrap' data-category={props.label}>
+          <Link className={`${checkStyle}__link`} to={props.path}>
+            <figure className={`${checkStyle}__pic-wrap`} data-category={props.label}>
               <img
-                className='cards__item__img'
+                className={`${checkStyle}__img`}
                 alt='Food item image'
                 src={props.src}
               />
             </figure>
-            <div className='cards__item__info'>
-              <h5 className='cards__item__text'>{props.text}</h5>
+            <div className={`${checkStyle}__info`}>
+              <h5 className={`${checkStyle}__text`}>{props.text}</h5>
             </div>
           </Link>
         ) : (
-          <Link className='cards__item__link' onClick={togglePopup}>
-            <figure className='cards__item__pic-wrap' data-category={props.label}>
+          <Link className={`${checkStyle}__link`} onClick={togglePopup}>
+            <figure className={`${checkStyle}__pic-wrap`} data-category={props.label}>
               <img
-                className='cards__item__img'
+                className={`${checkStyle}__img`}
                 alt='Food item image'
                 src={props.src}
               />
             </figure>
-            <div className='cards__item__info'>
-              <h5 className='cards__item__text'>{props.text}</h5>
+            <div className={`${checkStyle}__info`}>
+              <h5 className={`${checkStyle}__text`}>{props.text}</h5>
             </div>
           </Link>
         )}
       </li>
       {showPopup && (
-        <Popup text = {props.text} price = {props.label} ingredients = {props.ingredients} onClose={togglePopup} />
+        <Popup text={props.text} price={props.label} ingredients={props.ingredients} onClose={togglePopup} />
       )}
     </>
   );

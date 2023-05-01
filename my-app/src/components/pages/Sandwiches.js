@@ -1,8 +1,9 @@
 import Footer from '../Footer';
 import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
-import Navbar from '../CustomerNavbar';
+import Navbar from '../Navbar';
 import Loading from '../Loading';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 /*
 * Shows the menuboard for all menu items in Rev's including prices
 * @author: ariela
@@ -37,7 +38,7 @@ function Sandwiches() {
 
     /* HTML structure*/
     return (<>
-    <Navbar />
+    <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
     <div id="menu">
         <CardList cardData={cardData} title="SANDWICHES" />
     </div>

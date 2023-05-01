@@ -1,8 +1,9 @@
 import Footer from '../Footer';
 import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
-import Navbar from '../CustomerNavbar';
+import Navbar from '../Navbar';
 import Loading from '../Loading';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 
 function Baskets() {
   var menuItems = GetMenuList(5, 6);
@@ -33,7 +34,7 @@ function Baskets() {
   }
 
     return (<>
-    <Navbar />
+    <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
     <div id="menu">
         <CardList cardData={cardData} title="BASKETS" />
     </div>

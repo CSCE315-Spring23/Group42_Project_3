@@ -1,7 +1,8 @@
 import Footer from '../Footer';
 import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
-import Navbar from '../CustomerNavbar';
+import Navbar from '../Navbar';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 import Loading from '../Loading';
 
 function Burgers() {
@@ -36,7 +37,8 @@ function Burgers() {
   }
 
     return (<>
-    <Navbar />
+    <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
+
     <div id="menu">
         <CardList cardData={cardData} title="BURGERS" />
     </div>
