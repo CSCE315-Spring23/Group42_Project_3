@@ -38,7 +38,7 @@ function Sides() {
     return (<>
     <Navbar />
     <div id="menu">
-        <CardList cardData={cardData} title="SIDES" />
+        <CardList cardData={cardData} title="SIDES & DRINKS" />
     </div>
 
       <Footer/>

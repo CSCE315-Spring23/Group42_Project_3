@@ -82,7 +82,7 @@ function Navbar() {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Sides
+                Sides & Drinks
               </Link>
             </li>
             <li className='nav-item'>
