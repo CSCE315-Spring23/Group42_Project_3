@@ -3,13 +3,31 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
+/**
+  * Navbar component displaying a navigation bar with links to different pages for the Manager
+  * @function Navbar
+  * @returns {JSX.Element} Navbar component
+*/
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
+  /**
+  * Closes the mobile menu.
+  * @function closeMobileMenu
+  */
   const handleClick = () => setClick(!click);
+
+  /**
+  * Closes the mobile menu.
+  * @function closeMobileMenu
+  */
   const closeMobileMenu = () => setClick(false);
 
+  /**
+  * Shows the sign out button if the window is wide enough.
+  * @function showButton
+  */
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);

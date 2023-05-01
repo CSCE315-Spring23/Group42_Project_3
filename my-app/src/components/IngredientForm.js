@@ -10,21 +10,22 @@ import './IngredientForm.css';
   * @return {JSX.Element} Returns a JSX Element that displays the ingredient form.
 */
 const IngredientForm = ({ ingredients, setQuantities }) => {
+  // State hook to set the quantity values of the ingredients in the form
   const [quantityValues, setQuantityValues] = useState(ingredients.map(() => 0));
 
+  /**
+  * This function is called when a quantity button is clicked. It updates the quantity value for the
+  * corresponding ingredient in the state hook.
+  * @param {number} index The index of the ingredient in the ingredients array.
+  * @param {number} value The value of the button that was clicked.
+  */
   const handleChange = (index, value) => {
-    const newValues = [...quantityValues];
-    // If the user selects "Regular", deselect the previously selected button (if any)
-    // if (value === 0) {
-    //   newValues[index] = (newValues[index] === 0) ? -1 : 0;
-    // } else {
-    //   newValues[index] = (newValues[index] === value) ? 0 : value;
-    // }
-    newValues[index] = value;
-    setQuantityValues(newValues);
-    setQuantities(newValues);
+  const newValues = [...quantityValues];
+  newValues[index] = value;
+  setQuantityValues(newValues);
+  setQuantities(newValues);
   };
-
+  // Array of special buttons for each ingredient
   const specialButtons = [
     {
         label1: "None",
@@ -81,6 +82,12 @@ const IngredientForm = ({ ingredients, setQuantities }) => {
         show: "n",
     },
   ];
+
+  /**
+  * This function returns the index of the special button array based on the ingredient.
+  * @param {string} ingredient The name of the ingredient.
+  * @return {number} Returns the index of the special button array.
+  */
 
   function getButtonsIndex(ingredient) {
     if(ingredient === "Beef Patty"){
