@@ -117,7 +117,41 @@ function GetRestockReport() {
 }
 
 //SALES REPORT
+function GetSalesReport(start, end){
+  const [salesHistory, setSalesHistory] = useState([]);
+  console.log(`${host}/salesHistoryRequest/${start}/${end}`);
+  useEffect(() => {
+    async function fetchSalesHistory() {
+      const response = await fetch(`${host}/salesHistoryRequest/${start}/${end}`);
+      const data = await response.json();
+      setSalesHistory(data);
+      //console.table(data);
+    }
+
+    fetchSalesHistory();
+  }, [start, end]);
+
+  return salesHistory;
+}
+
 //EXCESS REPORT
+function GetExcessReport(start, end){
+  const [excessList, setExcessList] = useState([]);
+  console.log(`${host}/excessRequest/${start}/${end}`);
+  useEffect(() => {
+    async function fetchExcessList() {
+      const response = await fetch(`${host}/excessRequest/${start}/${end}`);
+      const data = await response.json();
+      setExcessList(data);
+      //console.table(data);
+    }
+
+    fetchExcessList();
+  }, [start, end]);
+
+  return excessList;
+}
+
 //SOLD TOGETHER
 
 /**************** EDIT TABLE ****************/
@@ -236,7 +270,7 @@ async function DeleteRecipesItem(ID) {
 
 //   useEffect(() => {
 //     async function fetchMenuItems() {
-//       const response = await fetch(`http://localhost:10000/menuRequestAll/`);
+//       const response = await fetch(`${host}/menuRequestAll/`);
 //       const data = await response.json();
 //       setMenuItems(data);
 //     }
@@ -410,14 +444,14 @@ function GetSoldTogether() {
 }
 
 function GetPassword(email) {
-  const [password, setPassword] = useState([]);
   //console.log("got here")
+  const [password, setPassword] = useState([]);
+  
   useEffect(() => {
     async function fetchPassword() {
       const response = await fetch(`${host}/password/${email}`);
       const data = await response.json();
       setPassword(data);
-      //console.table(data);
     }
 
     fetchPassword();
@@ -435,7 +469,7 @@ async function CreateOrderVectors() {
   // var myID = 12;
   // useEffect(() => {
     async function fetchCart() {
-      const response = await fetch(`http://localhost:10000/getCart/${myID}`);
+      const response = await fetch(`${host}/getCart/${myID}`);
       const data = await response.json();
       myCart = data.rows[0].orderlist;
       // setCart(data.rows[0].orderlist);
@@ -585,5 +619,5 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
-          GetMenuTable, CreateOrderVectors, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
+          GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
           AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword};

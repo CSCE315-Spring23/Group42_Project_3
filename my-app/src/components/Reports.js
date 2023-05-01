@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import {GetOrdersTable, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
+import {GetOrdersTable, GetExcessReport, GetSalesReport, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
 import './Reports.css';
 
 const Reports = () => {
     const [activeTab, setActiveTab] = useState(0);
     const [startDate, setStartDate] = useState('2020-01-01');
     const [endDate, setEndDate] = useState('2023-04-01');
-    const orderData = GetOrdersTable('2023-03-08','2023-03-08');
 
     //const orderData = ;
     const restockData = GetRestockReport();
     const soldTogether = GetSoldTogether();
+    const orderData = GetOrdersTable(startDate,endDate);
+    const salesData = GetSalesReport('2023-01-01', '2023-04-01');
+    const excessData = GetExcessReport('2020-04-01', '2022-05-01');
 
     const formattedOrderData = orderData.map((row) => {
         return {
@@ -25,8 +27,8 @@ const Reports = () => {
           headers: ["ID", "Date", "Cost"],
           tableData: formattedOrderData
         },
-        { id: 1, name: 'X/Y Reports',
-          headers: ["Report ID", "Order ID", "Cost", "Quantity"],
+        { id: 1, name: 'X/Z Reports',
+          headers: ["Report ID", "Last Order ID", "ZReport Date", "Total Cost", "Menu Item", "Quantity"],
           tableData: [
             {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
             {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
@@ -38,17 +40,12 @@ const Reports = () => {
         },
         { id: 3, name: 'Sales Report',
           headers: ["ID", "Item Name", "Quantity"],
-          tableData: [
-            {id: 1, item_name: "hello", quantity: 6},
-            {id: 2, item_name: "item2", quantity: 6},
-          ]
+          tableData: salesData
         },
         { id: 4, name: 'Excess Report',
-          headers: ["ID", "Item Name"],
-          tableData: [
-            {id: 1, item_name: "hello"},
-            {id: 2, item_name: "item2"},
-          ]},
+          headers: ["Total Amount Used", "Inventory ID", "Item Name"],
+          tableData: excessData
+        },
         { id: 5, name: 'Sold Together',
           headers: ["ID", "Item 1", "Item 2", "# of Times Sold Together"],
           tableData: soldTogether
@@ -84,6 +81,10 @@ const Reports = () => {
                     {tabs.map((tab) => (
                         <div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>
                             <div style={{ display: activeTab === 0 ? 'block' : 'none'}}>
+                                <input type="date" id="start-date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                                <br />
+                                <label htmlFor="end-date">End Date: </label>
+                                <input type="date" id="end-date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                             </div>
                             <table>
                                 <thead>

@@ -154,7 +154,6 @@ const Table = () => {
     },
   ];
 
-
   const handleClick = (tabIndex) => {
     setActiveTab(tabIndex);
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../Button';
 import { LoginButton } from './LoginButton';
 import {GetPassword} from "../pages/databaseFunctions";
@@ -9,6 +9,8 @@ function Login({ onClose, popupStyle }) {
   const [userPassword, setUserPassword] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
+  console.log("got here")
+  console.log(userEmail)
   const handleUserUpdate = (user) => {
     setUserEmail(user);
     setUserPassword(user);
@@ -17,9 +19,9 @@ function Login({ onClose, popupStyle }) {
   async function loginClick() {
     
     //error here
-    await GetPassword(userEmail);
+    //const pass = GetPassword("hobbit@shiremail.com");
     //console.log(pass);
-    console.log(userEmail)
+    //console.log(userEmail)
     if (userEmail === 'manager@example.com') {
       // Navigate to manager view page
       localStorage.setItem('isManager', true)
@@ -60,10 +62,12 @@ function Login({ onClose, popupStyle }) {
           onChange={(event)=>setUserPassword(event.target.value)}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <div>
         <Button onClick={() => { loginClick(); }} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
         {' '}
         Log In
         </Button>
+        </div>
         {/* <div className='loginContent'>Or Sign In with Google</div> */}
         <span className="or">
           <hr />
