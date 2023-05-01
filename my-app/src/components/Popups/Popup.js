@@ -62,7 +62,6 @@ function Popup({ text, ingredients, onClose, price, popupStyle = 'style1'}) {
             <div className='bottomBar'>
             <Button className="close" buttonStyle='btn--outline' onClick={onClose}>X</Button>
             <Button className="cart" buttonStyle="btn--outline" onClick={async () => { await checkoutClick(); onClose(); }}>ADD TO CART</Button>
-            <Button className="checkout" buttonStyle='btn--outline' path={'/checkout'}>CHECK OUT</Button>
             </div>
         </>
       )}
