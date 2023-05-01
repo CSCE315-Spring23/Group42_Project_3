@@ -2,6 +2,15 @@ import React from 'react';
 import './View.css';
 import Item from './Item';
 
+/**
+ * A component for displaying a menu board with various menu items.
+ * @param {object} props - The props object passed to this component.
+ * @param {object[]} props.burgers - An array of burger menu items.
+ * @param {object[]} props.baskets - An array of basket menu items.
+ * @param {object[]} props.sandwiches - An array of sandwich menu items.
+ * @param {object[]} props.sides - An array of side menu items.
+ * @param {object[]} props.seasonal - An array of seasonal menu items.
+ */
 const MenuBoardView = ({burgers, baskets, sandwiches, sides, seasonal}) => {
   return (
     <div className='body'> 
