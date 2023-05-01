@@ -77,6 +77,12 @@
   transition: all 0.2s ease-out;
 }
 
+/* .nav-links:active {
+  color: #242222;
+  border-bottom: 4px solid #fff;
+  transition: all 0.2s ease-out;
+} */
+
 .fa-bars {
   color: #fff;
 }

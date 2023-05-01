@@ -4,11 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faCloud, faCloudSun, faCloudRain } from '@fortawesome/free-solid-svg-icons';
 import './Weather.css';
 
+/**
+ * Displays the current weather information of a specified location.
+ * Uses the Weather API from weatherapi.com to retrieve the weather data.
+ */
 class Weather extends Component {
+  /**
+   * Initializes the component's state with weatherData property set to null.
+   */
   state = {
     weatherData: null
   };
 
+  /**
+   * Fetches the weather data for the specified location and updates the component's state with the response data.
+   */
   componentDidMount() {
     const API_KEY = 'c162fb7cca1b4833829201608231704';
     const LOCATION = 'College Station, TX';
@@ -26,6 +36,11 @@ class Weather extends Component {
       });
   }
 
+  /**
+   * Returns the FontAwesomeIcon object for the weather condition icon corresponding to the provided conditionCode.
+   * @param {Number} conditionCode - The condition code of the weather condition.
+   * @returns {FontAwesomeIcon} The FontAwesomeIcon object for the corresponding weather condition icon.
+   */
   getWeatherIcon = (conditionCode) => {
     if (conditionCode === 1000) {
       return faSun;
@@ -48,8 +63,12 @@ class Weather extends Component {
     } else {
       return faCloudRain;
     }
-  };  
+  };
 
+  /**
+   * Renders the Weather component with the current weather information and weather condition icon.
+   * @returns {JSX.Element} The rendered Weather component.
+   */
   render() {
     let icon;
     let description;
@@ -67,8 +86,6 @@ class Weather extends Component {
       <div>
         {this.state.weatherData && this.state.weatherData.current ? (
           <div className="weather-widget">
-            
-            {/* <p>{description}</p> */}
             <p className ='weather-temperature'>{temperature ? `${temperature}°C` : ''}</p>
             <FontAwesomeIcon icon={icon} size='2x' className='weathericon'/>
           </div>

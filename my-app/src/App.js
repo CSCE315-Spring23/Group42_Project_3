@@ -1,5 +1,4 @@
 import React from 'react';
-// import Navbar from './components/Navbar';
 import './App.css';
 import Home from './components/pages/Home';
 import Burgers from './components/pages/Burgers';
@@ -15,7 +14,10 @@ import MenuBoard from './components/pages/Menuboard';
 import ManagerView from './components/pages/ManagerView';
 import ManagerDatabaseAccess  from './components/pages/ManagerDatabaseAccess';
 
-//Main App documentation with all the different pages available
+/**
+ * Main App component containing all the different pages available
+ * @returns {JSX.Element} The rendered React element
+ */
 function App() {
   return (
     <>

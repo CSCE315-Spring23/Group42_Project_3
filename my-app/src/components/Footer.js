@@ -6,9 +6,9 @@ import Weather from './Weather';
 import Popup from "./Popups/Popup";
 
 /*
-* Global footer for all pages in our application
-* Keeps links to all differnet views including employee and Manager views
-* @author
+ * Global footer for all pages in our application
+ * Keeps links to all different views including employee and Manager views
+ * @return {JSX.Element} Footer component
 */
 function Footer() {
   const [showPopup, setShowPopup] = useState(false);
@@ -18,7 +18,10 @@ function Footer() {
      //console.log("Updating user data: " + JSON.stringify(userData));
    }, [userData]);
 
-  //console.log("II: " + JSON.stringify(initialItems));
+  /**
+  * Function to be executed when login button is clicked
+  * @function loginClick
+  */
   function loginClick() {
     //check credentials?
     setShowPopup(true);
@@ -29,19 +32,19 @@ function Footer() {
       <div className='footer-links'>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <Button buttonStyle='btn--outline'><Link onClick={() => {loginClick() }}>Employee Login</Link>
+            <Button buttonStyle='btn--outline'  onClick={() => {loginClick() }}>Employee Login
             {showPopup && <Popup popupStyle={'style2'}/>}</Button>
             <Link to='/EmployeeView'>Employee View</Link>
             <Link to='/Menuboard' target="_blank">Menuboard View</Link>
             <Link to='/ManagerView'>Manager View</Link>
           </div>
           <div className='footer-link-items'>
-              <Button buttonStyle='btn--outline'><Link to='/Menuboard'>Menuboard View</Link></Button>
+              <Button buttonStyle='btn--outline' path ='/Menuboard'>Menuboard View</Button>
           </div>
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-              <Button buttonStyle='btn--outline'><Link to='/'>Google Translate</Link></Button>
+              <Button buttonStyle='btn--outline' path = '/'>Google Translate</Button>
           </div>
         </div>
       </div>

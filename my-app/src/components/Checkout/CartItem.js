@@ -23,7 +23,7 @@ function CartItem({ btn, id, name, price, qty, updateQty, mods }) {
       <div className="CartItem">
         {/* <div>({id})</div> */}
         {btn}
-        <div>{name}</div>
+        <div className='item-name'>{name}<CartItemMods id={id} name={name} price={price} qty={qty} mods={mods} /></div>
         <div>${normalPrice.toFixed(2)}</div>
         <div>
           <button className='change-quantity' onClick={subOne} disabled={qty <= 1}>-</button>
@@ -33,7 +33,7 @@ function CartItem({ btn, id, name, price, qty, updateQty, mods }) {
         <div> ${(qty * price).toFixed(2)}</div>
       </div>
       <div className="ModRow">
-      <CartItemMods id={id} name={name} price={price} qty={qty} mods={mods} />
+      
       </div>
     </div>
   );

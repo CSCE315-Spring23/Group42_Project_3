@@ -1,7 +1,13 @@
 import React from 'react';
 import './Cards.css';
 
-//Display one item
+/**
+  * React component that displays a single item for an employee view.
+  * @param {Object} props - The props object containing the following properties:
+  * @param {string} props.text - The text to display for the item.
+  * @param {string} props.ingredients - The ingredients to display for the item.
+  * @returns {JSX.Element} - A React JSX element representing the EmployeeCard component.
+*/
 function EmployeeCard({text, ingredients}) {
   console.log("Ingredients in cards: " + ingredients);
   return (
