@@ -142,7 +142,7 @@ app.get('/menuListRequest', async (req, res) => {
   try {
     var queryToUse;
     queryToUse = 'SELECT menu_item_id, menu_item_name, menu_item_cost FROM menu ORDER BY menu_item_id';
-    console.log(queryToUse);
+    // console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
     //console.log(rows);
@@ -169,7 +169,7 @@ app.get('/soldTogether', async (req, res) => {
                     + "' AND '" + finalDateString + "') " +
                     "GROUP BY m1.MENU_ITEM_NAME, m2.MENU_ITEM_NAME " +
                     "ORDER BY combo_count DESC";
-    console.log(queryToUse);
+    // console.log(queryToUse);
     var i = 1;
     const { rows } = await pool.query(queryToUse);
     for (let row of rows) {
@@ -197,7 +197,7 @@ app.get('/restockRequest', async (req, res) => {
   try {
     var queryToUse;
     queryToUse = 'SELECT * FROM inventory_item WHERE inventory_item_quantity <= 50';
-    console.log(queryToUse);
+    // console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
     //console.log(rows);
@@ -213,14 +213,14 @@ app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
   try {
     const start = req.params.start;
     const end = req.params.end;
-    console.log("start:", start);
-    console.log("end:", end);
+    // console.log("start:", start);
+    // console.log("end:", end);
     var queryToUse = 'SELECT Menu.MENU_ITEM_ID, Menu.MENU_ITEM_NAME, SUM(item_sold.ITEM_SOLD_QUANTITY) AS TOTAL_QUANTITY FROM item_sold ' +
               'JOIN Menu ON Menu.MENU_ITEM_ID = item_sold.MENU_ITEM_ID JOIN Orders ON Orders.ORDER_ID = item_sold.ORDER_ID '+
               'WHERE Orders.DATE_ORDERED BETWEEN $1 AND $2 GROUP BY Menu.MENU_ITEM_ID, Menu.MENU_ITEM_NAME';
     const queryValues = [start, end];
 
-    console.log(queryToUse, queryValues);
+    // console.log(queryToUse, queryValues);
     const { rows } = await pool.query(queryToUse, queryValues);
     res.json(rows);
 
@@ -428,7 +428,6 @@ app.post('/addToCart/:id', async (req, res) => {
   try {
     const myID = req.params.id;
     const item = req.body;
-    //console.log(item);
     const result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
 
     if (result.rowCount === 0) {
@@ -461,55 +460,67 @@ app.get('/getCart/:id', async (req, res) => {
   }
 });
 
-app.get('/createOrder/:menuItemsJSON/:ingredientListJson/:cost', async (req, res) => {
+app.post('/createOrder', async (req, res) => {
   try {
     console.log("here 1.");
-    const menuItems = req.params.menuItemsJSON; 
-    const ingredientList = req.params.ingredientListJSON;
-    const cost = req.params.cost;
-    console.log("here 2.");
+    const requestOptions = req.body;
+    const menuItems = requestOptions.menuItems; 
+    const ingredientList = requestOptions.ingredientList;
+    const cost = requestOptions.cost;
+    console.log("menuItems: " + menuItems);
+    console.log("ingredientItems: " + ingredientList);
+    console.log("cost: " + cost);
     //get new order ID
-    let newOrderID = parseInt(await pool.query('SELECT MAX(order_id) FROM orders'));
+    let newOrderIDquery = await pool.query('SELECT MAX(order_id) FROM orders');
+    // console.log(newOrderIDquery.rows[0]);
+    let newOrderID = newOrderIDquery.rows[0].max;
     newOrderID += 1;
     console.log("value of newOrderID = " + newOrderID);
     //get current date and time
     const now = new Date(); 
     console.log("now: " + now);
-    let year = now.getFullYear;
-    let month = now.getMonth;
-    let date = now.getDate;
-    console.log("year/month/date: " + year + month + date);
+    let year = parseInt(now.getFullYear());
+    let month = parseInt(now.getMonth()) + 1;
+    if (month < 10){
+      month = "0" + month;
+    }
+    let date = parseInt(now.getDate());
+    // console.log("year/month/date: " + year + month + date);
     let dateForDatabase =  year + "-" + month + "-" + date;
-    console.log("current date: " + dateForDatabase);
-    const updateResult = await pool.query("INSERT INTO orders (order_id, date_ordered, order_cost) VALUES ($1, '$2', $3)", [newOrderID, dateForDatabase, cost]);
+    console.log(dateForDatabase);
+    let queryToUse = "INSERT INTO orders (order_id, date_ordered, order_cost) VALUES (" + newOrderID + ", '" + dateForDatabase + "', " + cost + ")"
+    const updateResult = await pool.query(queryToUse);//UNCOMMENT THIS LINE TO ADD TO THE ORDER TABLE IN DATABASE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     console.log("order created");
-    let newItemID = parseInt(await pool.query('SELECT MAX(item_id) FROM item_sold'));
+    let newItemIDquery = await pool.query('SELECT MAX(item_id) FROM item_sold');
+    let newItemID = newItemIDquery.rows[0].max;
+    console.log("value of newItemID = " + newItemID);
     for (let i = 0; i < menuItems.length; i++) {//adding menu items
       newItemID += 1;
-      let Menu_item_name = menuItems.get(i).first;
+      let Menu_item_name = menuItems[i].first;
 
-      let MenuId = parseInt(await pool.query("SELECT menu_item_id FROM menu WHERE menu_item_name = $1", [Menu_item_name]));
+      let MenuIdquery = await pool.query("SELECT menu_item_id FROM menu WHERE menu_item_name = $1", [Menu_item_name]);
+      let MenuId = MenuIdquery.rows[0].menu_item_id;
+      console.log(MenuId)
       // newOrderID = orderID
-      let quantity = menuItems.get(i).second;
-
-      newItemID += 1; //increment itemid
-      let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, MenuId, newOrderID, quantity]);
-      let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= '$1'", [MenuId]);
+      let quantity = menuItems[i].second;
+      queryToUse = "INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('" + newItemID + "', '" + MenuId + "', '" + newOrderID + "', '" + quantity + "')";
+      let insertIntoItemSold = await pool.query(queryToUse);
+      let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= $1", [MenuId]);
       let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [MenuId]);
       //  check getInventoryItemsForMenu if this doesnt work
       const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
       const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
 
       //update inventory item by adding a menu item.
-      for (let j = 0; j < inventoryItemsForMenuItemsArray.length; j++) {//update the inventory based off of what is in each
-        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used.get(i), inventory_id.get(i)]);
+      for (let j = 0; j < inventoryItemsForMenuItems.rows.length; j++) {//update the inventory based off of what is in each
+        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[i], inventory_id[i]]);
       }
-
     }
+    
     for (let i = 0; i < ingredientList.length; i++) {//adding inventory items
       newItemID += 1;
-      let inventoryID = ingredientList.get(i).first;
-      let quantity = ingredientList.get(i).second;
+      let inventoryID = ingredientList[i].first;
+      let quantity = ingredientList[i].second;
       let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, inventoryID, newOrderID, quantity]);
       let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [quantity, inventoryID]);
     }

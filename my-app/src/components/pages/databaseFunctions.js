@@ -250,7 +250,7 @@ function GetCartItems() {
       const element = JSON.parse(myCart[i]);
       if (element.type === "item") {
         const item = { id: j, name: element.name, price: element.price, qty: 1, mods: [...modlist] }
-        console.log("Mod list: ", item.mods);
+        // console.log("Mod list: ", item.mods);
         if (item.mods.indexOf("Fries Combo (+$1.90)") !== -1) {
           item.price += 1.9;
         }
@@ -433,6 +433,13 @@ async function CreateOrderVectors() {
             ingredientList.push(pair); //add a gig em sauce
           }
         }
+        else if (element.name === "Combo"){
+          if (element.quantity === -1) {
+            pair.first = 22;
+            pair.second = 1;
+            ingredientList.push(pair); //add a fries
+          }
+        }
         else {
           if (element.quantity === -1) {
             ingredientList.push(pair); //push item with quanity -1
@@ -452,7 +459,7 @@ async function CreateOrderVectors() {
   return [menuItems, ingredientList, cost];
 }
 
-// let createOrderPromise = Promise.resolve(); //synchronization thing
+let createOrderPromise = Promise.resolve(); //synchronization thing
 async function CreateOrder(menuItems, ingredientList, cost) {
   const requestBody = {
     menuItems: menuItems,
@@ -465,13 +472,20 @@ async function CreateOrder(menuItems, ingredientList, cost) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(requestBody)
   };
+  console.log("CreateOrder started");
 
-  async function ordercreat() {
-  const response = fetch(`${host}/createOrder`, requestOptions);
-  // const data = await response.json();
-      // console.log(data.message);
-  }
-  await ordercreat();
+  createOrderPromise = createOrderPromise.then(async () => {
+    const response = await fetch(`${host}/createOrder`, requestOptions);
+    
+    const data = await response.json();
+    console.log(data.message);
+  });
+  // async function ordercreat() {
+  //   const response = await fetch(`${host}/createOrder/${requestOptions}`);
+  //   // const data = await response.json();
+  //     // console.log(data.message);
+  // }
+  // await ordercreat();
   }
   // return items;
 

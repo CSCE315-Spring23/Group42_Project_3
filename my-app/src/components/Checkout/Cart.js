@@ -18,7 +18,7 @@ function Cart({ initialItems }) {
     console.log(cost);
     await CreateOrder(menuItems, ingredientList, cost);
     console.log("orderC");
-    setShowPopup(true);
+    // setShowPopup(true);
   }
 
   const [items, setItems] = useState(initialItems);
