@@ -501,22 +501,6 @@ app.get('/recipesDeleteItem/:ID', async (req, res) => {
 //   }
 // });
 
-//this function is for getting all items from the menu rather than a start and end
-// app.get('/menuRequestAll', async (req, res) => {
-//   try {
-//     // const start = parseInt(req.params.start);
-//     // const end = parseInt(req.params.end);
-//     //console.log("attempting fetch");
-//     // const userId = req.params.id;
-//     const { rows } = await pool.query(`SELECT * FROM Menu ORDER BY MENU_ITEM_ID`);
-//     res.json(rows);
-//     //console.log(rows);
-//   } catch (err) {
-//     //console.log("error!");
-//     console.error("Read failed with error " +err);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
 
 app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
@@ -631,7 +615,7 @@ app.get('/getCart/:id', async (req, res) => {
 
 app.post('/createOrder', async (req, res) => {
   try {
-    console.log("here 1.");
+    // console.log("here 1.");
     const requestOptions = req.body;
     const menuItems = requestOptions.menuItems; 
     const ingredientList = requestOptions.ingredientList;
@@ -641,13 +625,11 @@ app.post('/createOrder', async (req, res) => {
     console.log("cost: " + cost);
     //get new order ID
     let newOrderIDquery = await pool.query('SELECT MAX(order_id) FROM orders');
-    // console.log(newOrderIDquery.rows[0]);
     let newOrderID = newOrderIDquery.rows[0].max;
     newOrderID += 1;
     console.log("value of newOrderID = " + newOrderID);
     //get current date and time
     const now = new Date(); 
-    console.log("now: " + now);
     let year = parseInt(now.getFullYear());
     let month = parseInt(now.getMonth()) + 1;
     if (month < 10){
@@ -656,7 +638,6 @@ app.post('/createOrder', async (req, res) => {
     let date = parseInt(now.getDate());
     // console.log("year/month/date: " + year + month + date);
     let dateForDatabase =  year + "-" + month + "-" + date;
-    console.log(dateForDatabase);
     let queryToUse = "INSERT INTO orders (order_id, date_ordered, order_cost) VALUES (" + newOrderID + ", '" + dateForDatabase + "', " + cost + ")"
     const updateResult = await pool.query(queryToUse);//UNCOMMENT THIS LINE TO ADD TO THE ORDER TABLE IN DATABASE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     console.log("order created");
@@ -679,13 +660,16 @@ app.post('/createOrder', async (req, res) => {
       //  check getInventoryItemsForMenu if this doesnt work
       const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
       const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
+      console.log("inventory_id: ");
+      console.log(inventory_id);
 
       //update inventory item by adding a menu item.
-      for (let j = 0; j < inventoryItemsForMenuItems.rows.length; j++) {//update the inventory based off of what is in each
-        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[i], inventory_id[i]]);
+      for (let j = 0; j < inventory_id.length; j++) {//update the inventory based off of what is in each
+        console.log("inventory_id at: " + inventory_id[j]);
+        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[j], inventory_id[j]]);
       }
     }
-    
+
     for (let i = 0; i < ingredientList.length; i++) {//adding inventory items
       newItemID += 1;
       let inventoryID = ingredientList[i].first;
