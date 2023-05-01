@@ -409,6 +409,23 @@ function GetSoldTogether() {
   return sold;
 }
 
+function GetPassword(email) {
+  const [password, setPassword] = useState([]);
+
+  useEffect(() => {
+    async function fetchPassword() {
+      const response = await fetch(`${host}/password/${email}`);
+      const data = await response.json();
+      setPassword(data);
+      //console.table(data);
+    }
+
+    fetchPassword();
+  }, []);
+
+  return password;
+}
+
 // let createOrderPromise = Promise.resolve(); //synchronization thing
 async function CreateOrderVectors() {
   // const [myCart, setCart] = useState([]);

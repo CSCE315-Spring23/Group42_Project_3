@@ -193,6 +193,21 @@ app.get('/soldTogether', async (req, res) => {
   }
 });
 
+app.get('/password', async (req, res) => {
+  try {
+    var queryToUse;
+    const email = req.params.email;
+    queryToUse = "SELECT PASSWORD FROM Employee WHERE EMAIL = '" + email + "';";
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+    res.json(rows);
+
+  } catch (err) {
+    console.error("Read failed with error in Restock Request: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 //Fetch Restock Report which are Inventory items from database that need to be restock
 //*********WORK IN PROGRESS */
 app.get('/restockRequest', async (req, res) => {

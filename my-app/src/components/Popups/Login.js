@@ -18,9 +18,14 @@ function Login({ onClose, popupStyle }) {
     console.log(userPassword)
     if (userEmail === 'manager@example.com') {
       // Navigate to manager view page
+      localStorage.setItem('isManager', true)
+      localStorage.setItem('isEmployee', true)
       
     } else if (userEmail === 'employee@example.com') {
       // Navigate to employee view page
+      localStorage.setItem('isManager', false)
+      localStorage.setItem('isEmployee', true)
+
     } else {
       setErrorMessage('Invalid credentials');
     }
