@@ -4,18 +4,51 @@ import { LoginButton } from './LoginButton';
 import {GetPassword} from "../pages/databaseFunctions";
 import './Popup.css';
 
+/**
+ * React component that displays a login form and allows users to log in.
+ *
+ * @param {function} onClose - Callback function to close the login popup.
+ * @param {Object} popupStyle - Style object for the login popup.
+ * @returns {JSX.Element} The rendered login component.
+ */
 function Login({ onClose, popupStyle }) {
+  /**
+   * State hook that holds the email address entered by the user.
+   * 
+   * @type {[string, function]} An array containing the current email value and a function to update it.
+   */
   const [userEmail, setUserEmail] = useState(null);
+  /**
+   * State hook that holds the password entered by the user.
+   * 
+   * @type {[string, function]} An array containing the current password value and a function to update it.
+   */
   const [userPassword, setUserPassword] = useState(null);
+  /**
+   * State hook that holds any error message generated during the login process.
+   * 
+   * @type {[string, function]} An array containing the current error message value and a function to update it.
+   */
   const [errorMessage, setErrorMessage] = useState('');
 
   console.log("got here")
   console.log(userEmail)
+  /**
+   * Callback function to update the state with the user's email and password.
+   * 
+   * @param {string} user - The email and password entered by the user, separated by a comma.
+   * @returns {void}
+   */
   const handleUserUpdate = (user) => {
     setUserEmail(user);
     setUserPassword(user);
   };
-  
+
+  /**
+   * Async function that handles user login.
+   * 
+   * @returns {void}
+   */  
   async function loginClick() {
     
     //error here
@@ -37,6 +70,11 @@ function Login({ onClose, popupStyle }) {
     }
   }
 
+  /**
+   * Callback function to close the login popup.
+   * 
+   * @returns {void}
+   */
   const handleClose = () => {
     
     window.location.reload();

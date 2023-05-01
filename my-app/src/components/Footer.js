@@ -71,6 +71,17 @@ function Footer() {
           </div>
           <small className='website-rights'>Rev's © 2020</small>
           <Weather />
+          {/* <div id="google_translate_element"></div>
+          <script src="https://translate.google.com/translate_a/element.js?
+          cb=googleTranslateElementInit"></script>
+          <script>
+            function googleTranslateElementInit(){
+              new google.translate.translateElement(
+                {pageLanguage : 'en'},
+                'google_translate_element'
+              );
+            }
+          </script> */}
         </div>
       </section>
     </div>
