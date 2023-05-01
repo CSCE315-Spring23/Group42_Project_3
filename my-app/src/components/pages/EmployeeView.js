@@ -3,7 +3,7 @@ import Footer from '../Footer';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
 import EmployeeCardList from '../EmployeeCardList';
 import { Button } from '../Button';
-import Navbar from '../EmployeeNavbar';
+import EmployeeNavbar from '../EmployeeNavbar';
 // import './EmployeeView.css';
 
 
@@ -185,7 +185,7 @@ import Navbar from '../EmployeeNavbar';
 
 
     return (<>
-        <Navbar />
+        <EmployeeNavbar id="Navbar" />
         <div id="employeemenu">
             <EmployeeCardList cardData={cardData} title="Employee View" />
 
@@ -195,7 +195,7 @@ import Navbar from '../EmployeeNavbar';
 
          {/* <button>Checkout</button> */}
          {/* <Button text = "Checkout" buttonStyle={"btn--primary"}/> */}
-         <Button buttonStyle='btn--primary' path='/checkout'>CHECK OUT</Button>
+         <Button buttonStyle='btn--primary' path='/employeecheckout'>CHECK OUT</Button>
          <Footer/>
        </>);
 }

@@ -41,11 +41,11 @@ function SimilarItems() {
       recsList.push(filteredData[i].menuItem2);
   }
   recsList = recsList.filter(item => !myCart.some(cartItem => cartItem.name === item));
-  console.log("Recs list: ", recsList);
+  // console.log("Recs list: ", recsList);
   const menuItemsFiltered = menuItems.filter(menuItem => {
     return recsList.indexOf(menuItem.menu_item_name) !== -1;
   });
-  console.log("filtered: ", menuItemsFiltered);
+  // console.log("filtered: ", menuItemsFiltered);
   const numMenuItems = menuItemsFiltered.length; //if we have duplicates
 
   var ingredientsArrFiltered = [];
@@ -54,8 +54,8 @@ function SimilarItems() {
       ids.push(menuItemsFiltered[i].menu_item_id-1);
       ingredientsArrFiltered.push(ingredientsArr[ids[i]]);
   }
-  console.log("recs:", menuItemsFiltered);
-  console.log("ingredients:", ingredientsArrFiltered);
+  // console.log("recs:", menuItemsFiltered);
+  // console.log("ingredients:", ingredientsArrFiltered);
 
   const cardData = {
     cards: []

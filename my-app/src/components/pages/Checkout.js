@@ -1,9 +1,11 @@
 //import React, { useState } from "react";
 import {GetCartItems} from "../pages/databaseFunctions";
+import React, { useState, useEffect } from 'react';
 
 // import React from "react";
 import Cart from "../Checkout/Cart";
 import Navbar from "../CustomerNavbar";
+import EmployeeNavbar from "../EmployeeNavbar";
 import Footer from "../Footer";
 
 // const old = [
@@ -15,10 +17,15 @@ import Footer from "../Footer";
 
 function Checkout() {
   const list = GetCartItems();
+  // localStorage.setItem('isEmployee', false);
+  const isEmployee = localStorage.getItem('isEmployee') === 'true';
+  
 
   return (
     <>
-      <Navbar/>
+      {!isEmployee && <Navbar id="CustomerNavbar" />}
+      {isEmployee && <EmployeeNavbar id="EmployeeNavbar" />}
+      
       <Cart initialItems={list} />
       <Footer />
     </>
