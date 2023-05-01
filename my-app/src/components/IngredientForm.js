@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { Button } from './Button';
 import './IngredientForm.css';
 
-/*
-* Ingredient list used to customize orders such as Burgers and sandwiches
-*
+/**
+  * This is a functional component called IngredientForm  used to display a form of ingredients and quantity
+  * buttons that can be used to customize orders such as burgers and sandwiches.
+  * @param {Array} ingredients An array of ingredients to be displayed in the form.
+  * @param {Function} setQuantities A function to set the quantity values for each ingredient in the form.
+  * @return {JSX.Element} Returns a JSX Element that displays the ingredient form.
 */
-
 const IngredientForm = ({ ingredients, setQuantities }) => {
-  // function GetModifications() {
-  //   console.log(ingredients);
-  //   console.log(quantityValues);
-  // }
   const [quantityValues, setQuantityValues] = useState(ingredients.map(() => 0));
 
   const handleChange = (index, value) => {
