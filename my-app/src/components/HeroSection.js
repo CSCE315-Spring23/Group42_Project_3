@@ -5,10 +5,10 @@ import './HeroSection.css';
 import Weather from './Weather';
 // import { useHistory } from 'react-router-dom';
 
-/*
-*Display background video for Home page
-*
-*/
+/**
+ * Display background video for Home page
+ *
+ */
 function HeroSection() {
 //   const history = useHistory();
 
