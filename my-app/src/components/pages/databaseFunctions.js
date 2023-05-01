@@ -117,7 +117,41 @@ function GetRestockReport() {
 }
 
 //SALES REPORT
+function GetSalesReport(start, end){
+  const [salesHistory, setSalesHistory] = useState([]);
+  console.log(`${host}/salesHistoryRequest/${start}/${end}`);
+  useEffect(() => {
+    async function fetchSalesHistory() {
+      const response = await fetch(`${host}/salesHistoryRequest/${start}/${end}`);
+      const data = await response.json();
+      setSalesHistory(data);
+      //console.table(data);
+    }
+
+    fetchSalesHistory();
+  }, [start, end]);
+
+  return salesHistory;
+}
+
 //EXCESS REPORT
+function GetExcessReport(start, end){
+  const [excessList, setExcessList] = useState([]);
+  console.log(`${host}/excessRequest/${start}/${end}`);
+  useEffect(() => {
+    async function fetchExcessList() {
+      const response = await fetch(`${host}/excessRequest/${start}/${end}`);
+      const data = await response.json();
+      setExcessList(data);
+      //console.table(data);
+    }
+
+    fetchExcessList();
+  }, [start, end]);
+
+  return excessList;
+}
+
 //SOLD TOGETHER
 
 /**************** EDIT TABLE ****************/
@@ -585,5 +619,5 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
-          GetMenuTable, CreateOrderVectors, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
+          GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
           AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword};
