@@ -13,12 +13,12 @@ function Cart({ initialItems }) {
   async function checkoutClick() {
     //PLACE ORDER!
     const [menuItems, ingredientList, cost] = await CreateOrderVectors();
-    console.log(menuItems);
-    console.log(ingredientList);
-    console.log(cost);
+    // console.log(menuItems);
+    // console.log(ingredientList);
+    // console.log(cost);
     await CreateOrder(menuItems, ingredientList, cost);
-    console.log("orderC");
-    // setShowPopup(true);
+    // console.log("orderC");
+    setShowPopup(true);
   }
 
   const [items, setItems] = useState(initialItems);
