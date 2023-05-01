@@ -160,18 +160,15 @@ app.get('/soldTogether', async (req, res) => {
     var queryToUse;
     var initialDateString = "2000-01-01";
     var finalDateString = "2025-01-01";
-    queryToUse = "SELECT m1.MENU_ITEM_NAME AS MENU_ITEM_NAME_1, m2.MENU_ITEM_NAME AS MENU_ITEM_NAME_2, COUNT(*) AS combo_count " +
-                    "FROM item_sold s1 " +
-                    "JOIN item_sold s2 ON s1.ORDER_ID = s2.ORDER_ID AND s1.MENU_ITEM_ID < s2.MENU_ITEM_ID " +
-                    "JOIN Menu m1 ON s1.MENU_ITEM_ID = m1.MENU_ITEM_ID " +
-                    "JOIN Menu m2 ON s2.MENU_ITEM_ID = m2.MENU_ITEM_ID " +
-                    "WHERE s1.ORDER_ID IN (SELECT ORDER_ID FROM orders WHERE DATE_ORDERED BETWEEN '" + initialDateString
-                    + "' AND '" + finalDateString + "') " +
-                    "GROUP BY m1.MENU_ITEM_NAME, m2.MENU_ITEM_NAME " +
-                    "ORDER BY combo_count DESC";
-    console.log(queryToUse);
+    queryToUse = 'SELECT m1.MENU_ITEM_NAME AS MENU_ITEM_NAME_1, m2.MENU_ITEM_NAME AS MENU_ITEM_NAME_2, COUNT(*) AS combo_count ' +
+                    'FROM item_sold s1 JOIN item_sold s2 ON s1.ORDER_ID = s2.ORDER_ID AND s1.MENU_ITEM_ID < s2.MENU_ITEM_ID ' +
+                    'JOIN Menu m1 ON s1.MENU_ITEM_ID = m1.MENU_ITEM_ID JOIN Menu m2 ON s2.MENU_ITEM_ID = m2.MENU_ITEM_ID ' +
+                    'WHERE s1.ORDER_ID IN (SELECT ORDER_ID FROM orders WHERE DATE_ORDERED BETWEEN $1 AND $2 ) ' +
+                    'GROUP BY m1.MENU_ITEM_NAME, m2.MENU_ITEM_NAME ORDER BY combo_count DESC';
+    var queryValues = [initialDateString, finalDateString];
+    console.log(queryToUse, queryValues);
     var i = 1;
-    const { rows } = await pool.query(queryToUse);
+    const { rows } = await pool.query(queryToUse, queryValues);
     for (let row of rows) {
       //console.log(row);
       const menuItem1 = row.menu_item_name_1;
@@ -194,7 +191,6 @@ app.get('/soldTogether', async (req, res) => {
 });
 
 //Fetch Restock Report which are Inventory items from database that need to be restock
-//*********WORK IN PROGRESS */
 app.get('/restockRequest', async (req, res) => {
   try {
     var queryToUse;
@@ -210,7 +206,6 @@ app.get('/restockRequest', async (req, res) => {
   }
 });
 
-//************WORK IN PROGRESS */
 //Fetch sales history from database where start and end are dates
 app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
   try {
@@ -234,23 +229,22 @@ app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
 });
 
 //Fetch orders from database where start and end are dates
-//*********WORK IN PROGRESS */
 app.get('/excessRequest/:start/:end', async (req, res) => {
   try {
     const start = req.params.start;
     const end = req.params.end;
     console.log("start:", start);
     console.log("end:", end);
-    if (start === '2020-01-01' && end === '2023-04-01') {
-      console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 30');
-      const { rows } = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 20');
-      res.json(rows);
-    } else {
-      console.log('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id');
-      const { rows } = await pool.query('SELECT * FROM orders WHERE date_ordered BETWEEN $1 AND $2 ORDER BY order_id', [start, end]);
-      res.json(rows);
-    }
-    //console.table(rows);
+
+    var queryToUse = "SELECT SUM(AMT_USED) AS total_amt_used, i.INVENTORY_ID, i.INVENTORY_ITEM_NAME " +
+                  "FROM Recipe_Item r JOIN Inventory_Item i ON r.INVENTORY_ID = i.INVENTORY_ID " +
+                  "JOIN Item_Sold s ON r.MENU_ID = s.MENU_ITEM_ID JOIN Orders o ON s.ORDER_ID = o.ORDER_ID " +
+                  "WHERE o.DATE_ORDERED BETWEEN $1 AND $2 GROUP BY i.INVENTORY_ID, i.INVENTORY_ITEM_NAME"
+    const queryValues = [start, end];
+
+    //console.log(querryToUse, queryValues);
+    const { rows } = await pool.query(queryToUse, queryValues);
+    res.json(rows);
 
   } catch (err) {
     //console.log("error!");
