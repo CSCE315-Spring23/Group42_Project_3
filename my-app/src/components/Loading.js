@@ -7,9 +7,9 @@ import './Loading.css'; // Importing styles for the Loading component
  */
 const Loading = () => {
   return (
-    <div className='loading'> // The container div for the Loading component
-      <div className='loading-text'> // The div for the loading text
-        Loading<span className='dot-1'>.</span><span className='dot-2'>.</span><span className='dot-3'>.</span> // The loading text with three dots that animate
+    <div className='loading'>
+      <div className='loading-text'> 
+        Loading<span className='dot-1'>.</span><span className='dot-2'>.</span><span className='dot-3'>.</span>
       </div>
     </div>
   );

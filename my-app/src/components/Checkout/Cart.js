@@ -119,7 +119,7 @@ function Cart({ initialItems }) {
         <h1 className="Cart-title">Order Summary</h1>
         {items && items.length > 0 ? (
           <>
-            <div className="items-count">Total tems in Cart: {cartTotalQty}</div>
+            <div className="items-count">Total items in cart: {cartTotalQty}</div>
             <div className="price">Total: ${total}</div>
             <Button className='btn--Total' buttonStyle={'btn--third'} onClick={() => handleClose()}><i className="fa fa-trash-alt mr-2"></i><span> Empty Cart</span></Button>
             <Button className='btn--Total' buttonStyle={'btn--primary'} buttonSize={'btn--large'} onClick={() => { checkoutClick(); }}>Checkout</Button>
