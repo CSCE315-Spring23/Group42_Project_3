@@ -236,7 +236,7 @@ async function DeleteRecipesItem(ID) {
 
 //   useEffect(() => {
 //     async function fetchMenuItems() {
-//       const response = await fetch(`http://localhost:10000/menuRequestAll/`);
+//       const response = await fetch(`${host}/menuRequestAll/`);
 //       const data = await response.json();
 //       setMenuItems(data);
 //     }
