@@ -341,7 +341,7 @@ async function CreateOrderVectors() {
   // var myID = 12;
   // useEffect(() => {
     async function fetchCart() {
-      const response = await fetch(`http://localhost:10000/getCart/${myID}`);
+      const response = await fetch(`${host}/getCart/${myID}`);
       const data = await response.json();
       myCart = data.rows[0].orderlist;
       // setCart(data.rows[0].orderlist);
