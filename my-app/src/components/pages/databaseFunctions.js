@@ -410,14 +410,14 @@ function GetSoldTogether() {
 }
 
 function GetPassword(email) {
-  const [password, setPassword] = useState([]);
   //console.log("got here")
+  const [password, setPassword] = useState([]);
+  
   useEffect(() => {
     async function fetchPassword() {
       const response = await fetch(`${host}/password/${email}`);
       const data = await response.json();
       setPassword(data);
-      //console.table(data);
     }
 
     fetchPassword();
