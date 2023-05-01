@@ -16,13 +16,13 @@
     bottom: 0;
     color: var(--primary);
   }
-  
+
 .weathericon {
     margin-right: 20px;
     font-size: 2rem;
     color: var(--primary);
   }
-  
+
   .weather-temperature {
     color: white;
     font-size: 1.5rem;
@@ -31,5 +31,5 @@
     align-items: center;
     margin-right: 10px;
     /* font-weight: bold; */
+    line-height: 1.5;
   }
-  
