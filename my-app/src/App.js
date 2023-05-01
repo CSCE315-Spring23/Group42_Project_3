@@ -13,6 +13,7 @@ import EmployeeView from './components/pages/EmployeeView';
 import MenuBoard from './components/pages/Menuboard';
 import ManagerView from './components/pages/ManagerView';
 import ManagerDatabaseAccess  from './components/pages/ManagerDatabaseAccess';
+import EmployeeCheckout from './components/pages/EmployeeCheckout'
 
 /**
  * Main App component containing all the different pages available
@@ -31,6 +32,7 @@ function App() {
           <Route exact path='/Sides' element={<Sides/>} />
           <Route exact path='/Seasonal' element={<Seasonal/>} />
           <Route exact path='/Checkout' element={<Checkout/>} />
+          <Route exact path='/EmployeeCheckout' element={<EmployeeCheckout/>} />
           <Route exact path='/Menuboard' element={<MenuBoard/>} />
           <Route exact path='/EmployeeView' element={<EmployeeView/>} />
           <Route exact path='/ManagerView' element={<ManagerView/>} />

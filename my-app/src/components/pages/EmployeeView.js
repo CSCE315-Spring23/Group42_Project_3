@@ -5,8 +5,7 @@ import EmployeeCardList from '../EmployeeCardList';
 import { Button } from '../Button';
 import Navbar from '../Navbar';
 import { employeeLinks, buttonText, buttonPath } from '../NavbarData';
-// import './EmployeeView.css';
-
+import Loading from '../Loading';
 
 {/*
 * Shows Employee View so they can log in and access features not visible for customers
@@ -20,9 +19,9 @@ import { employeeLinks, buttonText, buttonPath } from '../NavbarData';
     var menuItems = GetMenuList(0, 0);
     var ingredientsArr = GetIngredients(1, menuItems.length);
 
-  if (menuItems.length === 0 | ingredientsArr.length === 0) {
-    return <div>Loading...</div>;
-  }
+    if (menuItems.length === 0 | ingredientsArr.length === 0) {
+      return <Loading />;
+    }
 
   const cardData = {
     cards: []
@@ -46,7 +45,7 @@ import { employeeLinks, buttonText, buttonPath } from '../NavbarData';
 
 
     return (<>
-        <Navbar links={employeeLinks} buttonText={buttonText} buttonPath={buttonPath} />
+        <Navbar links={employeeLinks} buttonText={buttonText} buttonPath='/EmployeeCheckout' />
         <div id="employeemenu">
             <EmployeeCardList cardData={cardData} title="Employee View" />
         </div>

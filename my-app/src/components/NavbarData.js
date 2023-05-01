@@ -2,7 +2,7 @@ export const menuLinks = [
     { to: '/Burgers', label: 'Burgers' },
     { to: '/Sandwiches', label: 'Sandwiches' },
     { to: '/Baskets', label: 'Baskets' },
-    { to: '/Sides', label: 'Sides' },
+    { to: '/Sides', label: 'Sides & Drinks' },
     { to: '/Seasonal', label: 'Seasonal' },
   ];
 
