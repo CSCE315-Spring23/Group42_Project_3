@@ -2,10 +2,21 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Popup from './Popups/Popup';
 
-//Used to display items in Employee View
+/**
+  * EmployeeCardItem Component - used to display items in Employee View
+  * @param {object} props - The props object containing the following properties:
+  * @param {string} props.path - The path to link to.
+  * @param {string} props.text - The text to display for the item.
+  * @param {string} props.label - The price of the item.
+  * @param {Array} props.ingredients - The array of ingredients for the item.
+  * @returns The EmployeeCardItem Component
+*/
 function EmployeeCardItem(props) {
   const [showPopup, setShowPopup] = useState(false);
 
+  /**
+  * Toggle the showPopup state.
+  */
   function togglePopup() {
     setShowPopup(!showPopup);
   }

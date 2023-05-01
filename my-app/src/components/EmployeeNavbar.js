@@ -3,14 +3,27 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
-//Navbar personalized to fit Employee's View
+
+/**
+  * Personalized Navbar for Employee's View
+  * @return {JSX.Element}
+*/
 function EmployeeNavbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
+  /**
+  * Toggle click state
+  */
   const handleClick = () => setClick(!click);
+  /**
+  * Close mobile menu
+  */
   const closeMobileMenu = () => setClick(false);
 
+  /**
+   * Sets the button state based on the window's width.
+   */
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -19,6 +32,9 @@ function EmployeeNavbar() {
     }
   };
 
+  /**
+  * Check if user is manager and display the manager view tab if so
+  */
   function checkIfManager(){
     document.getElementById("managerViewTab").style.display = 'none';
     // localStorage.setItem('isManager', false)

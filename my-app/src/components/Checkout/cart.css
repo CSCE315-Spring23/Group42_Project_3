@@ -50,12 +50,6 @@
     font-size: 1.3rem;
   }
 
-  .CartItemMods div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
   .CartItem div {
     width: 25%;
   }
@@ -205,3 +199,16 @@
   background-color: rgba(92,0,32,255);
   color: #fff;
 }
+
+.item-name{
+  display: flex;
+  flex-direction: column;
+}
+
+.CartItemMods div {
+  text-align: center;
+  font-size: 16px;
+  display: flex;
+  width: 300px;
+  padding-left: 20px;
+  }
