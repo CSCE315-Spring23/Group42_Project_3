@@ -270,7 +270,7 @@ async function DeleteRecipesItem(ID) {
 
 //   useEffect(() => {
 //     async function fetchMenuItems() {
-//       const response = await fetch(`http://localhost:10000/menuRequestAll/`);
+//       const response = await fetch(`${host}/menuRequestAll/`);
 //       const data = await response.json();
 //       setMenuItems(data);
 //     }
@@ -361,7 +361,7 @@ function GetCartItems() {
       const element = JSON.parse(myCart[i]);
       if (element.type === "item") {
         const item = { id: j, name: element.name, price: element.price, qty: 1, mods: [...modlist] }
-        console.log("Mod list: ", item.mods);
+        // console.log("Mod list: ", item.mods);
         if (item.mods.indexOf("Fries Combo (+$1.90)") !== -1) {
           item.price += 1.9;
         }
@@ -443,6 +443,23 @@ function GetSoldTogether() {
   return sold;
 }
 
+function GetPassword(email) {
+  //console.log("got here")
+  const [password, setPassword] = useState([]);
+  
+  useEffect(() => {
+    async function fetchPassword() {
+      const response = await fetch(`${host}/password/${email}`);
+      const data = await response.json();
+      setPassword(data);
+    }
+
+    fetchPassword();
+  }, []);
+
+  return password;
+}
+
 // let createOrderPromise = Promise.resolve(); //synchronization thing
 async function CreateOrderVectors() {
   // const [myCart, setCart] = useState([]);
@@ -452,7 +469,7 @@ async function CreateOrderVectors() {
   // var myID = 12;
   // useEffect(() => {
     async function fetchCart() {
-      const response = await fetch(`http://localhost:10000/getCart/${myID}`);
+      const response = await fetch(`${host}/getCart/${myID}`);
       const data = await response.json();
       myCart = data.rows[0].orderlist;
       // setCart(data.rows[0].orderlist);
@@ -544,6 +561,13 @@ async function CreateOrderVectors() {
             ingredientList.push(pair); //add a gig em sauce
           }
         }
+        else if (element.name === "Combo"){
+          if (element.quantity === -1) {
+            pair.first = 22;
+            pair.second = 1;
+            ingredientList.push(pair); //add a fries
+          }
+        }
         else {
           if (element.quantity === -1) {
             ingredientList.push(pair); //push item with quanity -1
@@ -563,7 +587,7 @@ async function CreateOrderVectors() {
   return [menuItems, ingredientList, cost];
 }
 
-// let createOrderPromise = Promise.resolve(); //synchronization thing
+let createOrderPromise = Promise.resolve(); //synchronization thing
 async function CreateOrder(menuItems, ingredientList, cost) {
   const requestBody = {
     menuItems: menuItems,
@@ -576,17 +600,24 @@ async function CreateOrder(menuItems, ingredientList, cost) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(requestBody)
   };
+  console.log("CreateOrder started");
 
-  async function ordercreat() {
-  const response = fetch(`${host}/createOrder`, requestOptions);
-  // const data = await response.json();
-      // console.log(data.message);
-  }
-  await ordercreat();
+  createOrderPromise = createOrderPromise.then(async () => {
+    const response = await fetch(`${host}/createOrder`, requestOptions);
+    
+    const data = await response.json();
+    console.log(data.message);
+  });
+  // async function ordercreat() {
+  //   const response = await fetch(`${host}/createOrder/${requestOptions}`);
+  //   // const data = await response.json();
+  //     // console.log(data.message);
+  // }
+  // await ordercreat();
   }
   // return items;
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
           GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
-          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem};
+          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword};

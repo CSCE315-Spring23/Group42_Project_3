@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../Button';
 import { LoginButton } from './LoginButton';
+import {GetPassword} from "../pages/databaseFunctions";
 import './Popup.css';
 
 function Login({ onClose, popupStyle }) {
@@ -8,22 +9,37 @@ function Login({ onClose, popupStyle }) {
   const [userPassword, setUserPassword] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
+  console.log("got here")
+  console.log(userEmail)
   const handleUserUpdate = (user) => {
     setUserEmail(user);
     setUserPassword(user);
   };
-
-  const handleClose = () => {
-    console.log(userEmail)
-    console.log(userPassword)
+  
+  async function loginClick() {
+    
+    //error here
+    //const pass = GetPassword("hobbit@shiremail.com");
+    //console.log(pass);
+    //console.log(userEmail)
     if (userEmail === 'manager@example.com') {
       // Navigate to manager view page
+      localStorage.setItem('isManager', true)
+      localStorage.setItem('isEmployee', true)
       
     } else if (userEmail === 'employee@example.com') {
       // Navigate to employee view page
+      localStorage.setItem('isManager', false)
+      localStorage.setItem('isEmployee', true)
+
     } else {
       setErrorMessage('Invalid credentials');
     }
+  }
+
+  const handleClose = () => {
+    
+    window.location.reload();
   };
 
   return (
@@ -46,10 +62,12 @@ function Login({ onClose, popupStyle }) {
           onChange={(event)=>setUserPassword(event.target.value)}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
+        <div>
+        <Button onClick={() => { loginClick(); }} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
         {' '}
         Log In
         </Button>
+        </div>
         {/* <div className='loginContent'>Or Sign In with Google</div> */}
         <span className="or">
           <hr />
