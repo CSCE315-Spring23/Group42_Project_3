@@ -26,39 +26,22 @@ function Footer() {
 
   return (
     <div className='footer-container'>
-      <section className='footer-subscription'>
-        <div className='input-areas'>
-          <form>
-            <input
-              className='footer-input'
-              name='email'
-              type='email'
-              placeholder='Your Email'
-            />
-            <Button buttonStyle='btn--outline'>Subscribe</Button>
-          </form>
-        </div>
-      </section>
       <div className='footer-links'>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <h2>Employee Login</h2>
-
-            <Link onClick={() => {loginClick() }}>Log in</Link>
-            {showPopup && <Popup popupStyle={'style2'}/>}
+            <Button buttonStyle='btn--outline'><Link onClick={() => {loginClick() }}>Employee Login</Link>
+            {showPopup && <Popup popupStyle={'style2'}/>}</Button>
             <Link to='/EmployeeView'>Employee View</Link>
             <Link to='/Menuboard' target="_blank">Menuboard View</Link>
             <Link to='/ManagerView'>Manager View</Link>
           </div>
           <div className='footer-link-items'>
-            <h2>Contact Us</h2>
-            <Link to='/Menuboard'>Menuboard View</Link>
+              <Button buttonStyle='btn--outline'><Link to='/Menuboard'>Menuboard View</Link></Button>
           </div>
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <h2>Social Media</h2>
-            <Link to='/'>Google Translate</Link>
+              <Button buttonStyle='btn--outline'><Link to='/'>Google Translate</Link></Button>
           </div>
         </div>
       </div>
