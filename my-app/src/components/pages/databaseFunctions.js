@@ -335,6 +335,19 @@ function AddToCart(type, name, quantity, price) {
 //   console.log(data.message);
 // }
 
+async function UpdateCartQuantity(id, quantity) {
+  console.log("Id: ", id, "New q: ", quantity);
+  var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  try {
+    const response = await fetch(`${host}/updateQty/${myID}/${id}/${quantity}`);
+    const data = await response.json();
+    console.log("Update cart result: ", data);
+
+  } catch (err) {
+    console.error('Error updating cart item: ' + err);
+  }
+}
+
 
 function GetCartItems() {
   const [myCart, setCart] = useState([]);
@@ -346,7 +359,7 @@ function GetCartItems() {
       const response = await fetch(`${host}/getCart/${myID}`);
       const data = await response.json();
       setCart(data.rows[0].orderlist);
-      //console.log("cart in func: " + data.rows[0].orderlist);
+      console.log("cart in func: " + data.rows[0].orderlist);
     }
     fetchCart();
   }, [myID]);
@@ -360,7 +373,7 @@ function GetCartItems() {
     for (let i = 0; i < myCart.length; i++) {
       const element = JSON.parse(myCart[i]);
       if (element.type === "item") {
-        const item = { id: j, name: element.name, price: element.price, qty: 1, mods: [...modlist] }
+        const item = { id: j, name: element.name, price: element.price, qty: element.quantity, mods: [...modlist] }
         // console.log("Mod list: ", item.mods);
         if (item.mods.indexOf("Fries Combo (+$1.90)") !== -1) {
           item.price += 1.9;
@@ -446,7 +459,7 @@ function GetSoldTogether() {
 function GetPassword(email) {
   //console.log("got here")
   const [password, setPassword] = useState([]);
-  
+
   useEffect(() => {
     async function fetchPassword() {
       const response = await fetch(`${host}/password/${email}`);
@@ -604,7 +617,7 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
   createOrderPromise = createOrderPromise.then(async () => {
     const response = await fetch(`${host}/createOrder`, requestOptions);
-    
+
     const data = await response.json();
     console.log(data.message);
   });
@@ -619,5 +632,5 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
-          GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
-          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword};
+          GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable,
+          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity};

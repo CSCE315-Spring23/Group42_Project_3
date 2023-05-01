@@ -596,6 +596,80 @@ app.post('/addToCart/:id', async (req, res) => {
   }
 });
 
+app.get('/updateQty/:cookie/:id/:quantity', async (req, res) => {
+  try {
+    const myID = req.params.cookie;
+    const itemID = parseInt(req.params.id);
+    const newQty = parseInt(req.params.quantity);
+    var result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+    //console.log("Result before simplifying: ", result);
+    result = result.rows[0].orderlist; //gets just the cart
+    //console.log("cart before:" , result);
+    const updatedItems = [];
+
+    if(newQty != 0) {
+      console.log("Setting quantity to ", newQty, " for item ID ", itemID);
+      var pos = 1;
+      for (let i = 0; i < result.length; i++) {
+        var thisItem = JSON.parse(result[i]);
+        if (thisItem.type === "item") {
+          if(pos === itemID) {
+            console.log("Found item to update ", thisItem.name);
+            thisItem.quantity = newQty;
+            pos++;
+          } else {
+            console.log("Pos is ", pos, " and id is ", itemID);
+            pos++;
+          }
+          updatedItems.push(JSON.stringify(thisItem));
+        } else {
+          updatedItems.push(JSON.stringify(thisItem));
+        }
+      }
+    } else { //remove item from cart
+      var modStartIndex = -1;
+      var modEndIndex = -1;
+      var pos = 1;
+      for (let i = 0; i < result.length; i++) {
+        var thisItem = JSON.parse(result[i]);
+        if (thisItem.type === "item") {
+          if(pos === (itemID-1)) { //will never hit for first item
+            modStartIndex = i+1;
+            pos++;
+          } else if (pos === (itemID)) { //the item we're removing
+            console.log("match found, itemID ", itemID, ", pos ", pos, " at index ", i);
+            modEndIndex = i;
+            pos++;
+          } else {
+            pos++;
+            console.log("Incremented pos to ", pos);
+          }
+        }
+      }
+
+      console.log("Indexes to clear: ", modStartIndex, " to ", modEndIndex, " from ", result);
+
+      for (let i = 0; i < result.length; i++) {
+        if(i < modStartIndex || i > modEndIndex) {
+          updatedItems.push(result[i]);
+        }
+      }
+    } //end remove from cart func
+
+    var updateResult = await pool.query('UPDATE cart SET orderlist = $1 WHERE sessionid = $2', [updatedItems, myID]);
+    var check = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+    //console.log("Result before simplifying: ", result);
+    check = check.rows[0].orderlist; //gets just the cart
+    console.log("cart before:" , result);
+    console.log("cart after:" , check);
+    console.log("Result of update: ", updateResult, " with items ", updatedItems);
+    res.json(result);
+  } catch (err) {
+    console.error("Write failed with error in updateCart " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/getCart/:id', async (req, res) => {
   try {
     const myID = req.params.id;
@@ -611,7 +685,7 @@ app.post('/createOrder', async (req, res) => {
   try {
     // console.log("here 1.");
     const requestOptions = req.body;
-    const menuItems = requestOptions.menuItems; 
+    const menuItems = requestOptions.menuItems;
     const ingredientList = requestOptions.ingredientList;
     const cost = requestOptions.cost;
     console.log("menuItems: " + menuItems);
@@ -623,7 +697,7 @@ app.post('/createOrder', async (req, res) => {
     newOrderID += 1;
     console.log("value of newOrderID = " + newOrderID);
     //get current date and time
-    const now = new Date(); 
+    const now = new Date();
     let year = parseInt(now.getFullYear());
     let month = parseInt(now.getMonth()) + 1;
     if (month < 10){
