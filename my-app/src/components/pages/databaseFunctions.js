@@ -411,7 +411,7 @@ function GetSoldTogether() {
 
 function GetPassword(email) {
   const [password, setPassword] = useState([]);
-
+  //console.log("got here")
   useEffect(() => {
     async function fetchPassword() {
       const response = await fetch(`${host}/password/${email}`);
@@ -572,4 +572,4 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
           GetMenuTable, CreateOrderVectors, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
-          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem};
+          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword};

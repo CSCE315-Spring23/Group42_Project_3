@@ -193,17 +193,18 @@ app.get('/soldTogether', async (req, res) => {
   }
 });
 
-app.get('/password', async (req, res) => {
+app.get('/password/:email', async (req, res) => {
   try {
     var queryToUse;
     const email = req.params.email;
     queryToUse = "SELECT PASSWORD FROM Employee WHERE EMAIL = '" + email + "';";
     console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
+    console.log(rows);
     res.json(rows);
 
   } catch (err) {
-    console.error("Read failed with error in Restock Request: " + err);
+    console.error("Read failed with error in Login Request: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

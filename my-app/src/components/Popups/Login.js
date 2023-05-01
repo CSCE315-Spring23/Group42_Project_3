@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../Button';
 import { LoginButton } from './LoginButton';
+import {GetPassword} from "../pages/databaseFunctions";
 import './Popup.css';
 
 function Login({ onClose, popupStyle }) {
@@ -12,10 +13,13 @@ function Login({ onClose, popupStyle }) {
     setUserEmail(user);
     setUserPassword(user);
   };
-
-  const handleClose = () => {
+  
+  async function loginClick() {
+    
+    //error here
+    await GetPassword(userEmail);
+    //console.log(pass);
     console.log(userEmail)
-    console.log(userPassword)
     if (userEmail === 'manager@example.com') {
       // Navigate to manager view page
       localStorage.setItem('isManager', true)
@@ -29,6 +33,11 @@ function Login({ onClose, popupStyle }) {
     } else {
       setErrorMessage('Invalid credentials');
     }
+  }
+
+  const handleClose = () => {
+    
+    window.location.reload();
   };
 
   return (
@@ -51,7 +60,7 @@ function Login({ onClose, popupStyle }) {
           onChange={(event)=>setUserPassword(event.target.value)}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <Button onClick={handleClose} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
+        <Button onClick={() => { loginClick(); }} buttonSize={'btn--large'} buttonStyle={'btn--outlinee'}>
         {' '}
         Log In
         </Button>
