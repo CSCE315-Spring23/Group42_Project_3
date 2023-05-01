@@ -32,7 +32,7 @@ function GetInventoryTable(start, end){
       const response = await fetch(`${host}/inventoryRequest/${start}/${end}`);
       const data = await response.json();
       setInventoryItems(data);
-      console.table(data);
+      //console.table(data);
     }
 
     fetchInventoryItems();
@@ -40,25 +40,6 @@ function GetInventoryTable(start, end){
 
   //console.table(inventoryItems);
   return inventoryItems;
-}
-
-/* Fetch orders from list to display in table */
-function GetOrdersTable(start, end){
-  const [orders, setOrders] = useState([]);
-  console.log(`${host}/orderRequest/${start}/${end}`);
-  useEffect(() => {
-    async function fetchOrders() {
-      const response = await fetch(`${host}/orderRequest/${start}/${end}`);
-      console.log("Bug test1");
-      const data = await response.json();
-      setOrders(data);
-      console.table(data);
-    }
-
-    fetchOrders();
-  }, [start, end]);
-
-  return orders;
 }
 
 /* Fetch Menu list from menu */
@@ -70,7 +51,7 @@ function GetMenuTable() {
       const response = await fetch(`${host}/menuListRequest`);
       const data = await response.json();
       setMenuList(data);
-      console.table(data);
+      //console.table(data);
     }
 
     fetchMenuList();
@@ -88,7 +69,7 @@ function GetRecipesTable(){
       const response = await fetch(`${host}/recipeRequest`);
       const data = await response.json();
       setRecipes(data);
-      console.table(data);
+      //console.table(data);
     }
 
     fetchRecipes();
@@ -96,6 +77,26 @@ function GetRecipesTable(){
 
   return recipes;
 }
+
+/* Fetch orders from list to display in table */
+function GetOrdersTable(start, end){
+  const [orders, setOrders] = useState([]);
+  console.log(`${host}/orderRequest/${start}/${end}`);
+  useEffect(() => {
+    async function fetchOrders() {
+      const response = await fetch(`${host}/orderRequest/${start}/${end}`);
+      //console.log("Bug test1");
+      const data = await response.json();
+      setOrders(data);
+      //console.table(data);
+    }
+
+    fetchOrders();
+  }, [start, end]);
+
+  return orders;
+}
+//XY REPORTS
 
 /* Fetch inventory list that needs restock to display in table */
 function GetRestockReport() {
@@ -106,7 +107,7 @@ function GetRestockReport() {
       const response = await fetch(`${host}/restockRequest`);
       const data = await response.json();
       setRestocks(data);
-      console.table(data);
+      //console.table(data);
     }
 
     fetchRestocks();
@@ -114,6 +115,10 @@ function GetRestockReport() {
 
   return restock;
 }
+
+//SALES REPORT
+//EXCESS REPORT
+//SOLD TOGETHER
 
 /**************** EDIT TABLE ****************/
 
@@ -150,6 +155,78 @@ async function UpdateRecipesTable(id, name, invID, menuID, quantity){
 
   } catch (err) {
     console.error('Error updating recipe item: ' + err);
+  }
+}
+
+/* Add new inventory item */
+async function AddInventoryItem(name, cost, quantity) {
+  try {
+    const response = await fetch(`${host}/inventoryAddItem/${name}/${cost}/${quantity}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error adding inventory item: ' + err);
+  }
+}
+
+/* Add new menu item */
+async function AddMenuItem(name, cost) {
+  try {
+    const response = await fetch(`${host}/menuAddItem/${name}/${cost}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error adding menu item: ' + err);
+  }
+}
+
+/* Add new recipe item */
+async function AddRecipesItem(name, invID, menuID, quantity) {
+  try {
+    const response = await fetch(`${host}/recipesAddItem/${name}/${invID}/${menuID}/${quantity}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error adding recipes item: ' + err);
+  }
+}
+
+/* Delete inventory item */
+async function DeleteInventoryItem(ID) {
+  try {
+    const response = await fetch(`${host}/inventoryDeleteItem/${ID}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error deleting inventory item: ' + err);
+  }
+}
+
+/* Delete menu item */
+async function DeleteMenuItem(ID) {
+  try {
+    const response = await fetch(`${host}/menuDeleteItem/${ID}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error deleting menu item: ' + err);
+  }
+}
+
+/* Delete recipe item */
+async function DeleteRecipesItem(ID) {
+  try {
+    const response = await fetch(`${host}/recipesDeleteItem/${ID}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error deleting recipes item: ' + err);
   }
 }
 
@@ -332,6 +409,23 @@ function GetSoldTogether() {
   return sold;
 }
 
+function GetPassword(email) {
+  const [password, setPassword] = useState([]);
+  //console.log("got here")
+  useEffect(() => {
+    async function fetchPassword() {
+      const response = await fetch(`${host}/password/${email}`);
+      const data = await response.json();
+      setPassword(data);
+      //console.table(data);
+    }
+
+    fetchPassword();
+  }, []);
+
+  return password;
+}
+
 // let createOrderPromise = Promise.resolve(); //synchronization thing
 async function CreateOrderVectors() {
   // const [myCart, setCart] = useState([]);
@@ -490,5 +584,6 @@ async function CreateOrder(menuItems, ingredientList, cost) {
   // return items;
 
 
-export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether,
-          GetRestockReport, GetRecipesTable, GetMenuTable, CreateOrderVectors, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable};
+export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
+          GetMenuTable, CreateOrderVectors, CreateOrder, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
+          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword};
