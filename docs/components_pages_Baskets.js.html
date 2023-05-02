@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/Cards.js</title>
+    <title>JSDoc: Source: components/pages/Baskets.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/Cards.js</h1>
+    <h1 class="page-title">Source: components/pages/Baskets.js</h1>
 
     
 
@@ -26,32 +26,66 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import './Cards.css';
+            <pre class="prettyprint source linenums"><code>/**
+ *
+ * @module Baskets
+ * @description Renders a list of basket items with their ingredients and costs
+ */
+import Footer from '../Footer';
+import CardList from '../CardList';
+import { GetMenuList, GetIngredients } from './databaseFunctions'
+import Navbar from '../Navbar';
+import Loading from '../Loading';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
+
+
+
 
 /**
- * Card component for displaying a card with title, text, and image.
- * 
- * @param {string} title - The title of the card.
- * @param {string} text - The text content of the card.
- * @param {string} image - The image source URL for the card.
- * @param {Array&lt;string>} ingredients - Optional array of ingredients for the card.
- * @param {string} price - Optional price for the card.
- * @returns {JSX.Element} - A card element with the given information.
- */
-function Card({ title, text, image, ingredients, price}) {
-  return (
-    &lt;div className='card'>
-      &lt;img src={image} alt={title} className='card-image' />
-      &lt;div className='card-body'>
-        &lt;h2 className='card-title'>{title}&lt;/h2>
-        &lt;p className='card-text'>{text}&lt;/p>
-      &lt;/div>
+*
+* @function Baskets
+* @description Renders a list of basket items with their ingredients and costs
+* @returns {JSX.Element} Baskets component
+*/
+function Baskets() {
+  var menuItems = GetMenuList(5, 6);
+  var ingredientsArr = GetIngredients(5, 6);
+
+  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+    return &lt;Loading />;
+  }
+
+  const cardData = {
+    cards: []
+  };
+
+  for (let i = 0; i &lt; menuItems.length; i++) {
+    const item = menuItems[i];
+    const ingr = ingredientsArr[i];
+    if (!ingr.includes("Basket Combo")) {
+      ingr.push("Basket Combo");
+    }
+    const card = {
+      image: item.image_link,
+      text: item.menu_item_name,
+      label: item.menu_item_cost,
+      //path: "",
+      ingredients: ingr
+    };
+    cardData.cards.push(card);
+  }
+
+  return (&lt;>
+    &lt;Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
+    &lt;div id="menu">
+      &lt;CardList cardData={cardData} title="BASKETS" />
     &lt;/div>
-  );
+
+    &lt;Footer />
+  &lt;/>);
 }
 
-export default Card;
+export default Baskets;
 </code></pre>
         </article>
     </section>

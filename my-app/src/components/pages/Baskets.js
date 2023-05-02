@@ -1,10 +1,24 @@
+/**
+ *
+ * @module Baskets
+ * @description Renders a list of basket items with their ingredients and costs
+ */
 import Footer from '../Footer';
 import CardList from '../CardList';
-import {GetMenuList, GetIngredients} from './databaseFunctions'
+import { GetMenuList, GetIngredients } from './databaseFunctions'
 import Navbar from '../Navbar';
 import Loading from '../Loading';
 import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 
+
+
+
+/**
+*
+* @function Baskets
+* @description Renders a list of basket items with their ingredients and costs
+* @returns {JSX.Element} Baskets component
+*/
 function Baskets() {
   var menuItems = GetMenuList(5, 6);
   var ingredientsArr = GetIngredients(5, 6);
@@ -33,14 +47,14 @@ function Baskets() {
     cardData.cards.push(card);
   }
 
-    return (<>
+  return (<>
     <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
     <div id="menu">
-        <CardList cardData={cardData} title="BASKETS" />
+      <CardList cardData={cardData} title="BASKETS" />
     </div>
 
-      <Footer/>
-    </>);
-  }
+    <Footer />
+  </>);
+}
 
-  export default Baskets;
+export default Baskets;

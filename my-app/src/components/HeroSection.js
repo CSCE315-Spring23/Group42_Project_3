@@ -10,6 +10,7 @@ import Weather from './Weather';
  *
  * This component displays a background video with a title and a call-to-action button.
  * It also includes a weather component that displays the current weather information.
+ * @returns {JSX.Element} HeroSection component
  */
 function HeroSection() {
 //   const history = useHistory();
@@ -19,6 +20,7 @@ function HeroSection() {
    *
    * This function is triggered when the user clicks on the call-to-action button.
    * It can be used to redirect the user to a different page using React Router.
+   * @function handleOnClick
    */
   const handleOnClick = () => {
     // history.push('/');

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/Cards.js</title>
+    <title>JSDoc: Source: index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/Cards.js</h1>
+    <h1 class="page-title">Source: index.js</h1>
 
     
 
@@ -26,33 +26,23 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import './Cards.css';
+            <pre class="prettyprint source linenums"><code>/**
 
-/**
- * Card component for displaying a card with title, text, and image.
- * 
- * @param {string} title - The title of the card.
- * @param {string} text - The text content of the card.
- * @param {string} image - The image source URL for the card.
- * @param {Array&lt;string>} ingredients - Optional array of ingredients for the card.
- * @param {string} price - Optional price for the card.
- * @returns {JSX.Element} - A card element with the given information.
- */
-function Card({ title, text, image, ingredients, price}) {
-  return (
-    &lt;div className='card'>
-      &lt;img src={image} alt={title} className='card-image' />
-      &lt;div className='card-body'>
-        &lt;h2 className='card-title'>{title}&lt;/h2>
-        &lt;p className='card-text'>{text}&lt;/p>
-      &lt;/div>
-    &lt;/div>
-  );
-}
+This module is the entry point of a React application and renders the App component in a root element.
+@module index
+*/
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
 
-export default Card;
-</code></pre>
+// Create a root element and render the App component in it
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+&lt;React.StrictMode>
+&lt;App />
+&lt;/React.StrictMode>
+);</code></pre>
         </article>
     </section>
 

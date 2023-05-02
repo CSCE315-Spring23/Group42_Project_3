@@ -34,27 +34,36 @@ import Weather from './Weather';
 import Popup from "./Popups/Popup";
 import GoogleTranslate from "./Translate";
 
-
-
-/*
- * Global footer for all pages in our application
- * Keeps links to all different views including employee and Manager views
- * @return {JSX.Element} Footer component
-*/
+/**
+ * React functional component representing the global footer for all pages in our application.
+ * It keeps links to all different views including employee and Manager views.
+ * @returns {JSX.Element} Footer component
+ */
 function Footer() {
+  /**
+   * React state hook to handle showing/hiding a popup.
+   * @type {[boolean, function]} showPopup - the state variable and its update function
+   */
   const [showPopup, setShowPopup] = useState(false);
+
+  /**
+   * React state hook to store user data.
+   * @type {[null, function]} userData - the state variable and its update function
+   */
   const userData = useState(null);
 
+  /**
+   * React effect hook that gets called when userData changes.
+   */
   useEffect(() => {
-    //console.log("Updating user data: " + JSON.stringify(userData));
+    // console.log("Updating user data: " + JSON.stringify(userData));
   }, [userData]);
 
   /**
-  * Function to be executed when login button is clicked
-  * @function loginClick
-  */
+   * Function to be executed when login button is clicked.
+   */
   function loginClick() {
-    //check credentials?
+    // check credentials?
     setShowPopup(true);
   }
 
@@ -63,30 +72,46 @@ function Footer() {
       &lt;div className='footer-links'>
         &lt;div className='footer-link-wrapper'>
           &lt;div className='footer-link-items'>
-            &lt;Button buttonStyle='btn--outline' onClick={() => { loginClick() }}>Employee Login
-              {showPopup &amp;&amp; &lt;Popup popupStyle={'style2'} />}&lt;/Button>
+            {/* Button to open popup */}
+            &lt;Button
+              buttonStyle='btn--outline'
+              onClick={() => { loginClick() }}
+            >
+              Employee Login
+              {showPopup &amp;&amp; &lt;Popup popupStyle={'style2'} />}
+            &lt;/Button>
+            {/* Link to EmployeeView */}
             &lt;Link to='/EmployeeView'>Employee View&lt;/Link>
-            &lt;Link to='/Menuboard' target="_blank">Menuboard View&lt;/Link>
+            {/* Link to MenuboardView (opens in new tab) */}
+            &lt;Link to='/Menuboard' target='_blank'>Menuboard View&lt;/Link>
+            {/* Link to ManagerView */}
             &lt;Link to='/ManagerView'>Manager View&lt;/Link>
           &lt;/div>
           &lt;div className='footer-link-items'>
-            &lt;Button buttonStyle='btn--outline' path='/Menuboard'>Menuboard View&lt;/Button>
+            {/* Button to navigate to MenuboardView */}
+            &lt;Button buttonStyle='btn--outline' path='/Menuboard'>
+              Menuboard View
+            &lt;/Button>
           &lt;/div>
         &lt;/div>
         &lt;div className='footer-link-wrapper'>
           &lt;div className='footer-link-items'>
-              {/* &lt;GoogleTranslate /> */}
+            {/* TODO: Uncomment when GoogleTranslate component is implemented */}
+            {/* &lt;GoogleTranslate /> */}
           &lt;/div>
         &lt;/div>
       &lt;/div>
       &lt;section className='social-media'>
         &lt;div className='social-media-wrap'>
           &lt;div className='footer-logo'>
+            {/* Link to home page */}
             &lt;Link to='/'>
-              &lt;img className='footer-img' src='images/Revs-logo.png' alt="Rev's American Grill">&lt;/img>
+              &lt;img className='footer-img' src='images/Revs-logo.png' alt="Rev's American Grill" />
             &lt;/Link>
           &lt;/div>
+          {/* Small text showing website rights */}
           &lt;small className='website-rights'>Rev's © 2020&lt;/small>
+          {/* Weather component */}
           &lt;Weather />
         &lt;/div>
       &lt;/section>
@@ -105,13 +130,13 @@ export default Footer;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Weather.html">Weather</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CardItem">CardItem</a></li><li><a href="global.html#CardList">CardList</a></li><li><a href="global.html#CartItemMods">CartItemMods</a></li><li><a href="global.html#EmployeeCard">EmployeeCard</a></li><li><a href="global.html#EmployeeCardItem">EmployeeCardItem</a></li><li><a href="global.html#EmployeeCardList">EmployeeCardList</a></li><li><a href="global.html#HeroSection">HeroSection</a></li><li><a href="global.html#IngredientForm">IngredientForm</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#MenuBoardView">MenuBoardView</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SimilarItems">SimilarItems</a></li><li><a href="global.html#TableInfo">TableInfo</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#loginClick">loginClick</a></li><li><a href="global.html#showButton">showButton</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Baskets.html">Baskets</a></li><li><a href="module-Checkout.html">Checkout</a></li><li><a href="module-databaseConnection.html">databaseConnection</a></li><li><a href="module-index.html">index</a></li><li><a href="module-jest-dom.html">jest-dom</a></li></ul><h3>Classes</h3><ul><li><a href="Weather.html">Weather</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Burgers">Burgers</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CardItem">CardItem</a></li><li><a href="global.html#CardList">CardList</a></li><li><a href="global.html#CartItemMods">CartItemMods</a></li><li><a href="global.html#EmployeeCard">EmployeeCard</a></li><li><a href="global.html#EmployeeCardItem">EmployeeCardItem</a></li><li><a href="global.html#EmployeeCardList">EmployeeCardList</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GoogleTranslate">GoogleTranslate</a></li><li><a href="global.html#HeroSection">HeroSection</a></li><li><a href="global.html#IngredientForm">IngredientForm</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#MenuBoardView">MenuBoardView</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SimilarItems">SimilarItems</a></li><li><a href="global.html#TableInfo">TableInfo</a></li><li><a href="global.html#buttonPath">buttonPath</a></li><li><a href="global.html#buttonText">buttonText</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#employeeLinks">employeeLinks</a></li><li><a href="global.html#handleOnClick">handleOnClick</a></li><li><a href="global.html#managerLinks">managerLinks</a></li><li><a href="global.html#menuLinks">menuLinks</a></li><li><a href="global.html#showButton">showButton</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 10:58:45 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 11:43:32 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

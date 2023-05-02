@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/Cards.js</title>
+    <title>JSDoc: Source: components/Translate.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/Cards.js</h1>
+    <h1 class="page-title">Source: components/Translate.js</h1>
 
     
 
@@ -26,33 +26,43 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import './Cards.css';
-
+            <pre class="prettyprint source linenums"><code>import React, { useEffect } from "react";
 /**
- * Card component for displaying a card with title, text, and image.
- * 
- * @param {string} title - The title of the card.
- * @param {string} text - The text content of the card.
- * @param {string} image - The image source URL for the card.
- * @param {Array&lt;string>} ingredients - Optional array of ingredients for the card.
- * @param {string} price - Optional price for the card.
- * @returns {JSX.Element} - A card element with the given information.
+ * Component to render Google Translate element in the application
+ * @return {JSX.Element} GoogleTranslate component
  */
-function Card({ title, text, image, ingredients, price}) {
-  return (
-    &lt;div className='card'>
-      &lt;img src={image} alt={title} className='card-image' />
-      &lt;div className='card-body'>
-        &lt;h2 className='card-title'>{title}&lt;/h2>
-        &lt;p className='card-text'>{text}&lt;/p>
-      &lt;/div>
-    &lt;/div>
-  );
-}
-
-export default Card;
-</code></pre>
+const GoogleTranslate = () => {
+    useEffect(() => {
+      // Create and append the Google Translate script tag to the body of the document
+      const script = document.createElement("script");
+      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.async = true;
+      document.body.appendChild(script);
+  
+      // Define the callback function for when the script is loaded
+      window.googleTranslateElementInit = () => {
+        // Create and initialize the Google Translate element with pageLanguage set to "en"
+        new window.google.translate.TranslateElement(
+          { pageLanguage: "en" },
+          "google_translate_element"
+        );  
+      };
+  
+      // Remove the script tag and cleanup the callback function when the component is unmounted
+      return () => {
+        document.body.removeChild(script);
+        delete window.googleTranslateElementInit;
+      };
+    }, []);
+  
+    return (
+      // Render the div with id "google_translate_element" for the Google Translate element to be inserted
+      &lt;div id="google_translate_element">&lt;/div>
+    );
+  };
+  
+  export default GoogleTranslate;
+  </code></pre>
         </article>
     </section>
 
