@@ -90,7 +90,11 @@ const Reports = () => {
         },
         { id: 2, name: 'Z Reports',
           headers: ["Report ID", "XReport ID", "Menu Item", "Quantity"],
-          tableData: GetZReport(2)
+          tableData: [
+            {id: 0, xreport: 5, item_name: 'item 1', qnt: 3},
+            {id: 1, xreport: 5, item_name: 'item 2', qnt: 23},
+            {id: 2, xreport: 5, item_name: 'item 3', qnt: 87}
+          ]
         },
         { id: 3, name: 'Restock Report',
           headers: ["ID", "Item Name", "Cost", "Quantity"],
