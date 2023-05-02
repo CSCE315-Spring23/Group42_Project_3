@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {GetOrdersTable, GetExcessReport, GetSalesReport, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
+import {GetOrdersTable, GetExcessReport, GetSalesReport, GetRestockReport, GetSoldTogether,
+        GetXReport, GetZReport} from './pages/databaseFunctions';
 import './Reports.css';
 
 
@@ -10,15 +11,47 @@ import './Reports.css';
 */
 const Reports = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const [newAttribute, setNewAttribute] = useState('');
     const [startDate, setStartDate] = useState('2020-01-01');
-    const [endDate, setEndDate] = useState('2023-04-01');
+    const [endDate, setEndDate] = useState('2025-01-01');
+    const [reportID, setReportID] = useState(1);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
-    //const orderData = ;
+    const xreportData = GetXReport();
     const restockData = GetRestockReport();
-    const soldTogether = GetSoldTogether();
-    const orderData = GetOrdersTable(startDate,endDate);
-    const salesData = GetSalesReport('2023-01-01', '2023-04-01');
-    const excessData = GetExcessReport('2020-04-01', '2022-05-01');
+    //const zreportData = GetZReport(reportID);
+
+
+    const handleNewAttributeChange = (event) => {
+        // update the new attribute state
+        const { name, value } = event.target;
+        setNewAttribute(prevState => ({ ...prevState, [name]: value }));
+        console.log(newAttribute);
+    };
+
+    const handleKeyPress = (event) => {
+        const { name, value } = event.target;
+        if (event.key === "Enter") {
+            if (name === 'startDate'){
+                setStartDate(value);
+            }else if(name === 'endDate'){
+                setEndDate(value);
+            }else if(name === 'reportID'){
+                setReportID(parseInt(value));
+            }
+        }
+    };
+
+    const handlePopulateTable = (event) => {
+        // update the new attribute state
+        console.log(newAttribute);
+        if(newAttribute){
+            setStartDate(newAttribute['startDate']);
+            setEndDate(newAttribute['endDate']);
+            setReportID(parseInt(newAttribute['reportID']));
+        }
+        setIsSubmitted(true);
+    };
 
     /**
      * Formats the order data into the desired format for display in the table
@@ -28,11 +61,21 @@ const Reports = () => {
      * @param {number} row[].order_cost - Cost of order
      * @return {Object[]} Formatted order data object
      */
-    const formattedOrderData = orderData.map((row) => {
+    const formattedOrderData = (GetOrdersTable(startDate, endDate)).map((row) => {
         return {
           order_id: row.order_id,
           date_ordered: new Date(row.date_ordered).toLocaleDateString(), // use the desired date format here
           order_cost: row.order_cost
+        };
+    });
+
+    const formattedXReportData = (GetXReport()).map((row) =>{
+        return {
+            report_id: row.report_id,
+            last_order_id: row.last_order_id,
+            zreport_date: new Date(row.zreport_date).toLocaleDateString(),
+            report_total_cost: row.report_total_cost,
+            is_zreport: row.is_zreport
         };
     });
 
@@ -41,28 +84,33 @@ const Reports = () => {
           headers: ["ID", "Date", "Cost"],
           tableData: formattedOrderData
         },
-        { id: 1, name: 'X/Z Reports',
-          headers: ["Report ID", "Last Order ID", "ZReport Date", "Total Cost", "Menu Item", "Quantity"],
+        { id: 1, name: 'X Reports',
+          headers: ["Report ID", "Last Order ID", "ZReport Date", "Total Cost", "Is Z Report?"],
+          tableData: formattedXReportData
+        },
+        { id: 2, name: 'Z Reports',
+          headers: ["Report ID", "XReport ID", "Menu Item", "Quantity"],
           tableData: [
-            {id: 1, item_name: "hello", cost: 6.0, quantity: 6},
-            {id: 2, item_name: "item2", cost: 6.0, quantity: 6},
+            {id: 0, xreport: 5, item_name: 'item 1', qnt: 3},
+            {id: 1, xreport: 5, item_name: 'item 2', qnt: 23},
+            {id: 2, xreport: 5, item_name: 'item 3', qnt: 87}
           ]
         },
-        { id: 2, name: 'Restock Report',
+        { id: 3, name: 'Restock Report',
           headers: ["ID", "Item Name", "Cost", "Quantity"],
           tableData: restockData
         },
-        { id: 3, name: 'Sales Report',
+        { id: 4, name: 'Sales Report',
           headers: ["ID", "Item Name", "Quantity"],
-          tableData: salesData
+          tableData: GetSalesReport(startDate, endDate)
         },
-        { id: 4, name: 'Excess Report',
+        { id: 5, name: 'Excess Report',
           headers: ["Total Amount Used", "Inventory ID", "Item Name"],
-          tableData: excessData
+          tableData: GetExcessReport(startDate, endDate)
         },
-        { id: 5, name: 'Sold Together',
+        { id: 6, name: 'Sold Together',
           headers: ["ID", "Item 1", "Item 2", "# of Times Sold Together"],
-          tableData: soldTogether
+          tableData: GetSoldTogether(startDate, endDate)
         },
     ];
 
@@ -73,6 +121,7 @@ const Reports = () => {
      */
     const handleClick = (tabIndex) => {
         setActiveTab(tabIndex);
+        setIsSubmitted(false);
     }
 
     return (        //The container that would show all the tables
@@ -98,32 +147,57 @@ const Reports = () => {
                 </div>
                 <div>
                     {tabs.map((tab) => (
-                        <div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>
-                            <div style={{ display: activeTab === 0 ? 'block' : 'none'}}>
-                                <input type="date" id="start-date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                                <br />
-                                <label htmlFor="end-date">End Date: </label>
-                                <input type="date" id="end-date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                            </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        {tab.headers.map((header) =>(
-                                            <th key={header}>{header}</th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {tab.tableData.map((data) => (
-                                        <tr key={data.id}>
-                                            {Object.keys(data).map((key) => (
-                                                <td key={key}>{data[key]}</td>
+                        <div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>\
+                            <div>
+                                <div style={{ display: activeTab === 0 || activeTab === 4 || activeTab === 5 || activeTab === 6 ? 'inline-block' : 'none', margin: '10px' }}>
+                                    <input
+                                        type="text"
+                                        value={newAttribute['startDate'] || 'Start Date YYYY-MM-DD'} // set default value to header name
+                                        name={'startDate'}
+                                        onChange={handleNewAttributeChange}
+                                        onKeyDown={(event) => handleKeyPress(event)}
+                                    />
+                                    <input
+                                        type="text"
+                                        value={newAttribute['endDate'] || 'End Date YYYY-MM-DD'} // set default value to header name
+                                        name={'endDate'}
+                                        onChange={handleNewAttributeChange}
+                                        onKeyDown={(event) => handleKeyPress(event)}
+                                    />
+                                </div>
+                                <div style={{ display: activeTab === 2 ? 'inline-block' : 'none', margin: '10px' }}>
+                                    <input
+                                        type="text"
+                                        value={newAttribute['reportID']} // set default value to header name
+                                        name={'reportID'}
+                                        onChange={handleNewAttributeChange}
+                                        onKeyDown={(event) => handleKeyPress(event)}
+                                    />
+                                </div>
+                                <div style={{ display: activeTab !== 1 && activeTab !== 3 ? 'inline-block' : 'none', margin: '10px', border: '5px' }}>
+                                    <button onClick={handlePopulateTable}>Submit</button>
+                                </div>
+                                {(isSubmitted || activeTab === 1 || activeTab === 3) &&
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                {tab.headers.map((header) =>(
+                                                    <th key={header}>{header}</th>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {tab.tableData.map((data) => (
+                                                <tr key={data.id}>
+                                                    {Object.keys(data).map((key) => (
+                                                        <td key={key}>{data[key]}</td>
+                                                    ))}
+                                                </tr>
                                             ))}
-                                        </tr>
-                                    ))}
-                                </tbody>
-
-                            </table>
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
                         </div>
                     ))}
                 </div>
