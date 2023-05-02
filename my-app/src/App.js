@@ -14,7 +14,6 @@ import MenuBoard from './components/pages/Menuboard';
 import ManagerView from './components/pages/ManagerView';
 import ManagerDatabaseAccess  from './components/pages/ManagerDatabaseAccess';
 import EmployeeCheckout from './components/pages/EmployeeCheckout'
-import GoogleTranslate from './components/Translate';
 
 /**
  * Main App component containing all the different pages available
@@ -25,7 +24,6 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route exact path='/Translate' element={<GoogleTranslate/>} />
           <Route exact path='/' element={<Home/>} />
           <Route exact path='/Burgers' element={<Burgers/>} />
           <Route exact path='/Menu' element={<Menu/>} />
