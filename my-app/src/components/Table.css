@@ -75,3 +75,12 @@ th:nth-child(5) {
   padding: 10px;
   cursor: pointer;
 }
+
+.footer-input::placeholder {
+  color: #c6c5c5;
+}
+
+.yt{
+  font-size: 14px;
+  background-color: #fff;
+}

@@ -48,8 +48,8 @@ function Navbar({ links, buttonText, buttonPath, type }) {
     setIsManagerView(type === 'm');
   }, []);
 
-  localStorage.setItem('isManager', true)
-  localStorage.setItem('isEmployee', true)
+//   localStorage.setItem('isManager', true)
+//   localStorage.setItem('isEmployee', true)
 
   window.addEventListener('resize', showButton);
 

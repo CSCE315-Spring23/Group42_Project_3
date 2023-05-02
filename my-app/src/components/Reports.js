@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {GetOrdersTable, GetExcessReport, GetSalesReport, GetRestockReport, GetSoldTogether} from './pages/databaseFunctions';
 import './Reports.css';
 
+
+
+/**
+    * Reports component to display various reports
+    * @return {JSX.Element} JSX element
+*/
 const Reports = () => {
     const [activeTab, setActiveTab] = useState(0);
     const [startDate, setStartDate] = useState('2020-01-01');
@@ -14,6 +20,14 @@ const Reports = () => {
     const salesData = GetSalesReport('2023-01-01', '2023-04-01');
     const excessData = GetExcessReport('2020-04-01', '2022-05-01');
 
+    /**
+     * Formats the order data into the desired format for display in the table
+     * @param {Object[]} row - Order data object
+     * @param {number} row[].order_id - Order ID
+     * @param {Date} row[].date_ordered - Date of order
+     * @param {number} row[].order_cost - Cost of order
+     * @return {Object[]} Formatted order data object
+     */
     const formattedOrderData = orderData.map((row) => {
         return {
           order_id: row.order_id,
@@ -52,7 +66,11 @@ const Reports = () => {
         },
     ];
 
-
+    /**
+     * Handles the click on a tab
+     * @param {number} tabIndex - Index of the clicked tab
+     * @return {void}
+     */
     const handleClick = (tabIndex) => {
         setActiveTab(tabIndex);
     }

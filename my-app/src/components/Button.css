@@ -79,6 +79,6 @@
   .btn--third:hover{
     transition: all 0.3s ease-out;
     background: rgba(92,0,32,255);
-    color: rgba(92,0,32,255);
+    color: #fff;
     transition: 250ms;
   }
