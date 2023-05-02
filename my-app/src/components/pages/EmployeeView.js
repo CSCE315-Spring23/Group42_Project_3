@@ -30,10 +30,16 @@ import Loading from '../Loading';
   for (let i = 0; i < menuItems.length; i++) {
     const item = menuItems[i];
     const ingr = ingredientsArr[i];
+    if (!ingr.includes("Combo") && (i <= 4 || (i > 6 && i <= 10))) {
+      ingr.push("Combo");
+    }
+    if (!ingr.includes("Basket Combo") && i > 4 && i <= 6) {
+      ingr.push("Basket Combo");
+    }
     const card = {
       // image: "images/sandwich-img-1.jpg",
       text: item.menu_item_name,
-      //label: item.menu_item_cost,
+      label: item.menu_item_cost,
       //path: "",
       ingredients: ingr
     };

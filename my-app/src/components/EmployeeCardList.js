@@ -33,6 +33,7 @@ function EmployeeCardList({ cardData, title }) {
               return (
                 <EmployeeCardItem
                   text={card.text}
+                  label={card.label}
                   path={card.path}
                   key={index}
                   ingredients={card.ingredients}
@@ -46,6 +47,7 @@ function EmployeeCardList({ cardData, title }) {
                 <EmployeeCardItem
                   text={card.text}
                   path={card.path}
+                  label={card.label}
                   key={index}
                   ingredients={card.ingredients}
                 />
@@ -58,6 +60,7 @@ function EmployeeCardList({ cardData, title }) {
                 <EmployeeCardItem
                   text={card.text}
                   path={card.path}
+                  label={card.label}
                   key={index}
                   ingredients={card.ingredients}
                 />
@@ -70,6 +73,7 @@ function EmployeeCardList({ cardData, title }) {
                 <EmployeeCardItem
                   text={card.text}
                   path={card.path}
+                  label={card.label}
                   key={index}
                   ingredients={card.ingredients}
                 />
