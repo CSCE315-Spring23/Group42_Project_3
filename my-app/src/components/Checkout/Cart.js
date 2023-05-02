@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "./CartItem";
 import './cart.css'
-import {CreateOrderVectors, CreateOrder, UpdateCartQuantity} from '../pages/databaseFunctions'
+import {UpdateCartQuantity, CreateNewOrder} from '../pages/databaseFunctions'
 import { Button } from "../Button";
-import { Link } from 'react-router-dom';
 import SimilarItems from "./SimilarItems";
 import Popup from "../Popups/Popup";
 
@@ -13,6 +12,7 @@ function Cart({ initialItems }) {
 
   function checkoutClick() {
     //PLACE ORDER!
+    CreateNewOrder(total);
     setShowPopup(true);
   }
 

@@ -348,6 +348,19 @@ async function UpdateCartQuantity(id, quantity) {
   }
 }
 
+async function CreateNewOrder(cost) {
+  console.log("Placing order...");
+  var myID = document.cookie.replace(/(?:(?:^|.*;\s*)sessionId\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  try {
+    const response = await fetch(`${host}/createNewOrder/${myID}/${cost}`);
+    const data = await response.json();
+    console.log("Order place result: ", data);
+
+  } catch (err) {
+    console.error('Error placing order: ' + err);
+  }
+}
+
 
 function GetCartItems() {
   const [myCart, setCart] = useState([]);
@@ -633,4 +646,4 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
           GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable,
-          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity};
+          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity, CreateNewOrder};
