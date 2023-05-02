@@ -206,9 +206,9 @@
 }
 
 .CartItemMods div {
-  text-align: center;
+  text-align: left;
   font-size: 16px;
-  display: flex;
+  /* display: flex; */
   width: 300px;
   padding-left: 20px;
   }
