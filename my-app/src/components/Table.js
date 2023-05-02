@@ -136,7 +136,8 @@ function TableInfo(props) {
           <input
           className="footer-input yt"
             type="text"
-            value={newAttribute[header] || header} // set default value to header name
+            value={newAttribute[header]} // set default value to header name
+            placeholder={header}
             name={header}
             onChange={handleNewAttributeChange}
           />
@@ -187,15 +188,15 @@ const Table = () => {
   const menuData = GetMenuTable();
 
   const tabs = [
-    { id: 0, name: 'Inventory', 
+    { id: 0, name: 'Inventory',
       headers: ["Inventory ID", "Item Name", "Cost", "Quantity"],
       tableData: inventoryData
     },
-    { id: 1, name: 'MenuItems', 
+    { id: 1, name: 'MenuItems',
       headers: ["Menu ID", "Item Name", "Cost"],
       tableData: menuData
     },
-    { id: 2, name: 'RecipeItems', 
+    { id: 2, name: 'RecipeItems',
       headers: ["Recipe ID", "Item Name", "Inventory ID", "Menu ID", "Amount Used"],
       tableData: recipeData
     },
@@ -220,7 +221,7 @@ const Table = () => {
                   padding: '10px',
                   cursor: 'pointer',
               }}
-            > 
+            >
               {tab.name}
             </div>
           ))}
@@ -233,8 +234,8 @@ const Table = () => {
           ))}
         </div>
       </div>
-    </div>    
-    </React.Fragment>    
+    </div>
+    </React.Fragment>
   )
 }
 
