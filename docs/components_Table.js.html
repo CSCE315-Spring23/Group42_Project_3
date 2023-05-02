@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Table.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Table.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import { GetInventoryTable, GetRecipesTable, GetMenuTable, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem } from './pages/databaseFunctions';
+import './Table.css';
+import { Button } from './Button';
+
+/**
+ * @typedef {Object} TableInfoProps
+ * @property {string[]} headers - an array of strings representing the table headers
+ * @property {Object[]} tableData - an array of objects representing the data in the table
+ * @property {number} id - an integer representing the id of the table
+ */
+
+/**
+ * TableInfo component that displays a table with editable cells and buttons for adding and deleting data.
+ * @param {TableInfoProps} props - props passed to the component
+ * @returns {JSX.Element} JSX element representing the TableInfo component
+ */
+function TableInfo(props) {
+  const [tableData, setTableData] = useState([props.tableData]);
+  const [newAttribute, setNewAttribute] = useState('');
+  const tab_id = props.id;
+
+  useEffect(() => {
+    setTableData(props.tableData);
+  }, [props.tableData]);
+
+  /**
+   * Function that handles the input change in the table cells
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} event - event that triggered the function
+   */
+  const handleInputChange = (event) => {
+    // update the state based on user input
+    const newData = [...tableData];
+    newData[event.target.dataset.row][event.target.dataset.field] = event.target.value;
+    setTableData(newData);
+    //console.log("change");
+  };
+
+  /**
+   * Function that handles the change in the new attribute input fields
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} event - event that triggered the function
+   */
+  const handleNewAttributeChange = (event) => {
+    // update the new attribute state
+    const { name, value } = event.target;
+    setNewAttribute(prevState => ({ ...prevState, [name]: value }));
+    console.log(newAttribute);
+  };
+
+  /**
+   * Function that handles the add attribute button click
+   * @param {React.MouseEvent&lt;HTMLButtonElement>} event - event that triggered the function
+   */
+  const handleAddAttribute = (event) => {
+    // update the state based on user input
+    console.log(newAttribute);
+    if (tab_id === 0) {
+      const name = newAttribute['Item Name'];
+      const cost = parseFloat(newAttribute['Cost']);
+      const quantity = parseInt(newAttribute['Quantity']);
+      //console.log(name, cost, quantity);
+      AddInventoryItem(name, cost, quantity);
+    } else if (tab_id === 1) {
+      const name = newAttribute['Item Name'];
+      const cost = parseFloat(newAttribute['Cost']);
+      //console.log(name, cost);
+      AddMenuItem(name, cost);
+    } else if (tab_id === 2) {
+      const name = newAttribute['Item Name'];
+      const invID = parseInt(newAttribute['Inventory ID']);
+      const menuID = parseInt(newAttribute['Menu ID']);
+      const quantity = parseInt(newAttribute['Amount Used']);
+      AddRecipesItem(name, invID, menuID, quantity);
+    }
+    setNewAttribute({});
+  };
+
+  /**
+   * Function that handles the delete attribute button click
+   * @param {React.MouseEvent&lt;HTMLButtonElement>} event - event that triggered the function
+   */
+  const handleDeleteAttribute = (event) => {
+    // update the state based on user input
+    if(tab_id === 0){
+      const ID = newAttribute['Inventory ID'];
+      console.log(ID);
+      DeleteInventoryItem(ID);
+    } else if (tab_id === 1){
+      const ID = newAttribute['Menu ID'];
+      console.log(ID);
+      DeleteMenuItem(ID);
+    } else if(tab_id === 2){
+      const ID = newAttribute['Recipe ID'];
+      console.log(ID);
+      DeleteRecipesItem(ID);
+    }
+    setNewAttribute({});
+  };
+
+  /**
+   * Handles the key press event and triggers the desired action if the Enter key is pressed.
+   *
+   * @param {Event} event - The event object for the key press event.
+   * @param {Object} data - An object containing the data necessary to perform the desired action.
+   * @param {number} data.inventory_id - The ID of the inventory item to update (if applicable).
+   * @param {string} data.inventory_item_name - The name of the inventory item to update (if applicable).
+   * @param {number} data.inventory_item_cost - The cost of the inventory item to update (if applicable).
+   * @param {number} data.inventory_item_quantity - The quantity of the inventory item to update (if applicable).
+   * @param {number} data.menu_item_id - The ID of the menu item to update (if applicable).
+   * @param {string} data.menu_item_name - The name of the menu item to update (if applicable).
+   * @param {number} data.menu_item_cost - The cost of the menu item to update (if applicable).
+   * @param {number} data.recipe_id - The ID of the recipe to update (if applicable).
+   * @param {string} data.recipe_item_name - The name of the recipe item to update (if applicable).
+   * @param {number} data.inventory_id - The ID of the inventory item used in the recipe (if applicable).
+   * @param {number} data.menu_id - The ID of the menu item associated with the recipe (if applicable).
+   * @param {number} data.amt_used - The amount of the inventory item used in the recipe (if applicable).
+   */
+  const handleKeyPress = (event, data) => {
+    if (event.key === "Enter") {
+      // trigger the desired action
+      console.log("pressed Enter", data, tab_id);
+      if(tab_id === 0){
+        UpdateInventoryTable(data['inventory_id'], data['inventory_item_name'], data['inventory_item_cost'], data['inventory_item_quantity']);
+      }else if(tab_id === 1){
+        UpdateMenuTable(data['menu_item_id'], data['menu_item_name'], data['menu_item_cost']);
+      }else if(tab_id === 2){
+        UpdateRecipesTable(data['recipe_id'], data['recipe_item_name'], data['inventory_id'], data['menu_id'], data['amt_used']);
+      }
+    }
+  };
+
+  return (
+    &lt;div>
+      {props.headers.map((header) =>(
+        &lt;div key={header} style={{ display: 'inline-block', margin: '10px' }}>
+          &lt;input
+          className="footer-input yt"
+            type="text"
+            value={newAttribute[header]} // set default value to header name
+            placeholder={header}
+            name={header}
+            onChange={handleNewAttributeChange}
+          />
+        &lt;/div>
+      ))}
+      &lt;div style={{ display: 'inline-block', margin: '10px', border: '5px' }}>
+          &lt;Button buttonStyle = 'btn--third' onClick={handleAddAttribute}>Add Attribute&lt;/Button>
+          &lt;Button buttonStyle = 'btn--third' onClick={handleDeleteAttribute}>Delete&lt;/Button>
+      &lt;/div>
+      &lt;table>
+        &lt;thead>
+          &lt;tr>
+            {props.headers.map((header) =>(
+              &lt;th key={header}>{header}&lt;/th>
+            ))}
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {tableData.map((data, rowIndex) => (
+            &lt;tr key={data.id}>
+              {Object.keys(data).map((key, colIndex) => (
+                // Make the first column not an input
+                &lt;td key={key}>
+                  {colIndex === 0 ? data[key] : (
+                    &lt;input
+                    type="text"
+                    value={data[key]}
+                    onChange={handleInputChange}
+                    onKeyDown={(event) => handleKeyPress(event, data)}
+                    data-row={rowIndex}
+                    data-field={key}
+                    />
+                  )}
+                &lt;/td>
+              ))}
+            &lt;/tr>
+          ))}
+        &lt;/tbody>
+      &lt;/table>
+    &lt;/div>
+  );
+}
+
+const Table = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const inventoryData = GetInventoryTable(0,0);
+  const recipeData = GetRecipesTable();
+  const menuData = GetMenuTable();
+
+  const tabs = [
+    { id: 0, name: 'Inventory',
+      headers: ["Inventory ID", "Item Name", "Cost", "Quantity"],
+      tableData: inventoryData
+    },
+    { id: 1, name: 'MenuItems',
+      headers: ["Menu ID", "Item Name", "Cost"],
+      tableData: menuData
+    },
+    { id: 2, name: 'RecipeItems',
+      headers: ["Recipe ID", "Item Name", "Inventory ID", "Menu ID", "Amount Used"],
+      tableData: recipeData
+    },
+  ];
+
+  const handleClick = (tabIndex) => {
+    setActiveTab(tabIndex);
+  }
+
+  return (        //The container that would show all the tables
+    &lt;React.Fragment>
+    &lt;div className='container'>
+      &lt;div className='table-tabb'>
+        &lt;div className='one-tab' style={{ display: 'flex' }}>
+          {tabs.map((tab) => (
+            &lt;div
+              key={tab.id}
+              onClick={() => handleClick(tab.id)}
+              style={{
+                  backgroundColor: activeTab === tab.id ? 'rgb(249, 187, 18)' : 'rgba(92,0,32,255)',
+                  color: 'white',
+                  padding: '10px',
+                  cursor: 'pointer',
+                  border: '1px solid whitesmoke',
+              }}
+            >
+              {tab.name}
+            &lt;/div>
+          ))}
+        &lt;/div>
+        &lt;div>
+          {tabs.map((tab) => (
+            &lt;div key={tab.id} style={{ display: activeTab === tab.id ? 'block' : 'none'}}>
+            &lt;TableInfo tableData={tab.tableData} headers={tab.headers} id={tab.id}/>
+            &lt;/div>
+          ))}
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+    &lt;/React.Fragment>
+  )
+}
+
+
+export default Table;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Weather.html">Weather</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CardItem">CardItem</a></li><li><a href="global.html#CardList">CardList</a></li><li><a href="global.html#CartItemMods">CartItemMods</a></li><li><a href="global.html#EmployeeCard">EmployeeCard</a></li><li><a href="global.html#EmployeeCardItem">EmployeeCardItem</a></li><li><a href="global.html#EmployeeCardList">EmployeeCardList</a></li><li><a href="global.html#HeroSection">HeroSection</a></li><li><a href="global.html#IngredientForm">IngredientForm</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#MenuBoardView">MenuBoardView</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SimilarItems">SimilarItems</a></li><li><a href="global.html#TableInfo">TableInfo</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#loginClick">loginClick</a></li><li><a href="global.html#showButton">showButton</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 10:58:45 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

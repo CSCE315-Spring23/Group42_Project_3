@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/IngredientForm.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/IngredientForm.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import { Button } from './Button';
+import './IngredientForm.css';
+
+/**
+  * This is a functional component called IngredientForm  used to display a form of ingredients and quantity
+  * buttons that can be used to customize orders such as burgers and sandwiches.
+  * @param {Array} ingredients An array of ingredients to be displayed in the form.
+  * @param {Function} setQuantities A function to set the quantity values for each ingredient in the form.
+  * @return {JSX.Element} Returns a JSX Element that displays the ingredient form.
+*/
+const IngredientForm = ({ ingredients, setQuantities }) => {
+  // State hook to set the quantity values of the ingredients in the form
+  const [quantityValues, setQuantityValues] = useState(ingredients.map(() => 0));
+
+  /**
+  * This function is called when a quantity button is clicked. It updates the quantity value for the
+  * corresponding ingredient in the state hook.
+  * @param {number} index The index of the ingredient in the ingredients array.
+  * @param {number} value The value of the button that was clicked.
+  */
+  const handleChange = (index, value) => {
+  const newValues = [...quantityValues];
+  newValues[index] = value;
+  setQuantityValues(newValues);
+  setQuantities(newValues);
+  };
+  // Array of special buttons for each ingredient
+  const specialButtons = [
+    {
+        label1: "None",
+        label2: "Regular",
+        label3: "Extra",
+        label4: "",
+        label5: "",
+        label6: "",
+        show: "y",
+    },
+    {
+        label1: "Black Bean",
+        label2: "Regular",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        show: "y",
+    },
+    {
+        label1: "Chocolate",
+        label2: "Vanilla",
+        label3: "Coffee",
+        label4: "Strawberry",
+        label5: "",
+        label6: "",
+        show: "n",
+    },
+    {
+        label1: "Buffalo",
+        label2: "BBQ",
+        label3: "Honey Mustard",
+        label4: "Ranch",
+        label5: "Spicy Ranch",
+        label6: "Gig-em Sauce",
+        show: "n",
+    },
+    {
+        label1: "None",
+        label2: "Fries",
+        label3: "Kettle Chips",
+        label4: "",
+        label5: "",
+        label6: "",
+        show: "n",
+    },
+    {
+        label1: "None",
+        label2: "Fountain Drink",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        show: "n",
+    },
+  ];
+
+  /**
+  * This function returns the index of the special button array based on the ingredient.
+  * @param {string} ingredient The name of the ingredient.
+  * @return {number} Returns the index of the special button array.
+  */
+
+  function getButtonsIndex(ingredient) {
+    if(ingredient === "Beef Patty"){
+      return 1;
+    }
+    if(ingredient === "Vanilla Ice Cream"){
+      return 2;
+    }
+    if(ingredient === "x"){
+      return 3;
+    }
+    if(ingredient === "Combo"){
+      return 4;
+    }
+    if(ingredient === "Basket Combo"){
+      return 5;
+    }
+    return 0;
+  }
+
+  function customName(ingredient) {
+    if(ingredient === "Beef Patty"){
+      return "Patty type";
+    }
+    if(ingredient === "Vanilla Ice Cream"){
+      return "Flavor";
+    }
+    if(ingredient === "x"){
+      return "";
+    }
+    if(ingredient === "Basket Combo"){
+      return "Combo";
+    }
+    return ingredient;
+  }
+
+  return (
+    &lt;div className="form-container">
+      &lt;form>
+        {ingredients.map((ingredient, index) => (
+          &lt;div key={index} className="form-row">
+            &lt;label>{customName(ingredient)}&lt;/label>
+            &lt;div className="quantity-buttons">
+              &lt;Button
+                buttonStyle={quantityValues[index] === -1 ? "btn--primary" : "btn--outline"}
+                buttonSize="btn--medium"
+                onClick={() => handleChange(index, -1)}
+              >
+                {specialButtons[getButtonsIndex(ingredient)].label1}
+              &lt;/Button>
+              {specialButtons[getButtonsIndex(ingredient)].label2 !== "" &amp;&amp; (
+                &lt;Button
+                  buttonStyle={quantityValues[index] === 0 ? "btn--primary" : "btn--outline"}
+                  buttonSize="btn--medium"
+                  onClick={() => handleChange(index, 0)}
+                >
+                  {specialButtons[getButtonsIndex(ingredient)].label2}
+                &lt;/Button>
+              )}
+              {specialButtons[getButtonsIndex(ingredient)].label3 !== "" &amp;&amp; (
+                &lt;Button
+                  buttonStyle={quantityValues[index] === 1 ? "btn--primary" : "btn--outline"}
+                  buttonSize="btn--medium"
+                  onClick={() => handleChange(index, 1)}
+                >
+                  {specialButtons[getButtonsIndex(ingredient)].label3}
+                &lt;/Button>
+              )}
+              {specialButtons[getButtonsIndex(ingredient)].label4 !== "" &amp;&amp; (
+                &lt;Button
+                  buttonStyle={quantityValues[index] === 2 ? "btn--primary" : "btn--outline"}
+                  buttonSize="btn--medium"
+                  onClick={() => handleChange(index, 2)}
+                >
+                  {specialButtons[getButtonsIndex(ingredient)].label4}
+                &lt;/Button>
+              )}
+              {specialButtons[getButtonsIndex(ingredient)].label5 !== "" &amp;&amp; (
+                &lt;Button
+                  buttonStyle={quantityValues[index] === 3 ? "btn--primary" : "btn--outline"}
+                  buttonSize="btn--medium"
+                  onClick={() => handleChange(index, 3)}
+                >
+                  {specialButtons[getButtonsIndex(ingredient)].label5}
+                &lt;/Button>
+              )}
+              {specialButtons[getButtonsIndex(ingredient)].label6 !== "" &amp;&amp; (
+                &lt;Button
+                  buttonStyle={quantityValues[index] === 4 ? "btn--primary" : "btn--outline"}
+                  buttonSize="btn--medium"
+                  onClick={() => handleChange(index, 4)}
+                >
+                  {specialButtons[getButtonsIndex(ingredient)].label6}
+                &lt;/Button>
+              )}
+            &lt;/div>
+          &lt;/div>
+        ))}
+      &lt;/form>
+    &lt;/div>
+  );
+};
+
+export {IngredientForm};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Weather.html">Weather</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CardItem">CardItem</a></li><li><a href="global.html#CardList">CardList</a></li><li><a href="global.html#CartItemMods">CartItemMods</a></li><li><a href="global.html#EmployeeCard">EmployeeCard</a></li><li><a href="global.html#EmployeeCardItem">EmployeeCardItem</a></li><li><a href="global.html#EmployeeCardList">EmployeeCardList</a></li><li><a href="global.html#HeroSection">HeroSection</a></li><li><a href="global.html#IngredientForm">IngredientForm</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#MenuBoardView">MenuBoardView</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SimilarItems">SimilarItems</a></li><li><a href="global.html#TableInfo">TableInfo</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#loginClick">loginClick</a></li><li><a href="global.html#showButton">showButton</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 10:58:45 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

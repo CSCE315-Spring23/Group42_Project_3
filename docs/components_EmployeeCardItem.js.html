@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: components/EmployeeCardItem.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,68 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: components/EmployeeCardItem.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Popup from './Popups/Popup';
 
+/**
+  * EmployeeCardItem Component - used to display items in Employee View
+  * @param {object} props - The props object containing the following properties:
+  * @param {string} props.path - The path to link to.
+  * @param {string} props.text - The text to display for the item.
+  * @param {string} props.label - The price of the item.
+  * @param {Array} props.ingredients - The array of ingredients for the item.
+  * @returns The EmployeeCardItem Component
+*/
+function EmployeeCardItem(props) {
+  const [showPopup, setShowPopup] = useState(false);
 
-    <h3> </h3>
+  /**
+  * Toggle the showPopup state.
+  */
+  function togglePopup() {
+    setShowPopup(!showPopup);
+  }
 
+  return (
+    &lt;>
+      &lt;li className='cards__item'>
+        {props.path ? (
+          &lt;Link className='cards__item__link' to={props.path}>
+        
+            &lt;div className='cards__item__info'>
+              &lt;h5 className='cards__item__text'>{props.text}&lt;/h5>
+            &lt;/div>
+          &lt;/Link>
+        ) : (
+          &lt;Link className='cards__item__link' onClick={togglePopup}>
+        
+            &lt;div className='cards__item__info'>
+              &lt;h5 className='cards__item__text'>{props.text}&lt;/h5>
+            &lt;/div>
+          &lt;/Link>
+        )}
+      &lt;/li>
+      {showPopup &amp;&amp; (
+        &lt;Popup text = {props.text} price = {props.label} ingredients = {props.ingredients} onClose={togglePopup} />
+      )}
+    &lt;/>
+  );
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default EmployeeCardItem;
+</code></pre>
+        </article>
+    </section>
 
 
 

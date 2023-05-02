@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: components/HeroSection.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,66 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: components/HeroSection.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import '../App.css';
+import { Button } from './Button';
+import './HeroSection.css';
+import Weather from './Weather';
+// import { useHistory } from 'react-router-dom';
 
+/**
+ * Display background video for Home page
+ *
+ * This component displays a background video with a title and a call-to-action button.
+ * It also includes a weather component that displays the current weather information.
+ */
+function HeroSection() {
+//   const history = useHistory();
 
-    <h3> </h3>
+  /**
+   * Handle click event for the call-to-action button
+   *
+   * This function is triggered when the user clicks on the call-to-action button.
+   * It can be used to redirect the user to a different page using React Router.
+   */
+  const handleOnClick = () => {
+    // history.push('/');
+  };
 
+  return (
+    &lt;div className='hero-container'>
+      &lt;video src='video-1.mp4' autoPlay loop muted />
+      &lt;h1>Rev's&lt;/h1>
+      &lt;p>American Grill&lt;/p>
+      &lt;div className='hero-btns'>
+        &lt;Button
+          className='btns'
+          buttonStyle='btn--outline'
+          buttonSize='btn--large'
+          onClick={handleOnClick}
+          path='/Menu'
+        >
+          GET STARTED
+        &lt;/Button>
+        &lt;Weather/>
+      &lt;/div>
+    &lt;/div>
+  );
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default HeroSection;
+</code></pre>
+        </article>
+    </section>
 
 
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: components/Checkout/CartItemMods.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,44 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: components/Checkout/CartItemMods.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import './cart.css'
 
+/**
+ * Renders the modifications of an item in the cart.
+ * @param {Object} props - The props that are passed to the component.
+ * @param {number} props.id - The ID of the item in the cart.
+ * @param {string} props.name - The name of the item in the cart.
+ * @param {number} props.price - The price of the item in the cart.
+ * @param {number} props.qty - The quantity of the item in the cart.
+ * @param {string[]} props.mods - An array of modifications for the item in the cart.
+ * @returns {JSX.Element} - The JSX code that renders the modifications of the item.
+ */
+function CartItemMods({ id, name, price, qty, mods }) {
+  return (
+    &lt;div className="CartItemMods">
+      &lt;div>
+        {mods &amp;&amp; mods.map((mod, index) => (
+          &lt;div key={index}>{mod}&lt;/div>
+        ))}
+      &lt;/div>
+    &lt;/div>
+  );
+}
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default CartItemMods;
+</code></pre>
+        </article>
+    </section>
 
 
 

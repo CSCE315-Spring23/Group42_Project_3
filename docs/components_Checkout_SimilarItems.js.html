@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Checkout/SimilarItems.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Checkout/SimilarItems.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import './SimilarItem.css';
+import CardItem from '../CardItem';
+import {GetMenuList, GetIngredients, GetSoldTogether, GetCartItems} from '../pages/databaseFunctions'
+import Loading from '../Loading';
+import './cart.css'
+
+/**
+ * React component that displays a list of similar menu items based on the items in the user's cart.
+ *
+ * @returns {JSX.Element} JSX element that renders a list of recommended menu items.
+ */
+function SimilarItems() {
+  const soldTogether = GetSoldTogether();
+  // bacon cheeseburger and tots to replicate issue
+  const myCart = GetCartItems();
+  var menuItems = GetMenuList(1, 25);
+  var ingredientsArr = GetIngredients(1, 25);
+
+  if (
+    menuItems.length === 0 ||
+    ingredientsArr.length === 0 ||
+    soldTogether.length === 0 ||
+    myCart.length === 0
+  ) {
+    return &lt;Loading />;
+  }
+
+  const filteredData = soldTogether.filter(item => {
+    const inMyCart1 = myCart.some(cartItem => cartItem.name === item.menuItem1);
+    const inMyCart2 = myCart.some(cartItem => cartItem.name === item.menuItem2);
+    return inMyCart1 ^ inMyCart2;
+  }); // remove pairs where both are already in the cart
+
+  var recsList = [];
+  const numRecs = Math.min(filteredData.length, 3);
+
+  for (let i = 0; i &lt; numRecs; i++) {
+    recsList.push(filteredData[i].menuItem1);
+    recsList.push(filteredData[i].menuItem2);
+  }
+  recsList = recsList.filter(item => !myCart.some(cartItem => cartItem.name === item));
+
+  const menuItemsFiltered = menuItems.filter(menuItem => {
+    return recsList.indexOf(menuItem.menu_item_name) !== -1;
+  });
+
+  const numMenuItems = menuItemsFiltered.length;
+
+  var ingredientsArrFiltered = [];
+  var ids = [];
+
+  for (let i = 0; i &lt; numMenuItems; i++) {
+    ids.push(menuItemsFiltered[i].menu_item_id - 1);
+    ingredientsArrFiltered.push(ingredientsArr[ids[i]]);
+  }
+
+  const cardData = {
+    cards: []
+  };
+
+  for (let i = 0; i &lt; numMenuItems; i++) {
+    const item = menuItemsFiltered[i];
+    const ingr = ingredientsArrFiltered[i];
+
+    if (!ingr.includes("Combo") &amp;&amp; ids[i] &lt; 11) {
+      ingr.push("Combo");
+    }
+
+    const card = {
+      image: item.image_link,
+      text: item.menu_item_name,
+      label: item.menu_item_cost,
+      ingredients: ingr
+    };
+
+    cardData.cards.push(card);
+  }
+
+  const sze = cardData.cards.length;
+
+  /**
+   * Renders a list of recommended menu items as CardItem components.
+   *
+   * @returns {JSX.Element[]} Array of JSX elements that render CardItem components for each recommended menu item.
+   */
+  const renderCards = () => {
+    return cardData.cards.slice(0, sze).map((card, index) => {
+      return (
+        &lt;CardItem
+          src={card.image}
+          text={card.text}
+          label={card.label}
+          key={index}
+          ingredients={card.ingredients}
+          style = 'ci'
+        />
+      );
+    });
+  };
+
+  return (
+    &lt;div className='similar'>
+      &lt;div className='ccc'>
+        &lt;h1 className='PeopleAlsoOrder'>People Also Order&lt;/h1>
+        &lt;div className='cards__wrapper'>
+          &lt;ul className='scrt'>{renderCards()}&lt;/ul>
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  );
+}
+
+export default SimilarItems;
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Weather.html">Weather</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CardItem">CardItem</a></li><li><a href="global.html#CardList">CardList</a></li><li><a href="global.html#CartItemMods">CartItemMods</a></li><li><a href="global.html#EmployeeCard">EmployeeCard</a></li><li><a href="global.html#EmployeeCardItem">EmployeeCardItem</a></li><li><a href="global.html#EmployeeCardList">EmployeeCardList</a></li><li><a href="global.html#HeroSection">HeroSection</a></li><li><a href="global.html#IngredientForm">IngredientForm</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#MenuBoardView">MenuBoardView</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SimilarItems">SimilarItems</a></li><li><a href="global.html#TableInfo">TableInfo</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#loginClick">loginClick</a></li><li><a href="global.html#showButton">showButton</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 10:58:45 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

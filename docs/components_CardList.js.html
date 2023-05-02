@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: components/CardList.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,78 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: components/CardList.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import './Cards.css';
+import CardItem from './CardItem';
 
 
-    <h3> </h3>
+/**
+ * Renders a list of cards with images and text.
+ *
+ * @param {object} cardData - Object containing an array of card objects.
+ * @param {string} title - The title of the card list.
+ * @returns {JSX.Element} - The CardList component.
+ */
+function CardList({cardData, title} ) {
+  /**
+   * The number of cards in the cardData array.
+   *
+   * @type {number}
+   */
+  const sze = cardData.cards.length;
 
+  return (
+    &lt;div className='cards'>
+      &lt;h1>{title}&lt;/h1>
+      &lt;div className='cards__container'>
+        &lt;div className='cards__wrapper'>
+          &lt;ul className='cards__items'>
+            {cardData.cards.slice(0, sze /2).map((card, index) => {
+              return (
+                &lt;CardItem
+                  src={card.image}
+                  text={card.text}
+                  label={card.label}
+                  path={card.path}
+                  key={index}
+                  ingredients = {card.ingredients}
+                />
+              );
+            })}
+          &lt;/ul>
+          &lt;ul className='cards__items'>
+            {cardData.cards.slice(sze / 2).map((card, index) => {
+              return (
+                &lt;CardItem
+                  src={card.image}
+                  text={card.text}
+                  label={card.label}
+                  path={card.path}
+                  key={index}
+                  ingredients = {card.ingredients}
+                />
+              );
+            })}
+          &lt;/ul>
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  );
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default CardList;
+</code></pre>
+        </article>
+    </section>
 
 
 

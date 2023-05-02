@@ -1,84 +1,87 @@
+
 :root {
-    --primary: #fff;
-    --secondary: rgb(249, 187, 18);
-  }
-  
-  .btn {
-    padding: 8px 20px;
-    border-radius: 2px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .btn:hover .footer-link-items a {
-    color: rgba(92,0,32,255);
-    transition: 0.3s ease-out;
-  }
-  
-  .btn--primary {
-    background-color: var(--secondary);
-    color: var(--primary);
-    border: 1px solid var(--secondary);
-  }
-  
-  .btn--outline, .btn--outlinee{
-    background-color: transparent;
-    color: #fff;
-    padding: 8px 20px;
-    border: 1px solid var(--primary);
-    transition: all 0.3s ease-out;
-  }
+  --primary: #fff;
+  --secondary: rgb(249, 187, 18);
+}
 
-  .btn--outlinee{
-    /* padding: 1em; */
-    background-color: var(--secondary);
-    color: var(--primary);
-    border: 1px solid var(--secondary);
-    padding-bottom: 30px;
-  }
 
-  .btn--third {
-    background-color: transparent;
-    color: rgba(92,0,32,255);
-    padding: 8px 20px;
-    border: 1px solid rgba(92,0,32,255);
-    transition: all 0.3s ease-out;
-    margin: 10px;
-  }
-  
-  .btn--medium {
-    padding: 8px 20px;
-    font-size: 18px;
-  }
-  
-  .btn--large {
-    padding: 12px 26px;
-    font-size: 20px;
-  }
-  
-  .btn--outline:hover{
-    transition: all 0.3s ease-out;
-    background: #fff;
-    color: rgba(92,0,32,255);
-    transition: 250ms;
-  }
+.btn {
+  padding: 8px 20px;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
 
-  .btn--outlinee:hover{
-    transform: scale(1.05);
-    color: rgba(92,0,32,255);
-  }
+.btn:hover .footer-link-items a {
+  color: rgba(92, 0, 32, 255);
+  transition: 0.3s ease-out;
+}
 
-  .btn--primary:hover{
-    transition: all 0.3s ease-out;
-    background: #fff;
-    color: rgba(92,0,32,255);
-    transition: 250ms;
-  }
+.btn--primary {
+  background-color: var(--secondary);
+  color: var(--primary);
+  border: 1px solid var(--secondary);
+}
 
-  .btn--third:hover{
-    transition: all 0.3s ease-out;
-    background: rgba(92,0,32,255);
-    color: #fff;
-    transition: 250ms;
-  }
+.btn--outline,
+.btn--outlinee {
+  background-color: transparent;
+  color: #fff;
+  padding: 8px 20px;
+  border: 1px solid var(--primary);
+  transition: all 0.3s ease-out;
+}
+
+.btn--outlinee {
+  /* padding: 1em; */
+  background-color: var(--secondary);
+  color: var(--primary);
+  border: 1px solid var(--secondary);
+  padding-bottom: 30px;
+}
+
+.btn--third {
+  background-color: transparent;
+  color: rgba(92, 0, 32, 255);
+  padding: 8px 20px;
+  border: 1px solid rgba(92, 0, 32, 255);
+  transition: all 0.3s ease-out;
+  margin: 10px;
+}
+
+.btn--medium {
+  padding: 8px 20px;
+  font-size: 18px;
+}
+
+.btn--large {
+  padding: 12px 26px;
+  font-size: 20px;
+}
+
+.btn--outline:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: rgba(92, 0, 32, 255);
+  transition: 250ms;
+}
+
+.btn--outlinee:hover {
+  transform: scale(1.05);
+  color: rgba(92, 0, 32, 255);
+}
+
+.btn--primary:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: rgba(92, 0, 32, 255);
+  transition: 250ms;
+}
+
+.btn--third:hover {
+  transition: all 0.3s ease-out;
+  background: rgba(92, 0, 32, 255);
+  color: #fff;
+  transition: 250ms;
+}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: components/EmployeeCards.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,41 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: components/EmployeeCards.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import './Cards.css';
 
+/**
+  * React component that displays a single item for an employee view.
+  * @param {Object} props - The props object containing the following properties:
+  * @param {string} props.text - The text to display for the item.
+  * @param {string} props.ingredients - The ingredients to display for the item.
+  * @returns {JSX.Element} - A React JSX element representing the EmployeeCard component.
+*/
+function EmployeeCard({text, ingredients}) {
+  console.log("Ingredients in cards: " + ingredients);
+  return (
+    &lt;div className='card'>
+      &lt;div className='card-body'>
+        &lt;h2 className='card-title'>{text}&lt;/h2>
+        &lt;p className='card-text'>{text}&lt;/p>
+      &lt;/div>
+    &lt;/div>
+  );
+}
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default EmployeeCard;
+</code></pre>
+        </article>
+    </section>
 
 
 
