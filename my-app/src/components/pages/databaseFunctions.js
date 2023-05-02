@@ -481,7 +481,7 @@ function GetPassword(email) {
     }
 
     fetchPassword();
-  }, []);
+  }, [email]);
 
   return password;
 }

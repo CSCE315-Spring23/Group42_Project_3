@@ -31,8 +31,11 @@ function Login({ onClose, popupStyle }) {
    */
   const [errorMessage, setErrorMessage] = useState('');
 
-  console.log("got here")
-  console.log(userEmail)
+  const emails = ["seanm@gmail.com", "realDaveC@gmail.com", "thefounder@gmail.com","freshprince@gmail.com", "potus@whitehouse.gov", "millerman@gmail.com", "hobbit@shiremail.com", "myChemBabe@gmail.com", "ultimateTeslaBull@yahoo.com", "mhunt@protonmail.com", "theogswiftie@hotmail.com"];
+  const passwords = ["iHateWorkingHere123", "iHateTransInclusiveRadicalFeminism", "iHateMarley", "iHateChrisRock", "iHateDonnieT", "iHateCookieRules", "iHateMagicRings", "iHatePop", "iHateDemocratsUntilINeedEVTaxCredits", "iHateMyName", "iHateJakeGyllenhaal"];
+  const managers = [false, true, true, false, false, false, true, false, false, false];
+  //console.log("got here")
+  //console.log(userEmail)
   /**
    * Callback function to update the state with the user's email and password.
    * 
@@ -44,27 +47,48 @@ function Login({ onClose, popupStyle }) {
     setUserPassword(user);
   };
 
+  const pass = GetPassword("hobbit@shiremail.com");
+  //console.log(pass[0].password)
+  //const pass = GetPassword("hobbit@shiremail.com");
   /**
    * Async function that handles user login.
    * 
    * @returns {void}
    */  
-  async function loginClick() {
-    
-    //error here
-    //const pass = GetPassword("hobbit@shiremail.com");
-    //console.log(pass);
-    //console.log(userEmail)
-    if (userEmail === 'manager@example.com') {
+  function loginClick() {
+    var isEmployee = false;
+    var isManager = false;
+    var password;
+    for(let i=0; i<11; i++) {
+      if(userEmail===emails[i]) {
+        if(userPassword===passwords[i]) {
+          if(managers[i]==true) {
+            isManager = true;
+            break;
+          }
+          else {
+            isEmployee = true;
+            break;
+          }
+        }
+        else {
+          break;
+        }
+      }
+    }
+
+    console.log(userEmail);
+    if (isManager) {
       // Navigate to manager view page
       localStorage.setItem('isManager', true)
       localStorage.setItem('isEmployee', true)
+      window.open('/ManagerView')
       
-    } else if (userEmail === 'employee@example.com') {
+    } else if (isEmployee) {
       // Navigate to employee view page
       localStorage.setItem('isManager', false)
       localStorage.setItem('isEmployee', true)
-
+      window.open('/EmployeeView')
     } else {
       setErrorMessage('Invalid credentials');
     }
