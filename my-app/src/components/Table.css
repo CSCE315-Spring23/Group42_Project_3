@@ -4,13 +4,13 @@ table {
   width: 100%;
   background-color: white;
 }
-.container{
+.containerr{
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 1rem;
   margin-block: 20px;
-  color: rgba(92,0,32,255);
+  color: whitesmoke;
   height: auto;
 }
 th {
@@ -65,13 +65,18 @@ th:nth-child(5) {
   right: 0;
 }
 
-.table-tab{
-  margin-top: 20px;
+.table-tabb{
+  margin-top: 10px;
   background-color: whitesmoke;
+
 }
 
-.table-tab-header{
-  color: white;
+.one-tab{
+  background-color: rgba(92,0,32,255);
+}
+
+.table-tabb-header{
+  color: green;
   padding: 10px;
   cursor: pointer;
 }

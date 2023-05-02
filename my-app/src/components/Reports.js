@@ -78,8 +78,8 @@ const Reports = () => {
     return (        //The container that would show all the tables
         <React.Fragment>
         <div className='container'>
-            <div className='table-tab'>
-                <div style={{ display: 'flex' }}>
+            <div className='table-tabb'>
+                <div className='one-tab' style={{ display: 'flex' }}>
                     {tabs.map((tab) => (
                         <div
                             key={tab.id}
@@ -89,6 +89,7 @@ const Reports = () => {
                                 color: 'white',
                                 padding: '10px',
                                 cursor: 'pointer',
+                                border: '1px solid whitesmoke',
                             }}
                         >
                             {tab.name}
