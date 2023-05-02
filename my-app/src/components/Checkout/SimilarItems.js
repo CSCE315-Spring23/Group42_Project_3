@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './SimilarItem.css';
 import CardItem from '../CardItem';
 import {GetMenuList, GetIngredients, GetSoldTogether, GetCartItems} from '../pages/databaseFunctions'
@@ -11,7 +11,9 @@ import './cart.css'
  * @returns {JSX.Element} JSX element that renders a list of recommended menu items.
  */
 function SimilarItems() {
-  const soldTogether = GetSoldTogether();
+  const [startDate, setStartDate] = useState('2020-01-01');
+  const [endDate, setEndDate] = useState('2025-01-01');
+  const soldTogether = GetSoldTogether(startDate, endDate);
   // bacon cheeseburger and tots to replicate issue
   const myCart = GetCartItems();
   var menuItems = GetMenuList(1, 25);
