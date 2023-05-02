@@ -60,7 +60,6 @@ import Loading from '../Loading';
 
          {/* <button>Checkout</button> */}
          {/* <Button text = "Checkout" buttonStyle={"btn--primary"}/> */}
-         <Button buttonStyle='btn--primary' path='/employeecheckout'>CHECK OUT</Button>
          <Footer/>
        </>);
 }
