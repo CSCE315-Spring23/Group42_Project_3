@@ -3,13 +3,27 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
+/**
+ * The Navbar component.
+ * @returns {JSX.Element} The rendered Navbar component.
+ */
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
+  /**
+   * Toggles the click state.
+   */
   const handleClick = () => setClick(!click);
+
+  /**
+   * Closes the mobile menu.
+   */
   const closeMobileMenu = () => setClick(false);
 
+  /**
+   * Sets the button state based on the window's width.
+   */
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -29,7 +43,7 @@ function Navbar() {
       <nav className='navbar'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-          <img className = 'navbar-img' src = 'images/Revs-logo.png' alt = "Rev's American Grill"></img>
+            <img className='navbar-img' src='images/Revs-logo.png' alt="Rev's American Grill"></img>
           </Link>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -68,7 +82,7 @@ function Navbar() {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Sides
+                Sides & Drinks
               </Link>
             </li>
             <li className='nav-item'>

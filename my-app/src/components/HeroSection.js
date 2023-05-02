@@ -5,13 +5,21 @@ import './HeroSection.css';
 import Weather from './Weather';
 // import { useHistory } from 'react-router-dom';
 
-/*
-*Display background video for Home page
-*
-*/
+/**
+ * Display background video for Home page
+ *
+ * This component displays a background video with a title and a call-to-action button.
+ * It also includes a weather component that displays the current weather information.
+ */
 function HeroSection() {
 //   const history = useHistory();
 
+  /**
+   * Handle click event for the call-to-action button
+   *
+   * This function is triggered when the user clicks on the call-to-action button.
+   * It can be used to redirect the user to a different page using React Router.
+   */
   const handleOnClick = () => {
     // history.push('/');
   };

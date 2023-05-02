@@ -3,6 +3,12 @@ import {GetOrdersTable, GetExcessReport, GetSalesReport, GetRestockReport, GetSo
         GetXReport, GetZReport} from './pages/databaseFunctions';
 import './Reports.css';
 
+
+
+/**
+    * Reports component to display various reports
+    * @return {JSX.Element} JSX element
+*/
 const Reports = () => {
     const [activeTab, setActiveTab] = useState(0);
     const [newAttribute, setNewAttribute] = useState('');
@@ -47,6 +53,14 @@ const Reports = () => {
         setIsSubmitted(true);
     };
 
+    /**
+     * Formats the order data into the desired format for display in the table
+     * @param {Object[]} row - Order data object
+     * @param {number} row[].order_id - Order ID
+     * @param {Date} row[].date_ordered - Date of order
+     * @param {number} row[].order_cost - Cost of order
+     * @return {Object[]} Formatted order data object
+     */
     const formattedOrderData = (GetOrdersTable(startDate, endDate)).map((row) => {
         return {
           order_id: row.order_id,
@@ -96,7 +110,11 @@ const Reports = () => {
         },
     ];
 
-
+    /**
+     * Handles the click on a tab
+     * @param {number} tabIndex - Index of the clicked tab
+     * @return {void}
+     */
     const handleClick = (tabIndex) => {
         setActiveTab(tabIndex);
         setIsSubmitted(false);
@@ -105,8 +123,8 @@ const Reports = () => {
     return (        //The container that would show all the tables
         <React.Fragment>
         <div className='container'>
-            <div className='table-tab'>
-                <div style={{ display: 'flex' }}>
+            <div className='table-tabb'>
+                <div className='one-tab' style={{ display: 'flex' }}>
                     {tabs.map((tab) => (
                         <div
                             key={tab.id}
@@ -116,6 +134,7 @@ const Reports = () => {
                                 color: 'white',
                                 padding: '10px',
                                 cursor: 'pointer',
+                                border: '1px solid whitesmoke',
                             }}
                         >
                             {tab.name}

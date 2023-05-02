@@ -1,7 +1,8 @@
 import React from 'react';
 import '../../App.css';
 import Footer from '../Footer';
-import Navbar from '../ManagerNavbar';
+import Navbar from '../Navbar';
+import { managerLinks} from '../NavbarData';
 import Table from '../Table';
 
 {/*
@@ -11,7 +12,7 @@ import Table from '../Table';
 
 function ManagerView() {
     return (<> 
-    <Navbar/>
+    <Navbar type = 'm' links={managerLinks} buttonText= 'SIGN OUT' buttonPath= '/' />
     <Table/>
         <Footer/>
       </>);

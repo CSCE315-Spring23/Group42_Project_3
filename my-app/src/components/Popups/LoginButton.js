@@ -2,13 +2,55 @@ import jwt_decode from "jwt-decode";
 import {useEffect, useState} from 'react';
 import "./Popup.css"
 
-//Main App documentation with all the different pages available
+/**
+  * Component for rendering a login button that uses Google Sign-In to authenticate users.
+  * @component
+  * @param {Function} onUserUpdate - A callback function that takes in the user object as a parameter and updates the user state in the parent component.
+  * @returns {JSX.Element} A login button component that uses Google Sign-In.
+*/
 function LoginButton({onUserUpdate}) {
+    const emails = ["bryanyan.tx@gmail.com"];
+    const managers = [true];
+  
     const [user, setUser] = useState({});
+    /**
+    *  Callback function to handle the response from Google Sign-In. Decodes the JWT token returned by Google and updates the user state using the setUser function. Calls the onUserUpdate function to update the user state in the parent component.
+    * @param {Object} response - The response object returned by Google Sign-In.
+    */
     function handleCallbackResponse(response) {
+      
       //console.log("callback running");
       var userObject = jwt_decode(response.credential);
       setUser(userObject);
+
+      var isEmployee = false;
+      var isManager = false;
+      var password;
+      for(let i=0; i<1; i++) {
+        if(userObject.email===emails[i]) {
+          if(managers[i]==true) {
+            isManager = true;
+            break;
+          }
+          else {
+            isEmployee = true;
+            break;
+          }
+        }
+      }
+      if (isManager) {
+        // Navigate to manager view page
+        localStorage.setItem('isManager', true)
+        localStorage.setItem('isEmployee', true)
+        window.open('/ManagerView')
+        
+      } else if (isEmployee) {
+        // Navigate to employee view page
+        localStorage.setItem('isManager', false)
+        localStorage.setItem('isEmployee', true)
+        window.open('/EmployeeView')
+      } 
+      //console.log(userObject.email)
       //console.log("btn user data: " + JSON.stringify(userObject));
       //document.getElementById("signIn").hidden = true;
       onUserUpdate(userObject);

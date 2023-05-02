@@ -3,12 +3,26 @@ import './Cards.css';
 import EmployeeCardItem from './EmployeeCardItem';
 import {GetMenuList} from './pages/databaseFunctions'
 
-//Show items in a list
-function EmployeeCardList({cardData, title} ) {
+/**
+ * A React component that displays a list of cards containing items to be viewed by employees.
+ *
+ * @component
+ * @param {object} cardData - An object containing data to be displayed on each card.
+ * @param {string} title - The title to be displayed above the card list.
+ * @returns {JSX.Element} A React JSX element representing a list of cards.
+ */
+function EmployeeCardList({ cardData, title }) {
 
+  /**
+   * Gets the menu items from the database.
+   *
+   * @function
+   * @returns {Array} An array containing the menu items.
+   */
   var menuItems = GetMenuList(0, 0);
+
   var lastSlice = menuItems.length;
-  // lastSlice = 27;
+
   return (
     <div className='cards'>
       <h1>{title}</h1>
@@ -19,9 +33,10 @@ function EmployeeCardList({cardData, title} ) {
               return (
                 <EmployeeCardItem
                   text={card.text}
+                  label={card.label}
                   path={card.path}
                   key={index}
-                  ingredients = {card.ingredients}
+                  ingredients={card.ingredients}
                 />
               );
             })}
@@ -32,8 +47,9 @@ function EmployeeCardList({cardData, title} ) {
                 <EmployeeCardItem
                   text={card.text}
                   path={card.path}
+                  label={card.label}
                   key={index}
-                  ingredients = {card.ingredients}
+                  ingredients={card.ingredients}
                 />
               );
             })}
@@ -44,8 +60,9 @@ function EmployeeCardList({cardData, title} ) {
                 <EmployeeCardItem
                   text={card.text}
                   path={card.path}
+                  label={card.label}
                   key={index}
-                  ingredients = {card.ingredients}
+                  ingredients={card.ingredients}
                 />
               );
             })}
@@ -56,8 +73,9 @@ function EmployeeCardList({cardData, title} ) {
                 <EmployeeCardItem
                   text={card.text}
                   path={card.path}
+                  label={card.label}
                   key={index}
-                  ingredients = {card.ingredients}
+                  ingredients={card.ingredients}
                 />
               );
             })}

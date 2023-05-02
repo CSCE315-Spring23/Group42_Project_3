@@ -2,7 +2,20 @@ import React from 'react';
 import './Cards.css';
 import CardItem from './CardItem';
 
+
+/**
+ * Renders a list of cards with images and text.
+ *
+ * @param {object} cardData - Object containing an array of card objects.
+ * @param {string} title - The title of the card list.
+ * @returns {JSX.Element} - The CardList component.
+ */
 function CardList({cardData, title} ) {
+  /**
+   * The number of cards in the cardData array.
+   *
+   * @type {number}
+   */
   const sze = cardData.cards.length;
 
   return (

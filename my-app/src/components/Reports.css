@@ -6,37 +6,34 @@ table {
   .container{
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 1rem;
-    margin-block: 20px;
+    padding: 0 3rem;
     color: rgba(92,0,32,255);
-    height: auto;
   }
   th, td {
     border: 0.5px solid black;
     text-align: left;
     padding: 8px;
   }
-  
+
   /* Set the width of the columns */
   td:nth-child(1),
   th:nth-child(1) {
     width: 5%;
   }
-  
+
   td:nth-child(2),
   th:nth-child(2) {
     width: 20%;
   }
-  
+
   td:nth-child(3),
   th:nth-child(3),
   td:nth-child(4),
   th:nth-child(4) {
     width: 20%;
   }
-  
-  
+
+
   .table-header-space{
     background-color: rgba(92,0,32,255);
     height: 100px;
@@ -45,12 +42,12 @@ table {
     left: 0;
     right: 0;
   }
-  
+
   .table-tab{
     margin-top: 150px;
     background-color: whitesmoke;
   }
-  
+
   .table-tab-header{
     color: white;
     padding: 10px;

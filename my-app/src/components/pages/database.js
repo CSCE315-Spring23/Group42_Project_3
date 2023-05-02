@@ -530,22 +530,6 @@ app.get('/recipesDeleteItem/:ID', async (req, res) => {
 //   }
 // });
 
-//this function is for getting all items from the menu rather than a start and end
-// app.get('/menuRequestAll', async (req, res) => {
-//   try {
-//     // const start = parseInt(req.params.start);
-//     // const end = parseInt(req.params.end);
-//     //console.log("attempting fetch");
-//     // const userId = req.params.id;
-//     const { rows } = await pool.query(`SELECT * FROM Menu ORDER BY MENU_ITEM_ID`);
-//     res.json(rows);
-//     //console.log(rows);
-//   } catch (err) {
-//     //console.log("error!");
-//     console.error("Read failed with error " +err);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
 
 app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
@@ -647,6 +631,255 @@ app.post('/addToCart/:id', async (req, res) => {
   }
 });
 
+app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
+  try {
+    const myID = req.params.cookie;
+    const orderPrice = req.params.cost;
+    console.log("Price: ", orderPrice);
+
+    //add to the orders table
+    let newOrderIDquery = await pool.query('SELECT MAX(order_id) FROM orders');
+    let newOrderID = newOrderIDquery.rows[0].max;
+    let newItemIDquery = await pool.query('SELECT MAX(item_id) FROM item_sold');
+    let newItemID = newItemIDquery.rows[0].max;
+    newOrderID += 1;
+    //get current date and time
+    const now = new Date();
+    let year = parseInt(now.getFullYear());
+    let month = parseInt(now.getMonth()) + 1;
+    if (month < 10){
+      month = "0" + month;
+    }
+    let date = parseInt(now.getDate());
+    // console.log("year/month/date: " + year + month + date);
+    let dateForDatabase =  year + "-" + month + "-" + date;
+    let queryToUse = "INSERT INTO orders (order_id, date_ordered, order_cost) VALUES (" + newOrderID + ", '" + dateForDatabase + "', " + orderPrice + ")";
+    console.log("adding this to cart: " + queryToUse);
+    const updateResult = await pool.query(queryToUse);//UNCOMMENT THIS LINE TO ADD TO THE ORDER TABLE IN DATABASE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    console.log("order table updaded");
+
+
+    var result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+    result = result.rows[0].orderlist; //gets just the cart
+    var itemCount = 0;
+    for (let i = 0; i < result.length; i++) {
+      var thisItem = JSON.parse(result[i]);
+      if (thisItem.type === "item") {
+        itemCount++;
+      }
+    } //this loop counts how many individual items there are
+
+    //console.log(itemCount, "items in the cart.");
+    for(let id = 1; id < itemCount+1; id++) { //number of items in cart
+      const itemArr = []; //the item and all its mods
+      var modStartIndex = -1;
+      var modEndIndex = -1;
+      var pos = 1;
+      var itemQ = 0; //count of this item
+      var itemName = "";
+      for (let i = 0; i < result.length; i++) {
+        var thisItem = JSON.parse(result[i]);
+        if (thisItem.type === "item") {
+          if(pos === (id-1)) { //will never hit for first item
+            modStartIndex = i+1;
+            pos++;
+          } else if (pos === (id)) { //the item we're removing
+            modEndIndex = i;
+            itemQ = thisItem.quantity;
+            itemName = thisItem.name;
+            pos++;
+          } else {
+            pos++;
+          }
+        }
+      } //end loop that sets start and end index
+      //console.log("Indexes to clear: ", modStartIndex, " to ", modEndIndex, " from ", result);
+      //console.log("Found ", itemQ, " ", itemName, "with indexes ", modStartIndex, " to ", modEndIndex);
+      for (let i = 0; i < result.length; i++) {
+        if(!(i < modStartIndex || i > modEndIndex)) {
+          itemArr.push(result[i]);
+        }
+      } //this loop inits our item, with the quantity value
+      //console.log("Full item info: ", itemArr);
+      for (const itm of itemArr) {
+        var foodItem = JSON.parse(itm);
+        newItemID += 1; //this is just for item sold
+        if(foodItem.type === "item" || foodItem.name === "Combo" || foodItem.type === "Basket Combo") {
+          if(foodItem.name === "Combo"){
+            foodItem.name = "Burger/Sandwich Combo";
+          }
+          let menuIdquery = await pool.query("SELECT menu_item_id FROM menu WHERE menu_item_name = $1", [foodItem.name]);
+          let menuId = menuIdquery.rows[0].menu_item_id;
+          queryToUse = "INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('" + newItemID + "', '" + menuId + "', '" + newOrderID + "', '" + itemQ + "')";
+          console.log("Inserting item ", newItemID, " with menu id ", menuId, " to order", newOrderID, "with quantity", itemQ);
+          let insertIntoItemSold = await pool.query(queryToUse);
+          let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= $1", [menuId]);
+          let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [menuId]);
+          const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
+          const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
+          //update inventory item by adding a menu item.
+          for (let j = 0; j < inventory_id.length; j++) {//update the inventory based off of what is in each
+            //console.log("inventory_id at: " + inventory_id[j] + " with " + amt_used[j]*itemQ + " units used.");
+            await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[j]*itemQ, inventory_id[j]]);
+          }
+        } //end loop for food type item
+        else { //these are the mods that aren't combo.
+          let inventoryIdQuery = await pool.query("SELECT inventory_id FROM inventory_item WHERE inventory_item_name = $1", [foodItem.name]);
+          //console.log("Inv id query: ", inventoryIdQuery);
+          //console.log("Inv id query row 0: ", inventoryIdQuery[0]);
+          let inventoryID = inventoryIdQuery.rows[0].inventory_id;
+          //console.log("inventory id for ", foodItem.name, " is ", inventoryID);
+          let quantity = foodItem.quantity; //change based on stuff below
+
+            if (foodItem.name === "Beef Patty") {
+              if (foodItem.quantity === -1) {
+                //special case; has to push black bean apart from removing beef patty
+                console.log("Inserting item ", newItemID, " with inv id ", 3, " to order", newOrderID, "with quantity", quantity);
+                await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ($1, $2, $3, $4)", [newItemID, 3, newOrderID, itemQ]);
+                await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [itemQ, 3]);
+                newItemID += 1;
+              }
+            }
+            else if (foodItem.name === "Vanilla Ice Cream") {
+              if (foodItem.quantity === -1) {
+                inventoryID = 18; //chocolate
+                quantity = 1;
+              }
+              else if (foodItem.quantity === 0) {
+                inventoryID = 19; //vanilla
+                quantity = 1;
+              }
+              else if (foodItem.quantity === 1) {
+                inventoryID = 21; //coffee
+                quantity = 1;
+              }
+              else {
+                inventoryID = 20; //strawberry
+                quantity = 1;
+              }
+            }
+            else if (foodItem.name === "x") {
+              if (foodItem.quantity === -1) {
+                inventoryID = 24;
+                quantity = 1;
+                //ingredientList.push(pair); //add a buffalo sauce
+              }
+              else if (foodItem.quantity === 0) {
+                inventoryID = 25;
+                quantity = 1;
+                //ingredientList.push(pair); //add a BBQ sauce
+              }
+              else if (foodItem.quantity === 1) {
+                inventoryID = 26;
+                quantity = 1;
+                //ingredientList.push(pair); //add a Honey mustard sauce
+              }
+              else if (foodItem.quantity === 2) {
+                inventoryID = 27;
+                quantity = 1;
+                //ingredientList.push(pair); //add a ranch sauce
+              }
+              else if (foodItem.quantity === 3) {
+                inventoryID = 28;
+                quantity = 1;
+                //ingredientList.push(pair); //add a spicy ranch sauce
+              }
+              else if (foodItem.quantity === 4) {
+                inventoryID = 4;
+                quantity = 1;
+                //ingredientList.push(pair); //add a gig em sauce
+              }
+            }
+            //by now, we have the ID of the item we're changing and the quantity for a single unit
+            quantity *= itemQ;
+            console.log("Inserting item ", newItemID, " with inv id ", inventoryID, " to order", newOrderID, "with quantity", quantity);
+            await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ($1, $2, $3, $4)", [newItemID, inventoryID, newOrderID, quantity]);
+            await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [quantity, inventoryID]);
+        } //ends else for mods
+      } //end looping through one food item and its mods
+      //console.log("Done adding one whole item");
+    }
+    res.json(result);  //returns what was in the cart
+  } catch (err) {
+    console.error("Write failed with error in place order " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/updateQty/:cookie/:id/:quantity', async (req, res) => {
+  try {
+    const myID = req.params.cookie;
+    const itemID = parseInt(req.params.id);
+    const newQty = parseInt(req.params.quantity);
+    var result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+    //console.log("Result before simplifying: ", result);
+    result = result.rows[0].orderlist; //gets just the cart
+    //console.log("cart before:" , result);
+    const updatedItems = [];
+
+    if(newQty != 0) {
+      console.log("Setting quantity to ", newQty, " for item ID ", itemID);
+      var pos = 1;
+      for (let i = 0; i < result.length; i++) {
+        var thisItem = JSON.parse(result[i]);
+        if (thisItem.type === "item") {
+          if(pos === itemID) {
+            console.log("Found item to update ", thisItem.name);
+            thisItem.quantity = newQty;
+            pos++;
+          } else {
+            console.log("Pos is ", pos, " and id is ", itemID);
+            pos++;
+          }
+          updatedItems.push(JSON.stringify(thisItem));
+        } else {
+          updatedItems.push(JSON.stringify(thisItem));
+        }
+      }
+    } else { //remove item from cart
+      var modStartIndex = -1;
+      var modEndIndex = -1;
+      var pos = 1;
+      for (let i = 0; i < result.length; i++) {
+        var thisItem = JSON.parse(result[i]);
+        if (thisItem.type === "item") {
+          if(pos === (itemID-1)) { //will never hit for first item
+            modStartIndex = i+1;
+            pos++;
+          } else if (pos === (itemID)) { //the item we're removing
+            console.log("match found, itemID ", itemID, ", pos ", pos, " at index ", i);
+            modEndIndex = i;
+            pos++;
+          } else {
+            pos++;
+            console.log("Incremented pos to ", pos);
+          }
+        }
+      }
+
+      console.log("Indexes to clear: ", modStartIndex, " to ", modEndIndex, " from ", result);
+
+      for (let i = 0; i < result.length; i++) {
+        if(i < modStartIndex || i > modEndIndex) {
+          updatedItems.push(result[i]);
+        }
+      }
+    } //end remove from cart func
+
+    var updateResult = await pool.query('UPDATE cart SET orderlist = $1 WHERE sessionid = $2', [updatedItems, myID]);
+    var check = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
+    //console.log("Result before simplifying: ", result);
+    check = check.rows[0].orderlist; //gets just the cart
+    console.log("cart before:" , result);
+    console.log("cart after:" , check);
+    console.log("Result of update: ", updateResult, " with items ", updatedItems);
+    res.json(result);
+  } catch (err) {
+    console.error("Write failed with error in updateCart " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/getCart/:id', async (req, res) => {
   try {
     const myID = req.params.id;
@@ -658,78 +891,78 @@ app.get('/getCart/:id', async (req, res) => {
   }
 });
 
-app.post('/createOrder', async (req, res) => {
-  try {
-    console.log("here 1.");
-    const requestOptions = req.body;
-    const menuItems = requestOptions.menuItems; 
-    const ingredientList = requestOptions.ingredientList;
-    const cost = requestOptions.cost;
-    console.log("menuItems: " + menuItems);
-    console.log("ingredientItems: " + ingredientList);
-    console.log("cost: " + cost);
-    //get new order ID
-    let newOrderIDquery = await pool.query('SELECT MAX(order_id) FROM orders');
-    // console.log(newOrderIDquery.rows[0]);
-    let newOrderID = newOrderIDquery.rows[0].max;
-    newOrderID += 1;
-    console.log("value of newOrderID = " + newOrderID);
-    //get current date and time
-    const now = new Date(); 
-    console.log("now: " + now);
-    let year = parseInt(now.getFullYear());
-    let month = parseInt(now.getMonth()) + 1;
-    if (month < 10){
-      month = "0" + month;
-    }
-    let date = parseInt(now.getDate());
-    // console.log("year/month/date: " + year + month + date);
-    let dateForDatabase =  year + "-" + month + "-" + date;
-    console.log(dateForDatabase);
-    let queryToUse = "INSERT INTO orders (order_id, date_ordered, order_cost) VALUES (" + newOrderID + ", '" + dateForDatabase + "', " + cost + ")"
-    const updateResult = await pool.query(queryToUse);//UNCOMMENT THIS LINE TO ADD TO THE ORDER TABLE IN DATABASE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    console.log("order created");
-    let newItemIDquery = await pool.query('SELECT MAX(item_id) FROM item_sold');
-    let newItemID = newItemIDquery.rows[0].max;
-    console.log("value of newItemID = " + newItemID);
-    for (let i = 0; i < menuItems.length; i++) {//adding menu items
-      newItemID += 1;
-      let Menu_item_name = menuItems[i].first;
-
-      let MenuIdquery = await pool.query("SELECT menu_item_id FROM menu WHERE menu_item_name = $1", [Menu_item_name]);
-      let MenuId = MenuIdquery.rows[0].menu_item_id;
-      console.log(MenuId)
-      // newOrderID = orderID
-      let quantity = menuItems[i].second;
-      queryToUse = "INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('" + newItemID + "', '" + MenuId + "', '" + newOrderID + "', '" + quantity + "')";
-      let insertIntoItemSold = await pool.query(queryToUse);
-      let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= $1", [MenuId]);
-      let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [MenuId]);
-      //  check getInventoryItemsForMenu if this doesnt work
-      const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
-      const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
-
-      //update inventory item by adding a menu item.
-      for (let j = 0; j < inventoryItemsForMenuItems.rows.length; j++) {//update the inventory based off of what is in each
-        let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[i], inventory_id[i]]);
-      }
-    }
-    
-    for (let i = 0; i < ingredientList.length; i++) {//adding inventory items
-      newItemID += 1;
-      let inventoryID = ingredientList[i].first;
-      let quantity = ingredientList[i].second;
-      let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, inventoryID, newOrderID, quantity]);
-      let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [quantity, inventoryID]);
-    }
-
-
-    res.status(200).json({ message: 'Added Order!' });
-  } catch (err) {
-    console.error("Read failed with error in getCart " + err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// app.post('/createOrder', async (req, res) => {
+//   try {
+//     // console.log("here 1.");
+//     const requestOptions = req.body;
+//     const menuItems = requestOptions.menuItems;
+//     const ingredientList = requestOptions.ingredientList;
+//     const cost = requestOptions.cost;
+//     console.log("menuItems: " + menuItems);
+//     console.log("ingredientItems: " + ingredientList);
+//     console.log("cost: " + cost);
+//     //get new order ID
+//     let newOrderIDquery = await pool.query('SELECT MAX(order_id) FROM orders');
+//     let newOrderID = newOrderIDquery.rows[0].max;
+//     newOrderID += 1;
+//     console.log("value of newOrderID = " + newOrderID);
+//     //get current date and time
+//     const now = new Date();
+//     let year = parseInt(now.getFullYear());
+//     let month = parseInt(now.getMonth()) + 1;
+//     if (month < 10){
+//       month = "0" + month;
+//     }
+//     let date = parseInt(now.getDate());
+//     // console.log("year/month/date: " + year + month + date);
+//     let dateForDatabase =  year + "-" + month + "-" + date;
+//     let queryToUse = "INSERT INTO orders (order_id, date_ordered, order_cost) VALUES (" + newOrderID + ", '" + dateForDatabase + "', " + cost + ")"
+//     const updateResult = await pool.query(queryToUse);//UNCOMMENT THIS LINE TO ADD TO THE ORDER TABLE IN DATABASE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//     console.log("order created");
+//     let newItemIDquery = await pool.query('SELECT MAX(item_id) FROM item_sold');
+//     let newItemID = newItemIDquery.rows[0].max;
+//     console.log("value of newItemID = " + newItemID);
+//     for (let i = 0; i < menuItems.length; i++) {//adding menu items
+//       newItemID += 1;
+//       let Menu_item_name = menuItems[i].first;
+//
+//       let MenuIdquery = await pool.query("SELECT menu_item_id FROM menu WHERE menu_item_name = $1", [Menu_item_name]);
+//       let MenuId = MenuIdquery.rows[0].menu_item_id;
+//       console.log(MenuId)
+//       // newOrderID = orderID
+//       let quantity = menuItems[i].second;
+//       queryToUse = "INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('" + newItemID + "', '" + MenuId + "', '" + newOrderID + "', '" + quantity + "')";
+//       let insertIntoItemSold = await pool.query(queryToUse);
+//       let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= $1", [MenuId]);
+//       let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [MenuId]);
+//       //  check getInventoryItemsForMenu if this doesnt work
+//       const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
+//       const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
+//       console.log("inventory_id: ");
+//       console.log(inventory_id);
+//
+//       //update inventory item by adding a menu item.
+//       for (let j = 0; j < inventory_id.length; j++) {//update the inventory based off of what is in each
+//         console.log("inventory_id at: " + inventory_id[j]);
+//         let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[j], inventory_id[j]]);
+//       }
+//     }
+//
+//     for (let i = 0; i < ingredientList.length; i++) {//adding inventory items
+//       newItemID += 1;
+//       let inventoryID = ingredientList[i].first;
+//       let quantity = ingredientList[i].second;
+//       let insertIntoItemSold = await pool.query("INSERT INTO item_sold (item_id, inventory_id, order_id, item_sold_quantity) VALUES ('$1', '$2', '$3', '$4')", [newItemID, inventoryID, newOrderID, quantity]);
+//       let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [quantity, inventoryID]);
+//     }
+//
+//
+//     res.status(200).json({ message: 'Added Order!' });
+//   } catch (err) {
+//     console.error("Read failed with error in getCart " + err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
 
 app.get('*', (req, res) => {
   console.log("sent unknown request");

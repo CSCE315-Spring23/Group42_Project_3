@@ -2,7 +2,8 @@ import React from 'react';
 import '../../App.css';
 import HeroSection from '../HeroSection';
 import Footer from '../Footer';
-import Navbar from '../CustomerNavbar';
+import Navbar from '../Navbar';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 
 /*
 * Shows Home page of the web app with main order options for customers
@@ -14,7 +15,7 @@ import Navbar from '../CustomerNavbar';
 /* HTML structure*/ 
 function Home() {
   return (<>
-    <Navbar />
+    <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
     <HeroSection />
     <Footer />
   </>);

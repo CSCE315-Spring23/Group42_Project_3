@@ -4,11 +4,14 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import Weather from './Weather';
 import Popup from "./Popups/Popup";
+import GoogleTranslate from "./Translate";
+
+
 
 /*
-* Global footer for all pages in our application
-* Keeps links to all differnet views including employee and Manager views
-* @author
+ * Global footer for all pages in our application
+ * Keeps links to all different views including employee and Manager views
+ * @return {JSX.Element} Footer component
 */
 function Footer() {
   const [showPopup, setShowPopup] = useState(false);
@@ -18,7 +21,10 @@ function Footer() {
      //console.log("Updating user data: " + JSON.stringify(userData));
    }, [userData]);
 
-  //console.log("II: " + JSON.stringify(initialItems));
+  /**
+  * Function to be executed when login button is clicked
+  * @function loginClick
+  */
   function loginClick() {
     //check credentials?
     setShowPopup(true);
@@ -26,45 +32,22 @@ function Footer() {
 
   return (
     <div className='footer-container'>
-      <section className='footer-subscription'>
-        <p className='footer-subscription-heading'>
-          Join the Rev's newsletter to receive our best deals and menu updates!
-        </p>
-        <p className='footer-subscription-text'>
-          You can unsubscribe at any time.
-        </p>
-        <div className='input-areas'>
-          <form>
-            <input
-              className='footer-input'
-              name='email'
-              type='email'
-              placeholder='Your Email'
-            />
-            <Button buttonStyle='btn--outline'>Subscribe</Button>
-          </form>
-        </div>
-      </section>
       <div className='footer-links'>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <h2>Employee Login</h2>
-
-            <Link onClick={() => {loginClick() }}>Log in</Link>
-            {showPopup && <Popup popupStyle={'style2'}/>}
+            <Button buttonStyle='btn--outline'  onClick={() => {loginClick() }}>Employee Login
+            {showPopup && <Popup popupStyle={'style2'}/>}</Button>
             <Link to='/EmployeeView'>Employee View</Link>
             <Link to='/Menuboard' target="_blank">Menuboard View</Link>
             <Link to='/ManagerView'>Manager View</Link>
           </div>
           <div className='footer-link-items'>
-            <h2>Contact Us</h2>
-            <Link to='/Menuboard'>Menuboard View</Link>
+              <Button buttonStyle='btn--outline' path ='/Menuboard'>Menuboard View</Button>
           </div>
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <h2>Social Media</h2>
-            <Link to='/'>Google Translate</Link>
+              <GoogleTranslate/>
           </div>
         </div>
       </div>

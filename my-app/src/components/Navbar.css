@@ -1,5 +1,5 @@
 .navbar {
-  background: linear-gradient(90deg, rgba(92,0,32,255) 0%, rgba(92,0,32,255) 100%);
+  background: linear-gradient(90deg, rgba(92, 0, 32, 255) 0%, rgba(92, 0, 32, 255) 100%);
   /* rev's yellow: rgd(249, 187, 18) */
   height: 80px;
   display: flex;
@@ -8,6 +8,7 @@
   font-size: 1.2rem;
   position: sticky;
   top: 0;
+  right: 0;
   z-index: 10;
 }
 
@@ -19,9 +20,9 @@
   max-width: 1500px;
 }
 
-.navbar-img{
+.navbar-img {
   z-index: 100;
-  width: 55%;
+  /* width: 55%; */
   height: 300%;
   top: 15%;
   left: 0;
@@ -76,6 +77,12 @@
   border-bottom: 4px solid #fff;
   transition: all 0.2s ease-out;
 }
+
+/* .nav-links:active {
+  color: #242222;
+  border-bottom: 4px solid #fff;
+  transition: all 0.2s ease-out;
+} */
 
 .fa-bars {
   color: #fff;

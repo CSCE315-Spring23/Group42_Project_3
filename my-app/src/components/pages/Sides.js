@@ -1,8 +1,9 @@
 import Footer from '../Footer';
 import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
-import Navbar from '../CustomerNavbar';
+import Navbar from '../Navbar';
 import Loading from '../Loading';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 
 function Sides() {
   var menuItems = GetMenuList(13, 25);
@@ -36,9 +37,9 @@ function Sides() {
   }
 
     return (<>
-    <Navbar />
+    <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
     <div id="menu">
-        <CardList cardData={cardData} title="SIDES" />
+        <CardList cardData={cardData} title="SIDES & DRINKS" />
     </div>
 
       <Footer/>

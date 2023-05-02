@@ -11,6 +11,11 @@
     cursor: pointer;
   }
   
+  .btn:hover .footer-link-items a {
+    color: rgba(92,0,32,255);
+    transition: 0.3s ease-out;
+  }
+  
   .btn--primary {
     background-color: var(--secondary);
     color: var(--primary);
@@ -61,12 +66,13 @@
 
   .btn--outlinee:hover{
     transform: scale(1.05);
+    color: rgba(92,0,32,255);
   }
 
   .btn--primary:hover{
     transition: all 0.3s ease-out;
     background: #fff;
-    color: var(--secondary);
+    color: rgba(92,0,32,255);
     transition: 250ms;
   }
 

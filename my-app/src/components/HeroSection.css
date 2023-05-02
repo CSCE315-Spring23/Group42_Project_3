@@ -27,7 +27,7 @@ video {
   .hero-container > p {
     margin-top: 8px;
     color: #fff;
-    font-size: 32px;
+    font-size: 200%;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
       'Lucida Sans', Arial, sans-serif;
   }
@@ -53,12 +53,18 @@ video {
   
   @media screen and (max-width: 768px) {
     .hero-container > h1 {
-      font-size: 50px;
+      font-size: 150%;
       margin-top: -100px;
     }
   
     .hero-container > p {
-      font-size: 30px;
+      line-height: 1.5;
+      font-size: 150%;
+    }
+    
+    p {
+     line-height: 1.5;
+     font-size: 150%;
     }
   
     .btn-mobile {

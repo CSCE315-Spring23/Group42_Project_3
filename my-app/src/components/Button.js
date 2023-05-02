@@ -6,6 +6,17 @@ const STYLES = ['btn--primary', 'btn--outline', 'btn--third', 'btn--outlinee'];
 
 const SIZES = ['btn--medium', 'btn--large'];
 
+/**
+  * Button component that can be customized with different styles and sizes.
+  * @param {object} props - The props that are passed to this component.
+  * @param {React.ReactNode} props.children - The text or elements to be displayed inside the button.
+  * @param {string} props.type - The type of button (e.g. "button", "submit", "reset").
+  * @param {function} props.onClick - The function to be executed when the button is clicked.
+  * @param {string} props.buttonStyle - The style of the button. Possible values are "btn--primary", "btn--outline", "btn--third", "btn--outlinee".
+  * @param {string} props.buttonSize - The size of the button. Possible values are "btn--medium", "btn--large".
+  * @param {string} props.path - The path for the link to which the button is redirected.
+  * @returns {JSX.Element} A button element that can be customized with different styles and sizes.
+  */
 export const Button = ({
   children,
   type,
