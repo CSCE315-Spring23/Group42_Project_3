@@ -10,10 +10,12 @@ import './Navbar.css';
  * @param {string} buttonText - The text to be displayed on the checkout button.
  * @returns {JSX.Element} The rendered Navbar component.
  */
-function Navbar({ links, buttonText, buttonPath }) {
+function Navbar({ links, buttonText, buttonPath, type }) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [isManager, setIsManager] = useState(false);
+  const [isEmployeeView, setIsEmployeeView] = useState(false);
+  const [isManagerView, setIsManagerView] = useState(false);
 
   /**
   * Closes the mobile menu.
@@ -42,7 +44,12 @@ function Navbar({ links, buttonText, buttonPath }) {
   useEffect(() => {
     showButton();
     setIsManager(localStorage.getItem('isManager') === 'true');
+    setIsEmployeeView(type === 'e');
+    setIsManagerView(type === 'm');
   }, []);
+
+  localStorage.setItem('isManager', true)
+  localStorage.setItem('isEmployee', true)
 
   window.addEventListener('resize', showButton);
 
@@ -53,11 +60,11 @@ function Navbar({ links, buttonText, buttonPath }) {
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
             <img className='navbar-img' src='images/Revs-logo.png' alt="Rev's American Grill"></img>
           </Link>
+          
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
 
-          {isManager && <Button className = "toggle">Switch View</Button>}
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             {links.map((link) => (
               <li key={link.to} className='nav-item'>
@@ -72,7 +79,7 @@ function Navbar({ links, buttonText, buttonPath }) {
             ))}
             <li>
               <Link
-                to='/Checkout'
+                to={buttonPath}
                 className='nav-links-mobile'
                 onClick={closeMobileMenu}
               >
@@ -80,7 +87,9 @@ function Navbar({ links, buttonText, buttonPath }) {
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline' path={buttonPath}>{buttonText}</Button>}
+            {isManager && isEmployeeView && <Button path = '/ManagerView' className = "toggle">Switch to Manager View</Button>}
+            {isManager && isManagerView && <Button path = '/EmployeeView' className = "toggle">Switch to Employee View</Button>}
+            {button && <Button buttonStyle='btn--outline' path={buttonPath}>{buttonText}</Button>}
         </div>
       </nav>
     </>

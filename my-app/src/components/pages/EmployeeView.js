@@ -45,7 +45,7 @@ import Loading from '../Loading';
 
 
     return (<>
-        <Navbar links={employeeLinks} buttonText={buttonText} buttonPath='/EmployeeCheckout' />
+        <Navbar type = 'e' links={employeeLinks} buttonText={buttonText} buttonPath='/EmployeeCheckout' />
         <div id="employeemenu">
             <EmployeeCardList cardData={cardData} title="Employee View" />
         </div>

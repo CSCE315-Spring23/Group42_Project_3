@@ -13,7 +13,7 @@ import { managerLinks } from '../NavbarData';
 
 function ManagerDatabaseAccess() {
     return (<> 
-        <Navbar links={managerLinks} buttonText= 'SIGN OUT' buttonPath= '/' />
+        <Navbar type = 'm' links={managerLinks} buttonText= 'SIGN OUT' buttonPath= '/' />
         <div id="database"></div>
         <Reports/>
         <Footer/>

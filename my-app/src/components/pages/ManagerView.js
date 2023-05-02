@@ -2,7 +2,7 @@ import React from 'react';
 import '../../App.css';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
-import { managerLinks, signOutText, signOutPath } from '../NavbarData';
+import { managerLinks} from '../NavbarData';
 import Table from '../Table';
 
 {/*
@@ -12,7 +12,7 @@ import Table from '../Table';
 
 function ManagerView() {
     return (<> 
-    <Navbar links={managerLinks} buttonText= 'SIGN OUT' buttonPath= '/' />
+    <Navbar type = 'm' links={managerLinks} buttonText= 'SIGN OUT' buttonPath= '/' />
     <Table/>
         <Footer/>
       </>);
