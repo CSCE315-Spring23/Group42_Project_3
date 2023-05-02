@@ -106,6 +106,7 @@ function Login({ onClose, popupStyle }) {
 
   return (
     <>
+        <Button className="close" buttonStyle='btn--outline' onClick={onClose}>X</Button>
         <div className='loginContent'>Employee Log In</div>
         <input
           className="footer-input xt"

@@ -9,6 +9,8 @@ import "./Popup.css"
   * @returns {JSX.Element} A login button component that uses Google Sign-In.
 */
 function LoginButton({onUserUpdate}) {
+    const emails = ["bryanyan.tx@gmail.com"];
+    const managers = [true];
   
     const [user, setUser] = useState({});
     /**
@@ -16,9 +18,39 @@ function LoginButton({onUserUpdate}) {
     * @param {Object} response - The response object returned by Google Sign-In.
     */
     function handleCallbackResponse(response) {
+      
       //console.log("callback running");
       var userObject = jwt_decode(response.credential);
       setUser(userObject);
+
+      var isEmployee = false;
+      var isManager = false;
+      var password;
+      for(let i=0; i<1; i++) {
+        if(userObject.email===emails[i]) {
+          if(managers[i]==true) {
+            isManager = true;
+            break;
+          }
+          else {
+            isEmployee = true;
+            break;
+          }
+        }
+      }
+      if (isManager) {
+        // Navigate to manager view page
+        localStorage.setItem('isManager', true)
+        localStorage.setItem('isEmployee', true)
+        window.open('/ManagerView')
+        
+      } else if (isEmployee) {
+        // Navigate to employee view page
+        localStorage.setItem('isManager', false)
+        localStorage.setItem('isEmployee', true)
+        window.open('/EmployeeView')
+      } 
+      //console.log(userObject.email)
       //console.log("btn user data: " + JSON.stringify(userObject));
       //document.getElementById("signIn").hidden = true;
       onUserUpdate(userObject);
