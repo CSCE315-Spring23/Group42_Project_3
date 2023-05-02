@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/pages/database.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/pages/database.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
 
  * Import required packages
  * @const {object} express - Express application
@@ -39,7 +67,7 @@ app.use(express.static(path.join(__dirname, '../../../public')));
 /**
 
 Array of allowed origins
-@const {Array.<string>} allowedOrigins - List of allowed origins
+@const {Array.&lt;string>} allowedOrigins - List of allowed origins
 */
 const allowedOrigins = ['https://revs-american-grill-z267.onrender.com', 'http://localhost:3000']
 /**
@@ -114,11 +142,11 @@ app.get('/menuRequest/:start/:end', async (req, res) => {
     const userId = req.params.id;
 
     var queryToUse;
-    if ((start === 0) && (end === 0)) {
+    if ((start === 0) &amp;&amp; (end === 0)) {
       queryToUse = 'SELECT * FROM Menu ORDER BY MENU_ITEM_ID';
     }
     else {
-      queryToUse = 'SELECT * FROM Menu WHERE MENU_ITEM_ID >= ' + start + ' AND MENU_ITEM_ID <= ' + end + ' ORDER BY MENU_ITEM_ID';
+      queryToUse = 'SELECT * FROM Menu WHERE MENU_ITEM_ID >= ' + start + ' AND MENU_ITEM_ID &lt;= ' + end + ' ORDER BY MENU_ITEM_ID';
     }
     console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
@@ -143,11 +171,11 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
     const start = parseInt(req.params.start);
     const end = parseInt(req.params.end);
     var queryToUse;
-    if ((start === 0) && (end === 0)) {
+    if ((start === 0) &amp;&amp; (end === 0)) {
       queryToUse = 'SELECT * FROM inventory_item ORDER BY inventory_id';
     }
     else {
-      queryToUse = 'SELECT * FROM inventory_item WHERE inventory_id >= ' + start + ' AND inventory_id <= ' + end + ' ORDER BY inventory_id';
+      queryToUse = 'SELECT * FROM inventory_item WHERE inventory_id >= ' + start + ' AND inventory_id &lt;= ' + end + ' ORDER BY inventory_id';
     }
     console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
@@ -210,7 +238,7 @@ app.get('/orderRequest/:start/:end', async (req, res) => {
     const end = req.params.end;
     console.log("start:", start);
     console.log("end:", end);
-    if (start === '2020-01-01' && end === '2025-01-01') {
+    if (start === '2020-01-01' &amp;&amp; end === '2025-01-01') {
       //console.log('SELECT * FROM orders ORDER BY order_id DESC LIMIT 30');
       const { rows } = await pool.query('SELECT * FROM orders ORDER BY order_id DESC LIMIT 30');
       res.json(rows);
@@ -248,7 +276,7 @@ app.get('/soldTogether/:start/:end', async (req, res) => {
     var initialDateString = req.params.start;
     var finalDateString = req.params.end;
     queryToUse = 'SELECT m1.MENU_ITEM_NAME AS MENU_ITEM_NAME_1, m2.MENU_ITEM_NAME AS MENU_ITEM_NAME_2, COUNT(*) AS combo_count ' +
-      'FROM item_sold s1 JOIN item_sold s2 ON s1.ORDER_ID = s2.ORDER_ID AND s1.MENU_ITEM_ID < s2.MENU_ITEM_ID ' +
+      'FROM item_sold s1 JOIN item_sold s2 ON s1.ORDER_ID = s2.ORDER_ID AND s1.MENU_ITEM_ID &lt; s2.MENU_ITEM_ID ' +
       'JOIN Menu m1 ON s1.MENU_ITEM_ID = m1.MENU_ITEM_ID JOIN Menu m2 ON s2.MENU_ITEM_ID = m2.MENU_ITEM_ID ' +
       'WHERE s1.ORDER_ID IN (SELECT ORDER_ID FROM orders WHERE DATE_ORDERED BETWEEN $1 AND $2 ) ' +
       'GROUP BY m1.MENU_ITEM_NAME, m2.MENU_ITEM_NAME ORDER BY combo_count DESC';
@@ -265,7 +293,7 @@ app.get('/soldTogether/:start/:end', async (req, res) => {
       //console.log(menuItem1);
       const combo = { ID: i, menuItem1: menuItem1, menuItem2: menuItem2, comboCount: comboCount };
       i++;
-      if (menuItem1 != "Burger/Sandwich Combo" && menuItem1 != "Basket Combo" && menuItem1 != "Silverware" && menuItem2 != "Burger/Sandwich Combo" && menuItem2 != "Basket Combo" && menuItem2 != "Silverware")
+      if (menuItem1 != "Burger/Sandwich Combo" &amp;&amp; menuItem1 != "Basket Combo" &amp;&amp; menuItem1 != "Silverware" &amp;&amp; menuItem2 != "Burger/Sandwich Combo" &amp;&amp; menuItem2 != "Basket Combo" &amp;&amp; menuItem2 != "Silverware")
         popularCombos.push(combo);
     }
     res.json(popularCombos);
@@ -297,7 +325,7 @@ app.get('/password/:email', async (req, res) => {
 app.get('/restockRequest', async (req, res) => {
   try {
     var queryToUse;
-    queryToUse = 'SELECT * FROM inventory_item WHERE inventory_item_quantity <= 50';
+    queryToUse = 'SELECT * FROM inventory_item WHERE inventory_item_quantity &lt;= 50';
     // console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
@@ -623,14 +651,14 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
     const inventoryItems = [];
     const start = parseInt(req.params.start);
     var end = parseInt(req.params.end);
-    if ((start === 0) && (end === 0)) {
+    if ((start === 0) &amp;&amp; (end === 0)) {
       start = 1;
       const sizeOfMenuQuery = `SELECT MAX(menu_item_id) FROM menu`;
       const sizeOfMenuResult = await pool.query(sizeOfMenuQuery);
       end = sizeOfMenuResult.rows.map((item) => parseInt(item.menu_item_id));
     }
 
-    for (let i = start; i <= end; i++) {
+    for (let i = start; i &lt;= end; i++) {
       //console.log("item :" + i);
       const recipeItemsQuery = `SELECT inventory_id FROM Recipe_Item WHERE menu_id = ${i}`;
       const recipeItemsResult = await pool.query(recipeItemsQuery);
@@ -734,7 +762,7 @@ app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
     const now = new Date();
     let year = parseInt(now.getFullYear());
     let month = parseInt(now.getMonth()) + 1;
-    if (month < 10) {
+    if (month &lt; 10) {
       month = "0" + month;
     }
     let date = parseInt(now.getDate());
@@ -749,7 +777,7 @@ app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
     var result = await pool.query('SELECT * FROM cart WHERE sessionid = $1', [myID]);
     result = result.rows[0].orderlist; //gets just the cart
     var itemCount = 0;
-    for (let i = 0; i < result.length; i++) {
+    for (let i = 0; i &lt; result.length; i++) {
       var thisItem = JSON.parse(result[i]);
       if (thisItem.type === "item") {
         itemCount++;
@@ -757,14 +785,14 @@ app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
     } //this loop counts how many individual items there are
 
     //console.log(itemCount, "items in the cart.");
-    for (let id = 1; id < itemCount + 1; id++) { //number of items in cart
+    for (let id = 1; id &lt; itemCount + 1; id++) { //number of items in cart
       const itemArr = []; //the item and all its mods
       var modStartIndex = -1;
       var modEndIndex = -1;
       var pos = 1;
       var itemQ = 0; //count of this item
       var itemName = "";
-      for (let i = 0; i < result.length; i++) {
+      for (let i = 0; i &lt; result.length; i++) {
         var thisItem = JSON.parse(result[i]);
         if (thisItem.type === "item") {
           if (pos === (id - 1)) { //will never hit for first item
@@ -782,8 +810,8 @@ app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
       } //end loop that sets start and end index
       //console.log("Indexes to clear: ", modStartIndex, " to ", modEndIndex, " from ", result);
       //console.log("Found ", itemQ, " ", itemName, "with indexes ", modStartIndex, " to ", modEndIndex);
-      for (let i = 0; i < result.length; i++) {
-        if (!(i < modStartIndex || i > modEndIndex)) {
+      for (let i = 0; i &lt; result.length; i++) {
+        if (!(i &lt; modStartIndex || i > modEndIndex)) {
           itemArr.push(result[i]);
         }
       } //this loop inits our item, with the quantity value
@@ -805,7 +833,7 @@ app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
           const amt_used = inventoryItemsForMenuItems.rows.map((item) => item.amt_used);
           const inventory_id = inventoryItemsForMenuItems.rows.map((item) => item.inventory_id);
           //update inventory item by adding a menu item.
-          for (let j = 0; j < inventory_id.length; j++) {//update the inventory based off of what is in each
+          for (let j = 0; j &lt; inventory_id.length; j++) {//update the inventory based off of what is in each
             //console.log("inventory_id at: " + inventory_id[j] + " with " + amt_used[j]*itemQ + " units used.");
             await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[j] * itemQ, inventory_id[j]]);
           }
@@ -907,7 +935,7 @@ app.get('/updateQty/:cookie/:id/:quantity', async (req, res) => {
     if (newQty != 0) {
       console.log("Setting quantity to ", newQty, " for item ID ", itemID);
       var pos = 1;
-      for (let i = 0; i < result.length; i++) {
+      for (let i = 0; i &lt; result.length; i++) {
         var thisItem = JSON.parse(result[i]);
         if (thisItem.type === "item") {
           if (pos === itemID) {
@@ -927,7 +955,7 @@ app.get('/updateQty/:cookie/:id/:quantity', async (req, res) => {
       var modStartIndex = -1;
       var modEndIndex = -1;
       var pos = 1;
-      for (let i = 0; i < result.length; i++) {
+      for (let i = 0; i &lt; result.length; i++) {
         var thisItem = JSON.parse(result[i]);
         if (thisItem.type === "item") {
           if (pos === (itemID - 1)) { //will never hit for first item
@@ -946,8 +974,8 @@ app.get('/updateQty/:cookie/:id/:quantity', async (req, res) => {
 
       console.log("Indexes to clear: ", modStartIndex, " to ", modEndIndex, " from ", result);
 
-      for (let i = 0; i < result.length; i++) {
-        if (i < modStartIndex || i > modEndIndex) {
+      for (let i = 0; i &lt; result.length; i++) {
+        if (i &lt; modStartIndex || i > modEndIndex) {
           updatedItems.push(result[i]);
         }
       }
@@ -997,7 +1025,7 @@ app.get('/getCart/:id', async (req, res) => {
 //     const now = new Date();
 //     let year = parseInt(now.getFullYear());
 //     let month = parseInt(now.getMonth()) + 1;
-//     if (month < 10){
+//     if (month &lt; 10){
 //       month = "0" + month;
 //     }
 //     let date = parseInt(now.getDate());
@@ -1009,7 +1037,7 @@ app.get('/getCart/:id', async (req, res) => {
 //     let newItemIDquery = await pool.query('SELECT MAX(item_id) FROM item_sold');
 //     let newItemID = newItemIDquery.rows[0].max;
 //     console.log("value of newItemID = " + newItemID);
-//     for (let i = 0; i < menuItems.length; i++) {//adding menu items
+//     for (let i = 0; i &lt; menuItems.length; i++) {//adding menu items
 //       newItemID += 1;
 //       let Menu_item_name = menuItems[i].first;
 //
@@ -1029,13 +1057,13 @@ app.get('/getCart/:id', async (req, res) => {
 //       console.log(inventory_id);
 //
 //       //update inventory item by adding a menu item.
-//       for (let j = 0; j < inventory_id.length; j++) {//update the inventory based off of what is in each
+//       for (let j = 0; j &lt; inventory_id.length; j++) {//update the inventory based off of what is in each
 //         console.log("inventory_id at: " + inventory_id[j]);
 //         let updateInventoryItem = await pool.query("UPDATE inventory_item SET inventory_item_quantity = inventory_item_quantity - $1 WHERE inventory_id = $2", [amt_used[j], inventory_id[j]]);
 //       }
 //     }
 //
-//     for (let i = 0; i < ingredientList.length; i++) {//adding inventory items
+//     for (let i = 0; i &lt; ingredientList.length; i++) {//adding inventory items
 //       newItemID += 1;
 //       let inventoryID = ingredientList[i].first;
 //       let quantity = ingredientList[i].second;
@@ -1061,3 +1089,26 @@ app.get('*', (req, res) => {
 app.listen(10000, () => {
   console.log('Server listening on port 10000');
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Baskets.html">Baskets</a></li><li><a href="module-Checkout.html">Checkout</a></li><li><a href="module-databaseConnection.html">databaseConnection</a></li><li><a href="module-index.html">index</a></li><li><a href="module-jest-dom.html">jest-dom</a></li></ul><h3>Classes</h3><ul><li><a href="Weather.html">Weather</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Burgers">Burgers</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CardItem">CardItem</a></li><li><a href="global.html#CardList">CardList</a></li><li><a href="global.html#CartItemMods">CartItemMods</a></li><li><a href="global.html#EmployeeCard">EmployeeCard</a></li><li><a href="global.html#EmployeeCardItem">EmployeeCardItem</a></li><li><a href="global.html#EmployeeCardList">EmployeeCardList</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GoogleTranslate">GoogleTranslate</a></li><li><a href="global.html#HeroSection">HeroSection</a></li><li><a href="global.html#IngredientForm">IngredientForm</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#MenuBoardView">MenuBoardView</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SimilarItems">SimilarItems</a></li><li><a href="global.html#TableInfo">TableInfo</a></li><li><a href="global.html#allowedOrigins">allowedOrigins</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buttonPath">buttonPath</a></li><li><a href="global.html#buttonText">buttonText</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#copyFileSync">copyFileSync</a></li><li><a href="global.html#employeeLinks">employeeLinks</a></li><li><a href="global.html#handleOnClick">handleOnClick</a></li><li><a href="global.html#managerLinks">managerLinks</a></li><li><a href="global.html#menuLinks">menuLinks</a></li><li><a href="global.html#pool">pool</a></li><li><a href="global.html#showButton">showButton</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 13:09:41 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
