@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {GetOrdersTable, GetExcessReport, GetSalesReport, GetRestockReport, GetSoldTogether,
         GetXReport, GetZReport} from './pages/databaseFunctions';
 import './Reports.css';
-
+import { Button } from './Button';
 
 
 /**
@@ -151,15 +151,19 @@ const Reports = () => {
                             <div>
                                 <div style={{ display: activeTab === 0 || activeTab === 4 || activeTab === 5 || activeTab === 6 ? 'inline-block' : 'none', margin: '10px' }}>
                                     <input
+                                        className="footer-input yt"
                                         type="text"
-                                        value={newAttribute['startDate'] || 'Start Date YYYY-MM-DD'} // set default value to header name
+                                        placeholder='Start Date YYYY-MM-DD'
+                                        value={newAttribute['startDate']} // set default value to header name
                                         name={'startDate'}
                                         onChange={handleNewAttributeChange}
                                         onKeyDown={(event) => handleKeyPress(event)}
                                     />
                                     <input
                                         type="text"
-                                        value={newAttribute['endDate'] || 'End Date YYYY-MM-DD'} // set default value to header name
+                                        className="footer-input yt"
+                                        placeholder='End Date YYYY-MM-DD'
+                                        value={newAttribute['endDate']} // set default value to header name
                                         name={'endDate'}
                                         onChange={handleNewAttributeChange}
                                         onKeyDown={(event) => handleKeyPress(event)}
@@ -167,6 +171,8 @@ const Reports = () => {
                                 </div>
                                 <div style={{ display: activeTab === 2 ? 'inline-block' : 'none', margin: '10px' }}>
                                     <input
+                                        className="footer-input yt"
+                                        placeholder='Report Id'
                                         type="text"
                                         value={newAttribute['reportID']} // set default value to header name
                                         name={'reportID'}
@@ -175,7 +181,7 @@ const Reports = () => {
                                     />
                                 </div>
                                 <div style={{ display: activeTab !== 1 && activeTab !== 3 ? 'inline-block' : 'none', margin: '10px', border: '5px' }}>
-                                    <button onClick={handlePopulateTable}>Submit</button>
+                                    <Button buttonStyle = 'btn--third' onClick={handlePopulateTable}>Submit</Button>
                                 </div>
                                 {(isSubmitted || activeTab === 1 || activeTab === 3) &&
                                     <table>

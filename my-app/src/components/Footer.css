@@ -90,9 +90,9 @@
     margin-bottom: 2rem;
   }
 
-  .footer-input::placeholder {
-    color: #929090;
-  }
+  /* .footer-input::placeholder {
+    color: #7b2525;
+  } */
 
   .social-media-wrap {
     display: flex;

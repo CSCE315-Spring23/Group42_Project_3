@@ -82,10 +82,11 @@ th:nth-child(5) {
 }
 
 .footer-input::placeholder {
-  color: #c6c5c5;
+  color: #7a7979;
 }
 
 .yt{
   font-size: 14px;
   background-color: #fff;
+  border: 1px solid #929090;;
 }
