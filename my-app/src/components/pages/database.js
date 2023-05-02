@@ -675,8 +675,8 @@ app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
           }
           let menuIdquery = await pool.query("SELECT menu_item_id FROM menu WHERE menu_item_name = $1", [foodItem.name]);
           let menuId = menuIdquery.rows[0].menu_item_id;
-          queryToUse = "INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('" + newItemID + "', '" + menuId + "', '" + newOrderID + "', '" + foodItem.quantity + "')";
-          console.log("Inserting item ", newItemID, " with menu id ", menuId, " to order", newOrderID, "with quantity", foodItem.quantity);
+          queryToUse = "INSERT INTO item_sold (item_id, menu_item_id, order_id, item_sold_quantity) VALUES ('" + newItemID + "', '" + menuId + "', '" + newOrderID + "', '" + itemQ + "')";
+          console.log("Inserting item ", newItemID, " with menu id ", menuId, " to order", newOrderID, "with quantity", itemQ);
           let insertIntoItemSold = await pool.query(queryToUse);
           let updateMenu = await pool.query("UPDATE menu SET menu_item_sold_since_z = menu_item_sold_since_z + 1 WHERE menu_item_id= $1", [menuId]);
           let inventoryItemsForMenuItems = await pool.query("SELECT * FROM recipe_item WHERE menu_id = $1", [menuId]);
