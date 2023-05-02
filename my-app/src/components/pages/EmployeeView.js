@@ -4,7 +4,7 @@ import {GetMenuList, GetIngredients} from './databaseFunctions'
 import EmployeeCardList from '../EmployeeCardList';
 import { Button } from '../Button';
 import Navbar from '../Navbar';
-import { employeeLinks, buttonText, buttonPath } from '../NavbarData';
+import { employeeLinks, buttonText } from '../NavbarData';
 import Loading from '../Loading';
 
 {/*

@@ -10,7 +10,7 @@ function Checkout() {
   
   return (
     <>
-      <Navbar links={employeeLinks} buttonText={buttonText} buttonPath= '/EmployeeCheckout' />
+      <Navbar links={employeeLinks} buttonText={buttonText} buttonPath= '/EmployeeCheckout'/>
       <Cart initialItems={list} />
       <Footer />
     </>

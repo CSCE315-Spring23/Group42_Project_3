@@ -11,7 +11,7 @@ import './Navbar.css';
  * @returns {JSX.Element} The rendered Navbar component.
  */
 function Navbar({ links, buttonText, buttonPath }) {
-    const [click, setClick] = useState(false);
+  const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [isManager, setIsManager] = useState(false);
 
@@ -56,6 +56,8 @@ function Navbar({ links, buttonText, buttonPath }) {
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
+
+          {isManager && <Button className = "toggle">Switch View</Button>}
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             {links.map((link) => (
               <li key={link.to} className='nav-item'>

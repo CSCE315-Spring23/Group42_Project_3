@@ -47,7 +47,7 @@ const cardData = {
 {/* HTML structure*/ }
 function Menu() {
     return (<>
-      <Navbar />
+      <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
       <CardList cardData={cardData} title="MENU" />
       <Footer/>
     </>);
