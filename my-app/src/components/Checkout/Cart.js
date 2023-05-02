@@ -46,7 +46,7 @@ function Cart({ initialItems }) {
       UpdateCartQuantity(id, 0);
       localStorage.setItem("checkout", "true");
       setTimeout(function () {
-        if (window.location.pathname === "/checkout") {
+        if (window.location.pathname === "/checkout" || window.location.pathname === "/EmployeeCheckout") {
           window.location.reload();
         }
       }, 1000);
