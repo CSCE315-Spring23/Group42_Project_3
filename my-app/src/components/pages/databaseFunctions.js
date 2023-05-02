@@ -81,7 +81,7 @@ function GetRecipesTable(){
 /* Fetch orders from list to display in table */
 function GetOrdersTable(start, end){
   const [orders, setOrders] = useState([]);
-  console.log(`${host}/orderRequest/${start}/${end}`);
+  //console.log(`${host}/orderRequest/${start}/${end}`);
   useEffect(() => {
     async function fetchOrders() {
       const response = await fetch(`${host}/orderRequest/${start}/${end}`);
@@ -96,7 +96,42 @@ function GetOrdersTable(start, end){
 
   return orders;
 }
-//XY REPORTS
+
+//X REPORTS
+function GetXReport() {
+  const [xreport, setXReport] = useState([]);
+
+  useEffect(() => {
+    async function fetchXReport() {
+      const response = await fetch(`${host}/xreportRequest`);
+      const data = await response.json();
+      setXReport(data);
+      //console.table(data);
+    }
+
+    fetchXReport();
+  }, []);
+
+  return xreport;
+}
+
+//Z REPORTS
+function GetZReport(id) {
+  const [report, setReport] = useState([]);
+
+  useEffect(() => {
+    async function fetchZReport() {
+      const response = await fetch(`${host}/zreportRequest/${id}`);
+      const data = await response.json();
+      setReport(data);
+      //console.table(data);
+    }
+
+    fetchZReport();
+  }, [id]);
+
+  return report;
+}
 
 /* Fetch inventory list that needs restock to display in table */
 function GetRestockReport() {
@@ -119,7 +154,7 @@ function GetRestockReport() {
 //SALES REPORT
 function GetSalesReport(start, end){
   const [salesHistory, setSalesHistory] = useState([]);
-  console.log(`${host}/salesHistoryRequest/${start}/${end}`);
+  //console.log(`${host}/salesHistoryRequest/${start}/${end}`);
   useEffect(() => {
     async function fetchSalesHistory() {
       const response = await fetch(`${host}/salesHistoryRequest/${start}/${end}`);
@@ -137,7 +172,7 @@ function GetSalesReport(start, end){
 //EXCESS REPORT
 function GetExcessReport(start, end){
   const [excessList, setExcessList] = useState([]);
-  console.log(`${host}/excessRequest/${start}/${end}`);
+  //console.log(`${host}/excessRequest/${start}/${end}`);
   useEffect(() => {
     async function fetchExcessList() {
       const response = await fetch(`${host}/excessRequest/${start}/${end}`);
@@ -153,6 +188,22 @@ function GetExcessReport(start, end){
 }
 
 //SOLD TOGETHER
+function GetSoldTogether(start, end) {
+  const [sold, setSold] = useState([]);
+
+  useEffect(() => {
+    async function fetchSoldTogether() {
+      const response = await fetch(`${host}/soldTogether/${start}/${end}`);
+      const data = await response.json();
+      setSold(data);
+      //console.table(data);
+    }
+
+    fetchSoldTogether();
+  }, [start,end]);
+
+  return sold;
+}
 
 /**************** EDIT TABLE ****************/
 
@@ -426,22 +477,6 @@ function GetCartItems() {
   return items;
 }
 
-function GetSoldTogether() {
-  const [sold, setSold] = useState([]);
-
-  useEffect(() => {
-    async function fetchSoldTogether() {
-      const response = await fetch(`${host}/soldTogether`);
-      const data = await response.json();
-      setSold(data);
-      //console.table(data);
-    }
-
-    fetchSoldTogether();
-  }, []);
-
-  return sold;
-}
 
 function GetPassword(email) {
   //console.log("got here")
@@ -455,7 +490,7 @@ function GetPassword(email) {
     }
 
     fetchPassword();
-  }, []);
+  }, [email]);
 
   return password;
 }
@@ -619,5 +654,6 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
-          GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
+          GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, GetXReport, GetZReport,
+          UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, 
           AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword};
