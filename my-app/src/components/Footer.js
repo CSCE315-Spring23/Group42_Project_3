@@ -4,6 +4,9 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import Weather from './Weather';
 import Popup from "./Popups/Popup";
+import GoogleTranslate from "./Translate";
+
+
 
 /*
  * Global footer for all pages in our application
@@ -44,7 +47,7 @@ function Footer() {
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-              <Button buttonStyle='btn--outline' path = '/'>Google Translate</Button>
+              <GoogleTranslate/>
           </div>
         </div>
       </div>
@@ -57,17 +60,6 @@ function Footer() {
           </div>
           <small className='website-rights'>Rev's © 2020</small>
           <Weather />
-          {/* <div id="google_translate_element"></div>
-          <script src="https://translate.google.com/translate_a/element.js?
-          cb=googleTranslateElementInit"></script>
-          <script>
-            function googleTranslateElementInit(){
-              new google.translate.translateElement(
-                {pageLanguage : 'en'},
-                'google_translate_element'
-              );
-            }
-          </script> */}
         </div>
       </section>
     </div>

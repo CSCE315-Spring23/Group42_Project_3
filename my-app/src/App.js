@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Home from './components/pages/Home';
 import Burgers from './components/pages/Burgers';
@@ -14,6 +14,7 @@ import MenuBoard from './components/pages/Menuboard';
 import ManagerView from './components/pages/ManagerView';
 import ManagerDatabaseAccess  from './components/pages/ManagerDatabaseAccess';
 import EmployeeCheckout from './components/pages/EmployeeCheckout'
+import GoogleTranslate from './components/Translate';
 
 /**
  * Main App component containing all the different pages available
@@ -24,6 +25,7 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route exact path='/Translate' element={<GoogleTranslate/>} />
           <Route exact path='/' element={<Home/>} />
           <Route exact path='/Burgers' element={<Burgers/>} />
           <Route exact path='/Menu' element={<Menu/>} />
@@ -39,6 +41,8 @@ function App() {
           <Route exact path='/ManagerDatabaseAccess' element={<ManagerDatabaseAccess/>}/>
         </Routes>
       </Router>
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+      <script src='./session.js'></script>
     </>
   );
 }
