@@ -12,13 +12,13 @@ const GoogleTranslate = () => {
             new window.google.translate.TranslateElement(
                 { pageLanguage: "en" },
                 "google_translate_element"
-            );
+            );  
         };
-
         return () => {
             document.body.removeChild(script);
             delete window.googleTranslateElementInit;
         };
+
     }, []);
 
     return (<div id="google_translate_element"></div>);
