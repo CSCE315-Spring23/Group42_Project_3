@@ -573,7 +573,7 @@ app.get('/employeeUpdate/:ID/:name/:email/:pwd/:ismang', async (req, res) => {
     const name = req.params.name;
     const email = req.params.email;
     const pwd = req.params.pwd;
-    const ismang = parseBool(req.params.ismang);
+    const ismang = Boolean(req.params.ismang);
 
     var queryString = 'UPDATE employee SET EMPLOYEE_NAME = $1, EMAIL = $2, PASSWORD = $3, IS_MANAGER = $4 WHERE EMPLOYEE_ID = $5';
     const queryValues = [name, email, pwd, ismang, ID];
@@ -734,7 +734,7 @@ app.get('/employeeAddItem/:name/:email/:pwd/:ismang', async (req, res) => {
     const name = req.params.name;
     const email = req.params.email;
     const pwd = req.params.pwd;
-    const ismang = parseBool(req.params.ismang);
+    const ismang = Boolean(req.params.ismang);
 
     var queryString = 'INSERT INTO employee (employee_ID, employee_NAME, email, password, is_manager) VALUES ($1, $2, $3, $4, $5)';
     const queryValues = [ID, name, email, pwd, ismang];

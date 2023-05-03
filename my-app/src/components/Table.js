@@ -76,7 +76,7 @@ function TableInfo(props) {
       const name = newAttribute['Employee Name'];
       const email = newAttribute['Email'];
       const pwd = newAttribute['Password'];
-      const ismang = parseBool(newAttribute['Is Manager?']);
+      const ismang = Boolean(newAttribute['Is Manager?']);
       AddEmployeeItem(name, email, pwd, ismang);
     }
     setNewAttribute({});
@@ -137,7 +137,7 @@ function TableInfo(props) {
       }else if(tab_id === 2){
         UpdateRecipesTable(data['recipe_id'], data['recipe_item_name'], data['inventory_id'], data['menu_id'], data['amt_used']);
       }else if(tab_id === 3){
-        UpdateEmployeeTable(data['Employee ID'], data['Employee Name'], data['Email'], data['Password'], data['Is Manager?']);
+        UpdateEmployeeTable(data['employee_id'], data['employee_name'], data['email'], data['password'], data['is_manager']);
       }
     }
   };
