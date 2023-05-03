@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {GetOrdersTable, GetExcessReport, GetSalesReport, GetRestockReport, GetSoldTogether,
-        GetXReport, GetZReport, GetSoldItem} from './pages/databaseFunctions';
+        GetXReport, GetZReport, GetSoldItem, CreateZReport} from './pages/databaseFunctions';
 import './Reports.css';
 import { Button } from './Button';
 
@@ -52,6 +52,12 @@ const Reports = () => {
         setIsSubmitted(true);
     };
 
+    const handleCreateReport = (event) => {
+        // update the new attribute state
+        console.log("Create Z Report");
+        CreateZReport();
+    };
+
     /**
      * Formats the order data into the desired format for display in the table
      * @param {Object[]} row - Order data object
@@ -74,7 +80,6 @@ const Reports = () => {
             last_order_id: row.last_order_id,
             zreport_date: new Date(row.zreport_date).toLocaleDateString(),
             report_total_cost: row.report_total_cost,
-            is_zreport: row.is_zreport
         };
     });
 
@@ -104,17 +109,12 @@ const Reports = () => {
           tableData: restockData
         },
         { id: 6, name: 'X Reports',
-          headers: ["Report ID", "Last Order ID", "ZReport Date", "Total Cost", "Is Z Report?"],
+          headers: ["Report ID", "Last Order ID", "ZReport Date", "Total Cost"],
           tableData: formattedXReportData
         },
         { id: 7, name: 'Z Reports',
           headers: ["Report ID", "XReport ID", "Menu Item", "Quantity"],
           tableData: GetZReport(reportID)
-        //   tableData: [
-        //     {id: 0, xreport: 5, item_name: 'item 1', qnt: 3},
-        //     {id: 1, xreport: 5, item_name: 'item 2', qnt: 23},
-        //     {id: 2, xreport: 5, item_name: 'item 3', qnt: 87}
-        //   ]
         },
     ];
 
@@ -198,8 +198,13 @@ const Reports = () => {
                                         onKeyDown={(event) => handleKeyPress(event)}
                                     />
                                 </div>
+                                {/* Display Button except on the XReport and Restock Tabs */}
                                 <div style={{ display: activeTab !== 5 && activeTab !== 6 ? 'inline-block' : 'none', margin: '10px', border: '5px' }}>
                                     <Button buttonStyle = 'btn--third' onClick={handlePopulateTable}>Submit</Button>
+                                </div>
+                                {/* Display Button only in the Z Report Tab */}
+                                <div style={{ display: activeTab === 7 ? 'inline-block' : 'none', margin: '10px', border: '5px' }}>
+                                    <Button buttonStyle = 'btn--third' onClick={handleCreateReport}>Create Z Report</Button>
                                 </div>
                                 {(isSubmitted || activeTab === 5 || activeTab === 6) &&
                                     <table>

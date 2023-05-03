@@ -259,14 +259,14 @@ Retrieve the Item_sold based on the order ID.
 app.get('/soldItemRequest/:ID', async (req, res) => {
   try {
     const ID = parseInt(req.params.ID);
-    console.log(ID);
+    //console.log(ID);
     var queryToUse;
     queryToUse = 'SELECT * FROM item_sold WHERE order_id = $1';
     queryValues = [ID];
     // console.log(queryToUse);
     const { rows } = await pool.query(queryToUse, queryValues);
     res.json(rows);
-    console.table(rows);
+    //console.table(rows);
 
   } catch (err) {
     console.error("Read failed with error in item sold Request: " + err);
@@ -1345,6 +1345,90 @@ app.get('/getCart/:id', async (req, res) => {
     res.json(result);
   } catch (err) {
     console.error("Read failed with error in getCart " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Create Z Report 
+app.get('/zreportCreate', async (req, res) => {
+  try {
+    //get new pk
+    const queryToUse = "SELECT MAX(report_id) as max_id FROM zreports";
+    console.log(queryToUse);
+
+    const { row1 } = await pool.query(queryToUse);
+    //console.log(row1);
+
+    const newReportID = parseInt(row1[0]['max_id']) + 1;
+    console.log(newReportID);
+
+    //get new latest order
+    const queryUse = 'SELECT MAX(order_id) as max_id FROM orders';
+    const { row2 } = await pool.query(queryUse);
+    //console.table(row2);
+    const newOrderID = parseInt(row2[0]['max_id']);
+    
+    // get z report date: get current date and time
+    const now = new Date();
+    let year = parseInt(now.getFullYear());
+    let month = parseInt(now.getMonth()) + 1;
+    if (month < 10) {month = "0" + month;}
+    let date = parseInt(now.getDate());
+    let dateForDatabase = year + "-" + month + "-" + date;
+
+    console.log(newReportID, newOrderID, dateForDatabase);
+
+    queryToUse = 'SELECT order_cost FROM orders WHERE order_id > (SELECT last_order_id FROM zreports WHERE report_id=(SELECT MAX(report_id) FROM zreports))'
+    //console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+    let totalCost = 0;
+    rows.forEach(row => {
+      totalCost += parseInt(row[0]);
+    });
+    console.log(newReportID, newOrderID, dateForDatabase, totalCost)
+
+    const queryString = 'INSERT INTO zreports (report_id, last_order_id, zreport_date, report_total_cost, is_zreport) VALUES ($1, $2, $3, $4, $5)';
+    const queryValues = [newReportID, newOrderID, dateForDatabase, totalCost, 1];
+
+    await pool.query(queryString, queryValues);
+
+    res.json(newReportID);
+    res.status(200).json({ message: 'Z report created successfully' });
+
+  } catch (err) {
+    console.error("Read failed with error in zreportCreate: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Create Z Report Content
+app.get('/zreportContent/:ID', async (req, res) => {
+  try {
+    const reportID = parseInt(req.params.ID);
+    //get new pk
+    var queryToUse = "SELECT MAX(report_content_id) as max_id FROM zreportcontent";
+    console.log(queryToUse);
+    const { row1 } = await pool.query(queryToUse);
+    let newID = parseInt(row1['max_id']) + 1;
+    console.log(newID);
+
+    queryToUse = 'SELECT menu_item_name, menu_item_sold_since_z FROM menu';
+    const { rows } = await pool.query(queryToUse);
+
+    const queryString = 'INSERT INTO zreportcontent (report_content_id, report_id, menu_item_name, menu_item_quantity) VALUES ($1, $2, $3, $4)';
+    for (const row of rows) {
+      const queryValues = [newID, reportID, row['menu_item_name'], row['menu_item_quantity']];
+      await pool.query(queryString, queryValues);
+      newID += 1;
+    }
+
+    queryToUse = 'UPDATE menu SET menu_item_sold_since_z = 0'  
+    await pool.query(queryToUse);
+
+    res.status(200).json({ message: 'Z Report Content Populate Sucessfully' });
+
+  } catch (err) {
+    console.error("Read failed with error in zreportContent: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
