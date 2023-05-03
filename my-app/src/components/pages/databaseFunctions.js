@@ -78,6 +78,24 @@ function GetRecipesTable(){
   return recipes;
 }
 
+/* Fetch employee list from database */
+function GetEmployeeTable(){
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    async function fetchEmployees() {
+      const response = await fetch(`${host}/employeeRequest`);
+      const data = await response.json();
+      setEmployees(data);
+      //console.table(data);
+    }
+
+    fetchEmployees();
+  }, []);
+
+  return employees;
+}
+
 /* Fetch orders from list to display in table */
 function GetOrdersTable(start, end){
   const [orders, setOrders] = useState([]);
@@ -243,6 +261,18 @@ async function UpdateRecipesTable(id, name, invID, menuID, quantity){
   }
 }
 
+/* Update the employee table with new values */
+async function UpdateEmployeeTable(id, name, email, pwd, ismang) {
+  try {
+    const response = await fetch(`${host}/employeeUpdate/${id}/${name}/${email}/${pwd}/${ismang}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error updating employee credentials: ' + err);
+  }
+}
+
 /* Add new inventory item */
 async function AddInventoryItem(name, cost, quantity) {
   try {
@@ -279,6 +309,18 @@ async function AddRecipesItem(name, invID, menuID, quantity) {
   }
 }
 
+/* Add new employee */
+async function AddEmployeeItem( name, email, pwd, ismang) {
+  try {
+    const response = await fetch(`${host}/employeeAddItem/${name}/${email}/${pwd}/${ismang}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error adding employee: ' + err);
+  }
+}
+
 /* Delete inventory item */
 async function DeleteInventoryItem(ID) {
   try {
@@ -312,6 +354,18 @@ async function DeleteRecipesItem(ID) {
 
   } catch (err) {
     console.error('Error deleting recipes item: ' + err);
+  }
+}
+
+/* Delete employee */
+async function DeleteEmployeeItem(ID) {
+  try {
+    const response = await fetch(`${host}/employeeDeleteItem/${ID}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error deleting employee credentials: ' + err);
   }
 }
 
@@ -680,6 +734,6 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
-          GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, GetXReport, GetZReport,
-          UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable,
+          GetEmployeeTable, GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, GetXReport, GetZReport,
+          UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, UpdateEmployeeTable, AddEmployeeItem, DeleteEmployeeItem,
           AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity, CreateNewOrder};
