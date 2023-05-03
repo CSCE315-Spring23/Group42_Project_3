@@ -387,6 +387,32 @@ async function DeleteEmployeeItem(ID) {
   }
 }
 
+/* Create Z report with Content */
+async function CreateZReport() {
+  try {
+    const response = await fetch(`${host}/zreportCreate`);
+    const ID = await response.json();
+    console.log(ID);
+    CreateZReportContent(ID);
+
+  } catch (err) {
+    console.error('Error creating the z report: ' + err);
+  }
+}
+
+/* Create Z report with Content */
+async function CreateZReportContent(ID) {
+  try {
+    const response = await fetch(`${host}/zreportContent/${ID}`);
+    const data = await response.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error('Error creating the z report content: ' + err);
+  }
+}
+
+
 //fetch all menu items from database table
 // function GetAllMenuList(){
 //   const [menuItems, setMenuItems] = useState([]);
@@ -483,7 +509,6 @@ async function CreateNewOrder(cost) {
     console.error('Error placing order: ' + err);
   }
 }
-
 
 function GetCartItems() {
   const [myCart, setCart] = useState([]);
@@ -770,5 +795,5 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
           GetEmployeeTable, GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, GetXReport, GetZReport, GetSoldItem,
-          UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, UpdateEmployeeTable, AddEmployeeItem, DeleteEmployeeItem,
+          UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, UpdateEmployeeTable, AddEmployeeItem, DeleteEmployeeItem, CreateZReport,
           AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity, CreateNewOrder, GetManager};
