@@ -26,7 +26,7 @@ function LoginButton({onUserUpdate}) {
       var isEmployee = false;
       var isManager = false;
       var password;
-      for(let i=0; i<1; i++) {
+      for(let i=0; i<6; i++) {
         if(userObject.email===emails[i]) {
           if(managers[i]==true) {
             isManager = true;
