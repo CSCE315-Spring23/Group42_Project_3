@@ -42,6 +42,9 @@ function HeroSection() {
           GET STARTED
         </Button>
         <Weather/>
+        {/* <div className='google_translate'>
+              <div id="google_translate_element" style={{width: '50%'}}></div>
+            </div> */}
       </div>
     </div>
   );
