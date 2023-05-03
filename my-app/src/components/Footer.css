@@ -90,9 +90,12 @@
     margin-bottom: 2rem;
   }
 
-  /* .footer-input::placeholder {
-    color: #7b2525;
-  } */
+#google_translate_element {
+	bottom: 0px;
+	/* position: fixed; */
+	right: 0px;
+	text-align: left;
+}
 
   .social-media-wrap {
     display: flex;

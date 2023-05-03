@@ -1,5 +1,20 @@
 #google_translate_element {
 	bottom: 0px;
-	position: fixed;
+	/* position: fixed; */
 	right: 0px;
+	text-align: left;
+	align-items: center;
+}
+
+select{
+	background-color: rgba(92,0,32,255);
+	color: white;
+	border: .1em solid white;
+	padding: 1em;
+	text-align: center;
+	font-size: 16px;
+}
+
+select::after{
+	color: black;
 }

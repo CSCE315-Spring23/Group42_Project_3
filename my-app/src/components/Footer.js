@@ -4,7 +4,8 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import Weather from './Weather';
 import Popup from "./Popups/Popup";
-import GoogleTranslate from "./Translate";
+// import GoogleTranslate from "./Translate";
+import GoogleTranslate from './gTranslate';
 
 /**
  * React functional component representing the global footer for all pages in our application.
@@ -69,7 +70,7 @@ function Footer() {
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             {/* TODO: Uncomment when GoogleTranslate component is implemented */}
-            {/* <GoogleTranslate /> */}
+            <GoogleTranslate />
           </div>
         </div>
       </div>
@@ -85,6 +86,7 @@ function Footer() {
           <small className='website-rights'>Rev's © 2020</small>
           {/* Weather component */}
           <Weather />
+          
         </div>
       </section>
     </div>
