@@ -106,7 +106,7 @@ function Login({ onClose, popupStyle }) {
 
   return (
     <>
-        <Button className="close" buttonStyle='btn--outline' onClick={onClose}>X</Button>
+        
         <div className='loginContent'>Employee Log In</div>
         <input
           className="footer-input xt"
@@ -138,7 +138,7 @@ function Login({ onClose, popupStyle }) {
           <hr />
         </span>
         <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
-        
+        <Button className="close" buttonStyle='btn--outline' onClick={handleClose}>X</Button>
       {/* <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
           X
       </Button> */}
