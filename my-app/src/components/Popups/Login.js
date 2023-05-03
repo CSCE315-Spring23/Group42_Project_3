@@ -84,12 +84,14 @@ function Login({ onClose, popupStyle }) {
       localStorage.setItem('isManager', true)
       localStorage.setItem('isEmployee', true)
       window.open('/ManagerView')
+      setErrorMessage('');
       
     } else if (isEmployee) {
       // Navigate to employee view page
       localStorage.setItem('isManager', false)
       localStorage.setItem('isEmployee', true)
       window.open('/EmployeeView')
+      setErrorMessage('');
     } else {
       setErrorMessage('Invalid credentials');
     }
