@@ -4,15 +4,17 @@ import {GetMenuList, GetIngredients} from './databaseFunctions'
 import Navbar from '../Navbar';
 import Loading from '../Loading';
 import { menuLinks, buttonText, buttonPath } from '../NavbarData';
-/*
-* Shows the menuboard for all menu items in Rev's including prices
-* @author: ariela
-*/
+/**
+ * Shows the menuboard for all menu items in Rev's including prices
+ * @function
+ * @returns {JSX.Element} - Returns the JSX code to be rendered in the browser
+ * @throws Will throw an error if menu items or ingredients are not loaded
+ */
 function Sandwiches() {
   var menuItems = GetMenuList(7, 10);
   var ingredientsArr = GetIngredients(7, 10);
 
-  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
     return <Loading />;
   }
 
@@ -36,15 +38,19 @@ function Sandwiches() {
     cardData.cards.push(card);
   }
 
-    /* HTML structure*/
-    return (<>
-    <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
-    <div id="menu">
+  /**
+   * HTML structure
+   * @returns {JSX.Element} - Returns the JSX code to be rendered in the browser
+   */
+  return (
+    <>
+      <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
+      <div id="menu">
         <CardList cardData={cardData} title="SANDWICHES" />
-    </div>
+      </div>
+      <Footer />
+    </>
+  );
+}
 
-      <Footer/>
-    </>);
-  }
-
-  export default Sandwiches;
+export default Sandwiches;

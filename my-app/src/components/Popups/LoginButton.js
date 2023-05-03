@@ -9,10 +9,11 @@ import "./Popup.css"
   * @returns {JSX.Element} A login button component that uses Google Sign-In.
 */
 function LoginButton({onUserUpdate}) {
-    const emails = ["bryanyan.tx@gmail.com"];
-    const managers = [true];
+    const emails = ["bryanyan.tx@gmail.com", "danielamtzb72@tamu.edu", "arjunkurkal@gmail.com", "srikarpotlapallis@gmail.com", "dsantos21@tamu.edu", "amitrani@tamu.edu"];
+    const managers = [true, true, true, true, true, true];
   
     const [user, setUser] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
     /**
     *  Callback function to handle the response from Google Sign-In. Decodes the JWT token returned by Google and updates the user state using the setUser function. Calls the onUserUpdate function to update the user state in the parent component.
     * @param {Object} response - The response object returned by Google Sign-In.
@@ -26,7 +27,7 @@ function LoginButton({onUserUpdate}) {
       var isEmployee = false;
       var isManager = false;
       var password;
-      for(let i=0; i<1; i++) {
+      for(let i=0; i<6; i++) {
         if(userObject.email===emails[i]) {
           if(managers[i]==true) {
             isManager = true;
@@ -43,13 +44,18 @@ function LoginButton({onUserUpdate}) {
         localStorage.setItem('isManager', true)
         localStorage.setItem('isEmployee', true)
         window.open('/ManagerView')
+        setErrorMessage('');
         
       } else if (isEmployee) {
         // Navigate to employee view page
         localStorage.setItem('isManager', false)
         localStorage.setItem('isEmployee', true)
         window.open('/EmployeeView')
+        setErrorMessage('');
       } 
+      else {
+        setErrorMessage('Invalid credentials');
+      }
       //console.log(userObject.email)
       //console.log("btn user data: " + JSON.stringify(userObject));
       //document.getElementById("signIn").hidden = true;
@@ -86,6 +92,7 @@ function LoginButton({onUserUpdate}) {
           </svg>
           <div className= "logintxt">Login in with Google</div>
         </button>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
         </div>
         </>

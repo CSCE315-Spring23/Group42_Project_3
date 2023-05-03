@@ -1,3 +1,7 @@
+/**
+ * Renders a menu of all the sides and drinks along with their prices
+ * @returns {JSX.Element} The JSX code for the Sides component
+ */
 import Footer from '../Footer';
 import CardList from '../CardList';
 import {GetMenuList, GetIngredients} from './databaseFunctions'
@@ -9,7 +13,7 @@ function Sides() {
   var menuItems = GetMenuList(13, 25);
   var ingredientsArr = GetIngredients(13, 25);
 
-  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
     return <Loading />;
   }
 
@@ -18,7 +22,16 @@ function Sides() {
   };
 
   for (let i = 0; i < menuItems.length; i++) {
+    /**
+     * @type {Object} item - An object containing information about the menu item
+     * @property {string} item.image_link - The URL of the image associated with the menu item
+     * @property {string} item.menu_item_name - The name of the menu item
+     * @property {string} item.menu_item_cost - The cost of the menu item
+     */
     const item = menuItems[i];
+    /**
+     * @type {string[]} ingredientsList - An array of strings representing the ingredients of the menu item
+     */
     var ingredientsList = [];
     if(item.menu_item_name === "Salad Bar")
       ingredientsList = [];
@@ -26,6 +39,13 @@ function Sides() {
       ingredientsList = ["x"];
     else
       ingredientsList = ingredientsArr[i];
+    /**
+     * @type {Object} card - An object containing information about the card to be displayed for the menu item
+     * @property {string} card.image - The URL of the image to be displayed for the menu item
+     * @property {string} card.text - The name of the menu item to be displayed
+     * @property {string} card.label - The cost of the menu item to be displayed
+     * @property {string[]} card.ingredients - The ingredients of the menu item to be displayed
+     */
     const card = {
       image: item.image_link,
       text: item.menu_item_name,
@@ -36,6 +56,7 @@ function Sides() {
     cardData.cards.push(card);
   }
 
+    /* HTML structure*/
     return (<>
     <Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
     <div id="menu">

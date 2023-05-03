@@ -42,6 +42,7 @@ function Login({ onClose, popupStyle }) {
    * @param {string} user - The email and password entered by the user, separated by a comma.
    * @returns {void}
    */
+  
   const handleUserUpdate = (user) => {
     setUserEmail(user);
     setUserPassword(user);
@@ -83,12 +84,14 @@ function Login({ onClose, popupStyle }) {
       localStorage.setItem('isManager', true)
       localStorage.setItem('isEmployee', true)
       window.open('/ManagerView')
+      setErrorMessage('');
       
     } else if (isEmployee) {
       // Navigate to employee view page
       localStorage.setItem('isManager', false)
       localStorage.setItem('isEmployee', true)
       window.open('/EmployeeView')
+      setErrorMessage('');
     } else {
       setErrorMessage('Invalid credentials');
     }
@@ -106,14 +109,14 @@ function Login({ onClose, popupStyle }) {
 
   return (
     <>
-        <Button className="close" buttonStyle='btn--outline' onClick={onClose}>X</Button>
+        
         <div className='loginContent'>Employee Log In</div>
         <input
           className="footer-input xt"
           name="username"
           type="email"
           placeholder="email"
-          value={userEmail}
+          //value={userEmail}
           onChange={(event)=>setUserEmail(event.target.value)}
         />
         <input
@@ -121,7 +124,7 @@ function Login({ onClose, popupStyle }) {
           name="password"
           type="password"
           placeholder="password"
-          value={userPassword}
+          //value={userPassword}
           onChange={(event)=>setUserPassword(event.target.value)}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -138,7 +141,7 @@ function Login({ onClose, popupStyle }) {
           <hr />
         </span>
         <LoginButton className="loginB" onUserUpdate={handleUserUpdate} />
-        
+        <Button className="close" buttonStyle='btn--outline' onClick={handleClose}>X</Button>
       {/* <Button className="close" buttonStyle="btn--outline" onClick={onClose}>
           X
       </Button> */}
