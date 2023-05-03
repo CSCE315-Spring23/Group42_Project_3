@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/NavbarData.js</title>
+    <title>JSDoc: Source: components/pages/Seasonal.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/NavbarData.js</h1>
+    <h1 class="page-title">Source: components/pages/Seasonal.js</h1>
 
     
 
@@ -26,58 +26,74 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>import Footer from '../Footer';
+import CardList from '../CardList';
+import { GetMenuList, GetIngredients } from './databaseFunctions';
+import Navbar from '../Navbar';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 
-Array of menu links for the navigation bar
-This array contains the links and corresponding labels for the navigation bar menu.
-@type {Object[]}
-@property {string} to - Link to the specified page
-@property {string} label - Label displayed for the specified link
-*/
-export const menuLinks = [
-  { to: '/Burgers', label: 'Burgers' },
-  { to: '/Sandwiches', label: 'Sandwiches' },
-  { to: '/Baskets', label: 'Baskets' },
-  { to: '/Sides', label: 'Sides &amp; Drinks' },
-  { to: '/Seasonal', label: 'Seasonal' },
-  ];
+/**
+ * Represents the Seasonal menu page of a restaurant.
+ * @function
+ * @returns {JSX.Element} The Seasonal menu page component.
+ */
+function Seasonal() {
   /**
+   * The list of seasonal menu items.
+   * @type {Array}
+   */
+  var menuItems = GetMenuList(27, 10000);
   
-  Label for the check out button
-  This constant contains the label displayed for the check out button.
-  @type {string}
-  */
-  export const buttonText = 'CHECK OUT';
   /**
-  
-  Path for the check out button
-  This constant contains the path to the check out page for the check out button.
-  @type {string}
-  */
-  export const buttonPath = '/checkout';
+   * The list of ingredients of the seasonal menu items.
+   * @type {Array}
+   */
+  var ingredientsArr = GetIngredients(27, 10000);
+
   /**
-  
-  Array of manager links for the navigation bar
-  This array contains the links and corresponding labels for the manager navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const managerLinks = [
-  { to: '/ManagerView', label: 'View and Edit Database' },
-  { to: '/ManagerDatabaseAccess', label: 'Reports' },
-  ];
+   * Renders a message if there are no seasonal items, otherwise populates a cardData object with the seasonal menu items and their properties.
+   * @type {Object}
+   * @property {Array} cards - An array of objects, each representing a seasonal menu item card.
+   */
+  const cardData = {
+    cards: []
+  };
+
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
+    return &lt;div>Sorry, there are no seasonal items right now!&lt;/div>;
+  }
+
   /**
-  
-  Array of employee links for the navigation bar
-  This array contains the links and corresponding labels for the employee navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const employeeLinks = [
-  { to: '/EmployeeView', label: 'Employee Order' },
-  ];</code></pre>
+   * Iterates through each seasonal menu item and populates a card object with the corresponding data, which is then pushed to the cardData object.
+   */
+  for (let i = 0; i &lt; menuItems.length; i++) {
+    const item = menuItems[i];
+    const card = {
+      image: "images/seasonal-img-1.jpg",
+      text: item.menu_item_name,
+      label: item.menu_item_cost,
+      ingredients: []
+    };
+    cardData.cards.push(card);
+  }
+
+  /**
+   * Renders the Seasonal menu page.
+   * @returns {JSX.Element} The Seasonal menu page component.
+   */
+  return (
+    &lt;>
+      &lt;Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
+      &lt;div id="menu">
+        &lt;CardList cardData={cardData} title="SEASONAL" />
+      &lt;/div>
+      &lt;Footer/>
+    &lt;/>
+  );
+}
+
+export default Seasonal;
+</code></pre>
         </article>
     </section>
 

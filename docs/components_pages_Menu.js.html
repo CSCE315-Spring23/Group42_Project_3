@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/NavbarData.js</title>
+    <title>JSDoc: Source: components/pages/Menu.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/NavbarData.js</h1>
+    <h1 class="page-title">Source: components/pages/Menu.js</h1>
 
     
 
@@ -26,58 +26,65 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import Footer from '../Footer';
+import CardList from '../CardList';
+import Navbar from '../Navbar';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
 
-Array of menu links for the navigation bar
-This array contains the links and corresponding labels for the navigation bar menu.
-@type {Object[]}
-@property {string} to - Link to the specified page
-@property {string} label - Label displayed for the specified link
-*/
-export const menuLinks = [
-  { to: '/Burgers', label: 'Burgers' },
-  { to: '/Sandwiches', label: 'Sandwiches' },
-  { to: '/Baskets', label: 'Baskets' },
-  { to: '/Sides', label: 'Sides &amp; Drinks' },
-  { to: '/Seasonal', label: 'Seasonal' },
-  ];
+/**
+ * Renders the menu page with a list of menu options for customers to choose from and add to their orders.
+ * @returns {JSX.Element} The rendered menu page.
+ */
+function Menu() {
   /**
-  
-  Label for the check out button
-  This constant contains the label displayed for the check out button.
-  @type {string}
-  */
-  export const buttonText = 'CHECK OUT';
-  /**
-  
-  Path for the check out button
-  This constant contains the path to the check out page for the check out button.
-  @type {string}
-  */
-  export const buttonPath = '/checkout';
-  /**
-  
-  Array of manager links for the navigation bar
-  This array contains the links and corresponding labels for the manager navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const managerLinks = [
-  { to: '/ManagerView', label: 'View and Edit Database' },
-  { to: '/ManagerDatabaseAccess', label: 'Reports' },
-  ];
-  /**
-  
-  Array of employee links for the navigation bar
-  This array contains the links and corresponding labels for the employee navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const employeeLinks = [
-  { to: '/EmployeeView', label: 'Employee Order' },
-  ];</code></pre>
+   * The data for each card in the CardList.
+   * @typedef {Object} CardData
+   * @property {string} image - The path to the image for the card.
+   * @property {string} text - The text to display on the card.
+   * @property {string} path - The path to the page to navigate to when the card is clicked.
+   */
+  const cardData = {
+    cards: [
+      {
+        image: "images/burger-img-1.jpg",
+        text: "Burgers",
+        path: "/Burgers",
+      },
+      {
+        image: "images/sandwich-img-1.jpg",
+        text: "Sandwiches",
+        path: "/Sandwiches",
+      },
+      {
+        image: "images/basket-img-1.jpg",
+        text: "Baskets",
+        path: "/Baskets",
+      },
+      {
+        image: "images/side-img-1.jpg",
+        text: "Sides",
+        path: "/Sides",
+      },
+      {
+        image: "images/seasonal-img-1.jpg",
+        text: "Seasonal",
+        path: "/Seasonal",
+      },
+    ],
+  };
+
+  return (
+    &lt;>
+      &lt;Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
+      &lt;CardList cardData={cardData} title="MENU" />
+      &lt;Footer />
+    &lt;/>
+  );
+}
+
+export default Menu;
+</code></pre>
         </article>
     </section>
 

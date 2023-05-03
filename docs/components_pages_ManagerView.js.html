@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/NavbarData.js</title>
+    <title>JSDoc: Source: components/pages/ManagerView.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/NavbarData.js</h1>
+    <h1 class="page-title">Source: components/pages/ManagerView.js</h1>
 
     
 
@@ -26,58 +26,30 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import '../../App.css';
+import Footer from '../Footer';
+import Navbar from '../Navbar';
+import { managerLinks } from '../NavbarData';
+import Table from '../Table';
 
-Array of menu links for the navigation bar
-This array contains the links and corresponding labels for the navigation bar menu.
-@type {Object[]}
-@property {string} to - Link to the specified page
-@property {string} label - Label displayed for the specified link
-*/
-export const menuLinks = [
-  { to: '/Burgers', label: 'Burgers' },
-  { to: '/Sandwiches', label: 'Sandwiches' },
-  { to: '/Baskets', label: 'Baskets' },
-  { to: '/Sides', label: 'Sides &amp; Drinks' },
-  { to: '/Seasonal', label: 'Seasonal' },
-  ];
-  /**
-  
-  Label for the check out button
-  This constant contains the label displayed for the check out button.
-  @type {string}
-  */
-  export const buttonText = 'CHECK OUT';
-  /**
-  
-  Path for the check out button
-  This constant contains the path to the check out page for the check out button.
-  @type {string}
-  */
-  export const buttonPath = '/checkout';
-  /**
-  
-  Array of manager links for the navigation bar
-  This array contains the links and corresponding labels for the manager navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const managerLinks = [
-  { to: '/ManagerView', label: 'View and Edit Database' },
-  { to: '/ManagerDatabaseAccess', label: 'Reports' },
-  ];
-  /**
-  
-  Array of employee links for the navigation bar
-  This array contains the links and corresponding labels for the employee navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const employeeLinks = [
-  { to: '/EmployeeView', label: 'Employee Order' },
-  ];</code></pre>
+/**
+ * Represents the Manager View page of the web app, accessible only to managers
+ * @return {JSX.Element} Returns the JSX code to display the Manager View page
+ * @constructor
+ */
+function ManagerView() {
+  return (
+    &lt;>
+      &lt;Navbar type='m' links={managerLinks} buttonText='SIGN OUT' buttonPath='/' />
+      &lt;Table />
+      &lt;Footer />
+    &lt;/>
+  );
+}
+
+export default ManagerView;
+</code></pre>
         </article>
     </section>
 
