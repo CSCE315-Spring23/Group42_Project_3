@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/NavbarData.js</title>
+    <title>JSDoc: Source: components/pages/Sandwiches.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/NavbarData.js</h1>
+    <h1 class="page-title">Source: components/pages/Sandwiches.js</h1>
 
     
 
@@ -26,58 +26,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>import Footer from '../Footer';
+import CardList from '../CardList';
+import {GetMenuList, GetIngredients} from './databaseFunctions'
+import Navbar from '../Navbar';
+import Loading from '../Loading';
+import { menuLinks, buttonText, buttonPath } from '../NavbarData';
+/**
+ * Shows the menuboard for all menu items in Rev's including prices
+ * @function
+ * @returns {JSX.Element} - Returns the JSX code to be rendered in the browser
+ * @throws Will throw an error if menu items or ingredients are not loaded
+ */
+function Sandwiches() {
+  var menuItems = GetMenuList(7, 10);
+  var ingredientsArr = GetIngredients(7, 10);
 
-Array of menu links for the navigation bar
-This array contains the links and corresponding labels for the navigation bar menu.
-@type {Object[]}
-@property {string} to - Link to the specified page
-@property {string} label - Label displayed for the specified link
-*/
-export const menuLinks = [
-  { to: '/Burgers', label: 'Burgers' },
-  { to: '/Sandwiches', label: 'Sandwiches' },
-  { to: '/Baskets', label: 'Baskets' },
-  { to: '/Sides', label: 'Sides &amp; Drinks' },
-  { to: '/Seasonal', label: 'Seasonal' },
-  ];
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
+    return &lt;Loading />;
+  }
+
+  const cardData = {
+    cards: []
+  };
+
+  for (let i = 0; i &lt; menuItems.length; i++) {
+    const item = menuItems[i];
+    const ingr = ingredientsArr[i];
+    if (!ingr.includes("Combo")) {
+      ingr.push("Combo");
+    }
+    const card = {
+      image: item.image_link,
+      text: item.menu_item_name,
+      label: item.menu_item_cost,
+      //path: "",
+      ingredients: ingr
+    };
+    cardData.cards.push(card);
+  }
+
   /**
-  
-  Label for the check out button
-  This constant contains the label displayed for the check out button.
-  @type {string}
-  */
-  export const buttonText = 'CHECK OUT';
-  /**
-  
-  Path for the check out button
-  This constant contains the path to the check out page for the check out button.
-  @type {string}
-  */
-  export const buttonPath = '/checkout';
-  /**
-  
-  Array of manager links for the navigation bar
-  This array contains the links and corresponding labels for the manager navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const managerLinks = [
-  { to: '/ManagerView', label: 'View and Edit Database' },
-  { to: '/ManagerDatabaseAccess', label: 'Reports' },
-  ];
-  /**
-  
-  Array of employee links for the navigation bar
-  This array contains the links and corresponding labels for the employee navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const employeeLinks = [
-  { to: '/EmployeeView', label: 'Employee Order' },
-  ];</code></pre>
+   * HTML structure
+   * @returns {JSX.Element} - Returns the JSX code to be rendered in the browser
+   */
+  return (
+    &lt;>
+      &lt;Navbar links={menuLinks} buttonText={buttonText} buttonPath={buttonPath} />
+      &lt;div id="menu">
+        &lt;CardList cardData={cardData} title="SANDWICHES" />
+      &lt;/div>
+      &lt;Footer />
+    &lt;/>
+  );
+}
+
+export default Sandwiches;
+</code></pre>
         </article>
     </section>
 

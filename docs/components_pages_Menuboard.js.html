@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/NavbarData.js</title>
+    <title>JSDoc: Source: components/pages/Menuboard.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/NavbarData.js</h1>
+    <h1 class="page-title">Source: components/pages/Menuboard.js</h1>
 
     
 
@@ -26,58 +26,93 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import View from '../MenuBoard/View';
+import { GetMenuList, GetIngredients } from './databaseFunctions';
+import Loading from '../Loading';
 
-Array of menu links for the navigation bar
-This array contains the links and corresponding labels for the navigation bar menu.
-@type {Object[]}
-@property {string} to - Link to the specified page
-@property {string} label - Label displayed for the specified link
-*/
-export const menuLinks = [
-  { to: '/Burgers', label: 'Burgers' },
-  { to: '/Sandwiches', label: 'Sandwiches' },
-  { to: '/Baskets', label: 'Baskets' },
-  { to: '/Sides', label: 'Sides &amp; Drinks' },
-  { to: '/Seasonal', label: 'Seasonal' },
-  ];
-  /**
-  
-  Label for the check out button
-  This constant contains the label displayed for the check out button.
-  @type {string}
-  */
-  export const buttonText = 'CHECK OUT';
-  /**
-  
-  Path for the check out button
-  This constant contains the path to the check out page for the check out button.
-  @type {string}
-  */
-  export const buttonPath = '/checkout';
-  /**
-  
-  Array of manager links for the navigation bar
-  This array contains the links and corresponding labels for the manager navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const managerLinks = [
-  { to: '/ManagerView', label: 'View and Edit Database' },
-  { to: '/ManagerDatabaseAccess', label: 'Reports' },
-  ];
-  /**
-  
-  Array of employee links for the navigation bar
-  This array contains the links and corresponding labels for the employee navigation bar menu.
-  @type {Object[]}
-  @property {string} to - Link to the specified page
-  @property {string} label - Label displayed for the specified link
-  */
-  export const employeeLinks = [
-  { to: '/EmployeeView', label: 'Employee Order' },
-  ];</code></pre>
+/**
+ * Displays all sandwich types for customers to choose from.
+ * @function
+ * @returns {JSX.Element} The component to render.
+ */
+const MenuBoard = () => {
+  // Retrieve menu items and ingredients from database
+  var menuItems = GetMenuList(1, 60);
+  var ingredientsArr = GetIngredients(1, 26);
+
+  // Array of ingredients to hide
+  const ingredientsToHide = ["Tray Paper", "Black Bean Patty", "Straws", "Cups", "Fountain Drink Syrup", "Drink Lids"];
+
+  // If either menuItems or ingredientsArr is empty, display loading screen
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
+    return &lt;Loading />;
+  }
+
+  // Generate arrays of cards for each menu category
+  const burgersArr = [];
+  for (let i = 0; i &lt; 4; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
+      price: item.menu_item_cost,
+      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient)),
+    };
+    burgersArr.push(card);
+  }
+
+  const basketsArr = [];
+  for (let i = 4; i &lt; 7; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
+      price: item.menu_item_cost,
+      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient)),
+    };
+    basketsArr.push(card);
+  }
+
+  const sandwichesArr = [];
+  for (let i = 7; i &lt; 10; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
+      price: item.menu_item_cost,
+      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient)),
+    };
+    sandwichesArr.push(card);
+  }
+
+  const sidesArr = [];
+  for (let i = 12; i &lt; 25; i++) {
+    const item = menuItems[i];
+    const card = {
+      name: item.menu_item_name,
+      price: item.menu_item_cost,
+      ingredients: [],
+    };
+    sidesArr.push(card);
+  }
+
+  const seasonalArr = [];
+  for (let i = 26; i &lt; 60; i++) {
+    const item = menuItems[i];
+    if (item) {
+      const card = {
+        name: item.menu_item_name,
+        price: item.menu_item_cost,
+        ingredients: [],
+      };
+      seasonalArr.push(card);
+    }
+  }
+
+  // Return the View component with the generated arrays of cards for each menu category
+  return &lt;View burgers={burgersArr} baskets={basketsArr} sandwiches={sandwichesArr} sides={sidesArr} seasonal={seasonalArr} />;
+};
+
+export default MenuBoard;
+</code></pre>
         </article>
     </section>
 
