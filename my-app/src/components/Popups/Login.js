@@ -42,6 +42,7 @@ function Login({ onClose, popupStyle }) {
    * @param {string} user - The email and password entered by the user, separated by a comma.
    * @returns {void}
    */
+  
   const handleUserUpdate = (user) => {
     setUserEmail(user);
     setUserPassword(user);
@@ -113,7 +114,7 @@ function Login({ onClose, popupStyle }) {
           name="username"
           type="email"
           placeholder="email"
-          value={userEmail}
+          //value={userEmail}
           onChange={(event)=>setUserEmail(event.target.value)}
         />
         <input
@@ -121,7 +122,7 @@ function Login({ onClose, popupStyle }) {
           name="password"
           type="password"
           placeholder="password"
-          value={userPassword}
+          //value={userPassword}
           onChange={(event)=>setUserPassword(event.target.value)}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
