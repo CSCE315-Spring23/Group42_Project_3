@@ -248,6 +248,33 @@ app.get('/orderRequest/:start/:end', async (req, res) => {
 });
 
 /**
+ 
+Retrieve the Item_sold based on the order ID.
+@function
+@param {object} req - The request object.
+@param {object} res - The response object.
+@returns {object} - The Z Report Table based on the report ID.
+@throws {error} - Internal server error.
+*/
+app.get('/soldItemRequest/:ID', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    console.log(ID);
+    var queryToUse;
+    queryToUse = 'SELECT * FROM item_sold WHERE order_id = $1';
+    queryValues = [ID];
+    // console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse, queryValues);
+    res.json(rows);
+    console.table(rows);
+
+  } catch (err) {
+    console.error("Read failed with error in item sold Request: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+/**
  *
  * Get the popular menu item combinations sold together within a specified date range.
  * @function
@@ -379,7 +406,7 @@ Retrieve the Z Report Table based on the report ID.
 */
 app.get('/zreportRequest/:ID', async (req, res) => {
   try {
-    const ID = parseInt(req.params.start);
+    const ID = parseInt(req.params.ID);
     console.log(ID);
     var queryToUse;
     queryToUse = 'SELECT * FROM zreportcontent WHERE report_id = $1';
