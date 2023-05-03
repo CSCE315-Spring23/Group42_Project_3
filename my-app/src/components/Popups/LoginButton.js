@@ -13,6 +13,7 @@ function LoginButton({onUserUpdate}) {
     const managers = [true, true, true, true, true, true];
   
     const [user, setUser] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
     /**
     *  Callback function to handle the response from Google Sign-In. Decodes the JWT token returned by Google and updates the user state using the setUser function. Calls the onUserUpdate function to update the user state in the parent component.
     * @param {Object} response - The response object returned by Google Sign-In.
@@ -50,6 +51,9 @@ function LoginButton({onUserUpdate}) {
         localStorage.setItem('isEmployee', true)
         window.open('/EmployeeView')
       } 
+      else {
+        setErrorMessage('Invalid credentials');
+      }
       //console.log(userObject.email)
       //console.log("btn user data: " + JSON.stringify(userObject));
       //document.getElementById("signIn").hidden = true;
@@ -86,6 +90,7 @@ function LoginButton({onUserUpdate}) {
           </svg>
           <div className= "logintxt">Login in with Google</div>
         </button>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
         </div>
         </>
