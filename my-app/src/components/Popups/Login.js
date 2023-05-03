@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../Button';
 import { LoginButton } from './LoginButton';
-import {GetPassword} from "../pages/databaseFunctions";
+import {GetPassword, GetManager} from "../pages/databaseFunctions";
 import './Popup.css';
 
 /**
@@ -48,51 +48,47 @@ function Login({ onClose, popupStyle }) {
     setUserPassword(user);
   };
 
-  const pass = GetPassword("hobbit@shiremail.com");
-  //console.log(pass[0].password)
-  //const pass = GetPassword("hobbit@shiremail.com");
+  console.log(userEmail)
+  const resul = GetPassword(userEmail);
   /**
    * Async function that handles user login.
    * 
    * @returns {void}
    */  
   function loginClick() {
+    try {
+    const password = resul[0].password;
+    const manager = resul[0].is_manager;
     var isEmployee = false;
     var isManager = false;
-    var password;
-    for(let i=0; i<11; i++) {
-      if(userEmail===emails[i]) {
-        if(userPassword===passwords[i]) {
-          if(managers[i]==true) {
-            isManager = true;
-            break;
-          }
-          else {
-            isEmployee = true;
-            break;
-          }
-        }
-        else {
-          break;
-        }
+    if(userPassword === password) {
+      if(manager) {
+        isManager = true;
+      }
+      else {
+        isEmployee = true;
       }
     }
-
-    console.log(userEmail);
-    if (isManager) {
-      // Navigate to manager view page
-      localStorage.setItem('isManager', true)
-      localStorage.setItem('isEmployee', true)
-      window.open('/ManagerView')
-      setErrorMessage('');
-      
-    } else if (isEmployee) {
-      // Navigate to employee view page
-      localStorage.setItem('isManager', false)
-      localStorage.setItem('isEmployee', true)
-      window.open('/EmployeeView')
-      setErrorMessage('');
-    } else {
+      //console.log(userEmail);
+      if (isManager) {
+        // Navigate to manager view page
+        localStorage.setItem('isManager', true)
+        localStorage.setItem('isEmployee', true)
+        window.open('/ManagerView')
+        setErrorMessage('');
+        
+      } else if (isEmployee) {
+        // Navigate to employee view page
+        localStorage.setItem('isManager', false)
+        localStorage.setItem('isEmployee', true)
+        window.open('/EmployeeView')
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Invalid credentials');
+      }
+    }
+    
+    catch(err) {
       setErrorMessage('Invalid credentials');
     }
   }

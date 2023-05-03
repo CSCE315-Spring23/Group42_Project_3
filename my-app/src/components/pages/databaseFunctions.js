@@ -615,7 +615,24 @@ function GetPassword(email) {
     fetchPassword();
   }, [email]);
 
+  console.log(password)
   return password;
+}
+
+function GetManager(email) { 
+  
+  const [manager, setManager] = useState([]);
+  useEffect(() => {
+    async function fetchManager() {
+      const response = await fetch(`${host}/password/${email}`);
+      const data = await response.json();
+      setManager(data);
+    }
+
+    fetchManager();
+  }, [email]);
+  console.log(manager)
+  return manager;
 }
 
 // let createOrderPromise = Promise.resolve(); //synchronization thing
@@ -779,4 +796,4 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
           GetEmployeeTable, GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, GetXReport, GetZReport, GetSoldItem,
           UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, UpdateEmployeeTable, AddEmployeeItem, DeleteEmployeeItem, CreateZReport,
-          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity, CreateNewOrder};
+          AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity, CreateNewOrder, GetManager};

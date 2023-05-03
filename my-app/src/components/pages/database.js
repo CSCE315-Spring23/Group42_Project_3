@@ -335,7 +335,7 @@ app.get('/password/:email', async (req, res) => {
   try {
     var queryToUse;
     const email = req.params.email;
-    queryToUse = "SELECT PASSWORD FROM Employee WHERE EMAIL = '" + email + "';";
+    queryToUse = "SELECT PASSWORD, IS_MANAGER FROM Employee WHERE EMAIL = '" + email + "';";
     console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
     console.log(rows);
