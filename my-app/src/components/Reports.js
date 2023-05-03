@@ -48,32 +48,32 @@ const Reports = () => {
     const handlePopulateTable = (event) => {
         // update the new attribute state
         console.log(newAttribute);
-        
+
         if (newAttribute['startDate']) {
-          const startDate = new Date(newAttribute['startDate']);
-          if (!isNaN(startDate.getTime())) {
-            setStartDate(startDate);
-          }
+            const startDate = new Date(newAttribute['startDate']);
+            if (!isNaN(startDate.getTime())) {
+                setStartDate(startDate);
+            }
         }
-        
+
         if (newAttribute['endDate']) {
-          const endDate = new Date(newAttribute['endDate']);
-          if (!isNaN(endDate.getTime())) {
-            setEndDate(endDate);
-          }
+            const endDate = new Date(newAttribute['endDate']);
+            if (!isNaN(endDate.getTime())) {
+                setEndDate(endDate);
+            }
         }
-        
-        if (newAttribute['reportID']) {
-          setReportID(parseInt(newAttribute['reportID']));
+        if (newAttribute['reportID'] && Number.isInteger(parseInt(newAttribute['reportID']))) {
+            setReportID(parseInt(newAttribute['reportID']));
         }
-        
-        if (newAttribute['orderID']) {
-          setOrderID(parseInt(newAttribute['orderID']));
+
+        if (newAttribute['orderID'] && Number.isInteger(parseInt(newAttribute['orderID']))) {
+            setOrderID(parseInt(newAttribute['orderID']));
         }
-        
+
+
         setIsSubmitted(true);
-      };
-      
+    };
+
 
     /**
      * Formats the order data into the desired format for display in the table
