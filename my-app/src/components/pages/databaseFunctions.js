@@ -124,7 +124,7 @@ function GetXReport() {
       const response = await fetch(`${host}/xreportRequest`);
       const data = await response.json();
       setXReport(data);
-      //console.table(data);
+      console.table(data);
     }
 
     fetchXReport();
@@ -146,6 +146,24 @@ function GetZReport(id) {
     }
 
     fetchZReport();
+  }, [id]);
+
+  return report;
+}
+
+//Order Items
+function GetSoldItem(id) {
+  const [report, setReport] = useState([]);
+
+  useEffect(() => {
+    async function fetchSoldItem() {
+      const response = await fetch(`${host}/soldItemRequest/${id}`);
+      const data = await response.json();
+      setReport(data);
+      //console.table(data);
+    }
+
+    fetchSoldItem();
   }, [id]);
 
   return report;
@@ -734,6 +752,6 @@ async function CreateOrder(menuItems, ingredientList, cost) {
 
 
 export {GetMenuList, GetIngredients, AddToCart, GetCartItems, GetInventoryTable, GetOrdersTable, GetSoldTogether, GetRestockReport, GetRecipesTable,
-          GetEmployeeTable, GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, GetXReport, GetZReport,
+          GetEmployeeTable, GetMenuTable, CreateOrderVectors, CreateOrder, GetSalesReport, GetExcessReport, GetXReport, GetZReport, GetSoldItem,
           UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, UpdateEmployeeTable, AddEmployeeItem, DeleteEmployeeItem,
           AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, GetPassword, UpdateCartQuantity, CreateNewOrder};
