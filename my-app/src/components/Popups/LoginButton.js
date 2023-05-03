@@ -1,5 +1,6 @@
 import jwt_decode from "jwt-decode";
 import {useEffect, useState} from 'react';
+import {GetPassword, GetManager} from "../pages/databaseFunctions";
 import "./Popup.css"
 
 /**
@@ -14,15 +15,19 @@ function LoginButton({onUserUpdate}) {
   
     const [user, setUser] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
+    const [userEmail, setUserEmail] = useState(null);
     /**
     *  Callback function to handle the response from Google Sign-In. Decodes the JWT token returned by Google and updates the user state using the setUser function. Calls the onUserUpdate function to update the user state in the parent component.
     * @param {Object} response - The response object returned by Google Sign-In.
     */
+
+    const resul = GetPassword(userEmail);
     function handleCallbackResponse(response) {
       
       //console.log("callback running");
       var userObject = jwt_decode(response.credential);
       setUser(userObject);
+      setUserEmail(userObject.email);
 
       var isEmployee = false;
       var isManager = false;
@@ -37,6 +42,22 @@ function LoginButton({onUserUpdate}) {
             isEmployee = true;
             break;
           }
+        }
+      }
+
+      if((!isManager) && (!isEmployee)) {
+        try {
+          const password = resul[0].password;
+          const manager = resul[0].is_manager;
+          if(manager) {
+            isManager = true;
+          }
+          else {
+            isEmployee = true;
+          }
+        }
+        catch(err) {
+
         }
       }
       if (isManager) {
