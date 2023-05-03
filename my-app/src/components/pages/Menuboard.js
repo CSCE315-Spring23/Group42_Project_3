@@ -1,41 +1,45 @@
 import React, { useState } from 'react';
 import View from '../MenuBoard/View';
-import {GetMenuList, GetIngredients} from './databaseFunctions'
+import { GetMenuList, GetIngredients } from './databaseFunctions';
 import Loading from '../Loading';
 
-{/*
-* Displays all sandwich types for customers to choose from
-* @author: 
-*/ }
-
+/**
+ * Displays all sandwich types for customers to choose from.
+ * @function
+ * @returns {JSX.Element} The component to render.
+ */
 const MenuBoard = () => {
+  // Retrieve menu items and ingredients from database
   var menuItems = GetMenuList(1, 60);
-  const ingredientsToHide = ["Tray Paper", "Black Bean Patty", "Straws", "Cups", "Fountain Drink Syrup", "Drink Lids"];
   var ingredientsArr = GetIngredients(1, 26);
-  // var ingredientsArr = GetIngredients(1, 26);
 
-  if (menuItems.length === 0 | ingredientsArr.length === 0) {
+  // Array of ingredients to hide
+  const ingredientsToHide = ["Tray Paper", "Black Bean Patty", "Straws", "Cups", "Fountain Drink Syrup", "Drink Lids"];
+
+  // If either menuItems or ingredientsArr is empty, display loading screen
+  if (menuItems.length === 0 || ingredientsArr.length === 0) {
     return <Loading />;
   }
-  
+
+  // Generate arrays of cards for each menu category
   const burgersArr = [];
   for (let i = 0; i < 4; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,
       price: item.menu_item_cost,
-      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient))
+      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient)),
     };
     burgersArr.push(card);
   }
-  
+
   const basketsArr = [];
   for (let i = 4; i < 7; i++) {
     const item = menuItems[i];
     const card = {
       name: item.menu_item_name,
       price: item.menu_item_cost,
-      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient))
+      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient)),
     };
     basketsArr.push(card);
   }
@@ -46,7 +50,7 @@ const MenuBoard = () => {
     const card = {
       name: item.menu_item_name,
       price: item.menu_item_cost,
-      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient))
+      ingredients: ingredientsArr[i].filter((ingredient) => !ingredientsToHide.includes(ingredient)),
     };
     sandwichesArr.push(card);
   }
@@ -57,12 +61,11 @@ const MenuBoard = () => {
     const card = {
       name: item.menu_item_name,
       price: item.menu_item_cost,
-      ingredients: []
+      ingredients: [],
     };
     sidesArr.push(card);
   }
 
-  //silverware is 25 but seasonal is not working
   const seasonalArr = [];
   for (let i = 26; i < 60; i++) {
     const item = menuItems[i];
@@ -70,17 +73,14 @@ const MenuBoard = () => {
       const card = {
         name: item.menu_item_name,
         price: item.menu_item_cost,
-        ingredients: []
+        ingredients: [],
       };
       seasonalArr.push(card);
     }
   }
 
-  {/* HTML structure*/ }
-  return (
-    <View burgers={burgersArr} baskets={basketsArr} sandwiches={sandwichesArr} sides = {sidesArr} seasonal= {seasonalArr} />
-  );
+  // Return the View component with the generated arrays of cards for each menu category
+  return <View burgers={burgersArr} baskets={basketsArr} sandwiches={sandwichesArr} sides={sidesArr} seasonal={seasonalArr} />;
 };
 
 export default MenuBoard;
-
