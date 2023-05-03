@@ -276,7 +276,15 @@ app.get('/soldTogether/:start/:end', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+/**
 
+Retrieve the password for a given email.
+@function
+@param {object} req - The request object.
+@param {object} res - The response object.
+@returns {object} - The password for the specified email.
+@throws {error} - Internal server error.
+*/
 app.get('/password/:email', async (req, res) => {
   try {
     var queryToUse;
@@ -293,7 +301,15 @@ app.get('/password/:email', async (req, res) => {
   }
 });
 
-//Fetch Restock Report which are Inventory items from database that need to be restock
+/**
+ 
+Retrieve the restock report which are inventory items from the database that need to be restocked.
+@function
+@param {object} req - The request object.
+@param {object} res - The response object.
+@returns {object} - The inventory items that need to be restocked.
+@throws {error} - Internal server error.
+*/
 app.get('/restockRequest', async (req, res) => {
   try {
     var queryToUse;
@@ -309,7 +325,15 @@ app.get('/restockRequest', async (req, res) => {
   }
 });
 
-//Fetch X Report Table which is a table with all zreports overall results
+/**
+ 
+Retrieve the X Report Table which is a table with all zreports overall results.
+@function
+@param {object} req - The request object.
+@param {object} res - The response object.
+@returns {object} - The X Report Table with all zreports overall results.
+@throws {error} - Internal server error.
+*/
 app.get('/xreportRequest', async (req, res) => {
   try {
     var queryToUse;
@@ -325,7 +349,15 @@ app.get('/xreportRequest', async (req, res) => {
   }
 });
 
-//Fetch Z Report Table based on the report ID
+/**
+ 
+Retrieve the Z Report Table based on the report ID.
+@function
+@param {object} req - The request object.
+@param {object} res - The response object.
+@returns {object} - The Z Report Table based on the report ID.
+@throws {error} - Internal server error.
+*/
 app.get('/zreportRequest/:ID', async (req, res) => {
   try {
     const ID = parseInt(req.params.start);
@@ -344,6 +376,14 @@ app.get('/zreportRequest/:ID', async (req, res) => {
   }
 });
 
+/**
+
+Fetch sales history from database between given start and end dates
+
+@param {Object} req - HTTP request object
+
+@param {Object} res - HTTP response object
+*/
 //Fetch sales history from database where start and end are dates
 app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
   try {
@@ -367,6 +407,14 @@ app.get('/salesHistoryRequest/:start/:end', async (req, res) => {
 });
 
 //Fetch orders from database where start and end are dates
+/**
+
+Fetch excess requests from database between given start and end dates
+
+@param {Object} req - HTTP request object
+
+@param {Object} res - HTTP response object
+*/
 app.get('/excessRequest/:start/:end', async (req, res) => {
   try {
     const start = req.params.start;
@@ -393,6 +441,14 @@ app.get('/excessRequest/:start/:end', async (req, res) => {
 
 
 //Update Inventory items from table
+/**
+
+Update inventory items in the database
+
+@param {Object} req - HTTP request object
+
+@param {Object} res - HTTP response object
+*/
 app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
   try {
     const ID = parseInt(req.params.ID);
@@ -415,6 +471,19 @@ app.get('/inventoryUpdate/:ID/:name/:cost/:quantity', async (req, res) => {
 });
 
 //Update Menu items from table
+/**
+
+Updates a menu item in the database
+@function
+@async
+@param {object} req - The HTTP request object
+@param {object} res - The HTTP response object
+@param {number} req.params.ID - The ID of the menu item to be updated
+@param {string} req.params.name - The updated name of the menu item
+@param {number} req.params.cost - The updated cost of the menu item
+@throws {error} Throws an error if the query fails
+@returns {object} Returns a JSON object with a message indicating that the menu item was updated successfully
+*/
 app.get('/menuUpdate/:ID/:name/:cost', async (req, res) => {
   try {
     const ID = parseInt(req.params.ID);
@@ -437,6 +506,16 @@ app.get('/menuUpdate/:ID/:name/:cost', async (req, res) => {
 });
 
 //Update Recipe items from table
+/**
+ * Update Recipe items from table
+ *
+ * @param {object} req - The request object
+ * @param {object} res - The response object
+ * @returns {object} JSON response indicating success or error
+ *
+ * @throws {Error} If any error occurs during the database query
+ */
+
 app.get('/recipesUpdate/:ID/:name/:invID/:menuID/:quantity', async (req, res) => {
   try {
     const ID = parseInt(req.params.ID);
@@ -460,6 +539,15 @@ app.get('/recipesUpdate/:ID/:name/:invID/:menuID/:quantity', async (req, res) =>
 });
 
 //Add Inventory items to table
+/**
+ * Adds an inventory item to the table.
+ * 
+ * @param {string} name - The name of the inventory item.
+ * @param {number} cost - The cost of the inventory item.
+ * @param {number} quantity - The quantity of the inventory item.
+ * @returns {Promise} - Promise object represents the successful addition of the inventory item.
+ * @throws {Error} - If there's an error while adding the inventory item to the table.
+ */
 app.get('/inventoryAddItem/:name/:cost/:quantity', async (req, res) => {
   try {
     //get next inventory id
@@ -489,6 +577,22 @@ app.get('/inventoryAddItem/:name/:cost/:quantity', async (req, res) => {
 });
 
 //Add Menu items to table
+/**
+
+Add a new item to the menu table
+
+@function
+
+@async
+
+@param {string} req.params.name - The name of the new item to add to the menu
+
+@param {number} req.params.cost - The cost of the new item to add to the menu
+
+@throws {Error} Will throw an error if there is an issue adding the item to the database
+
+@returns {object} Returns a JSON object indicating success or failure of the operation
+*/
 app.get('/menuAddItem/:name/:cost', async (req, res) => {
   try {
     //get next inventory id
@@ -517,6 +621,18 @@ app.get('/menuAddItem/:name/:cost', async (req, res) => {
 });
 
 //Add Recipe items to table
+/**
+
+Adds a recipe item to the database.
+@param {object} req - The request object containing the recipe item details.
+@param {string} req.params.name - The name of the recipe item.
+@param {number} req.params.invID - The inventory ID of the recipe item.
+@param {number} req.params.menuID - The menu ID of the recipe item.
+@param {number} req.params.quantity - The quantity of the recipe item.
+@param {object} res - The response object to send the result.
+@returns {Promise<void>} - A promise that resolves with the success message or rejects with an error message.
+@throws {Error} - Throws an error if there is a problem with the query or server.
+*/
 app.get('/recipesAddItem/:name/:invID/:menuID/:quantity', async (req, res) => {
   try {
     //get next inventory id
@@ -546,6 +662,17 @@ app.get('/recipesAddItem/:name/:invID/:menuID/:quantity', async (req, res) => {
   }
 });
 
+/**
+ * Delete an inventory item from the table.
+ *
+ * @function
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {number} req.params.ID - The ID of the inventory item to delete.
+ * @throws {Error} If there is an error deleting the item.
+ * @returns {Object} A JSON object with a success message on successful deletion.
+ */
 //Delete Inventory items from table
 app.get('/inventoryDeleteItem/:ID', async (req, res) => {
   try {
@@ -565,6 +692,18 @@ app.get('/inventoryDeleteItem/:ID', async (req, res) => {
   }
 });
 
+/**
+
+Deletes a menu item from the menu table in the database.
+
+@param {object} req - The HTTP request object.
+
+@param {object} res - The HTTP response object.
+
+@returns {object} HTTP response object with a success or error message.
+
+@throws {object} Error message in case of server error.
+*/
 //Delete Menu items from table
 app.get('/menuDeleteItem/:ID', async (req, res) => {
   try {
@@ -583,7 +722,24 @@ app.get('/menuDeleteItem/:ID', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+/**
 
+Deletes a recipe item from the recipe_item table by its ID.
+
+@function
+
+@async
+
+@param {Object} req - Express request object.
+
+@param {Object} res - Express response object.
+
+@param {number} req.params.ID - ID of the recipe item to be deleted.
+
+@throws {Error} 500 - Internal server error.
+
+@returns {Object} - JSON object with a message indicating the success of the operation.
+*/
 //Delete Recipes items from table
 app.get('/recipesDeleteItem/:ID', async (req, res) => {
   try {
@@ -617,7 +773,16 @@ app.get('/recipesDeleteItem/:ID', async (req, res) => {
 //   }
 // });
 
+/**
 
+Retrieves inventory items used in menu items within a specified range of menu items.
+@param {object} req - Express request object.
+@param {object} res - Express response object.
+@param {number} req.params.start - The starting menu item ID to retrieve inventory items from.
+@param {number} req.params.end - The ending menu item ID to retrieve inventory items from.
+@returns {object} - Returns an object with an array of inventory items used in menu items within the specified range.
+@throws {error} - Throws a 500 error if there was an internal server error or failed to retrieve the inventory items.
+*/
 app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
   try {
     const inventoryItems = [];
@@ -652,6 +817,16 @@ app.get('/getInventoryItemsForMenu/:start/:end', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+/**
+ * Check if a row exists for the given session ID in the 'cart' table of the database.
+ * If a row does not exist, insert a new row for the session ID into the table.
+ *
+ * @param {object} req - The request object.
+ * @param {string} req.params.id - The session ID to check.
+ * @param {object} res - The response object.
+ * @returns {object} A response JSON object indicating whether the session ID was added or already exists in the cart.
+ * @throws {object} An error object if there was an error checking the session ID.
+ */
 
 //check if we already have a row for our session
 app.get('/checkSession/:id', async (req, res) => {
@@ -672,6 +847,14 @@ app.get('/checkSession/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 });
+/**
+ * Ends a session by deleting it from the cart table in the database.
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The ID of the session to end.
+ * @param {Object} res - The response object.
+ * @returns {Object} A JSON object indicating whether the session was successfully deleted or not.
+ * @throws {Error} Throws an error if there was an issue with checking the session ID or deleting it from the database.
+ */
 
 app.get('/endSession/:id', async (req, res) => {
   try {
@@ -692,6 +875,16 @@ app.get('/endSession/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 });
+/**
+ * Adds an item to the user's cart for a given session ID.
+ * 
+ * @param {string} req.params.id - The session ID for the user's cart.
+ * @param {object} req.body - The item to add to the cart.
+ * @param {string} req.body.name - The name of the item to add.
+ * @param {number} req.body.quantity - The quantity of the item to add.
+ * @returns {object} A JSON object with a success message if the item was added to the cart.
+ * @throws {object} An error object with a 500 status code and an error message if there was an error adding the item to the cart.
+ */
 
 app.post('/addToCart/:id', async (req, res) => {
   try {
@@ -717,7 +910,20 @@ app.post('/addToCart/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 });
+/**
 
+Express route handler for creating a new order
+
+@param {Object} req - Express request object
+
+@param {string} req.params.cookie - Session ID of the user
+
+@param {string} req.params.cost - Total cost of the order
+
+@param {Object} res - Express response object
+
+@returns {void}
+*/
 app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
   try {
     const myID = req.params.cookie;
@@ -892,7 +1098,19 @@ app.get('/createNewOrder/:cookie/:cost', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+/**
 
+Handles requests to update the quantity of an item in the user's shopping cart.
+@function
+@async
+@param {Object} req - The request object.
+@param {Object} res - The response object.
+@param {string} req.params.cookie - The session ID for the user.
+@param {string} req.params.id - The ID of the item to update.
+@param {string} req.params.quantity - The new quantity for the item.
+@throws {Error} Will throw an error if the database write fails.
+@returns {Object} The updated shopping cart.
+*/
 app.get('/updateQty/:cookie/:id/:quantity', async (req, res) => {
   try {
     const myID = req.params.cookie;
@@ -966,7 +1184,17 @@ app.get('/updateQty/:cookie/:id/:quantity', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+/**
 
+Retrieve cart for a given session ID
+@function
+@async
+@param {Object} req - Express request object
+@param {Object} res - Express response object
+@param {string} req.params.id - Session ID for the cart to retrieve
+@throws {Error} Throws an error if the read operation fails
+@returns {Promise} Returns a promise that resolves with a JSON object containing the retrieved cart data
+*/
 app.get('/getCart/:id', async (req, res) => {
   try {
     const myID = req.params.id;
@@ -1051,6 +1279,13 @@ app.get('/getCart/:id', async (req, res) => {
 //   }
 // });
 
+ 
+/**
+ * Responds to GET requests with an unknown route and sends the index.html file.
+ * @function
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 app.get('*', (req, res) => {
   console.log("sent unknown request");
   res.sendFile(path.resolve(__dirname, '../../../public', 'index.html'));
@@ -1058,6 +1293,12 @@ app.get('*', (req, res) => {
 
 
 // Start the server
+/**
+ * Starts the server and listens for incoming requests on port 10000.
+ * @function
+ * @param {number} port - The port on which to listen for incoming requests.
+ * @returns {void}
+ */
 app.listen(10000, () => {
   console.log('Server listening on port 10000');
 });
