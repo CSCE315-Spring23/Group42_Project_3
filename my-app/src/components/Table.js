@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { GetInventoryTable, GetRecipesTable, GetMenuTable, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, AddInventoryItem, AddMenuItem, AddRecipesItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem } from './pages/databaseFunctions';
+import { GetInventoryTable, GetRecipesTable, GetMenuTable, GetEmployeeTable, UpdateInventoryTable, UpdateMenuTable, UpdateRecipesTable, UpdateEmployeeTable,
+          AddInventoryItem, AddMenuItem, AddRecipesItem, AddEmployeeItem, DeleteInventoryItem, DeleteMenuItem, DeleteRecipesItem, DeleteEmployeeItem } from './pages/databaseFunctions';
 import './Table.css';
 import { Button } from './Button';
 
@@ -71,6 +72,12 @@ function TableInfo(props) {
       const menuID = parseInt(newAttribute['Menu ID']);
       const quantity = parseInt(newAttribute['Amount Used']);
       AddRecipesItem(name, invID, menuID, quantity);
+    } else if (tab_id === 3) {
+      const name = newAttribute['Employee Name'];
+      const email = newAttribute['Email'];
+      const pwd = newAttribute['Password'];
+      const ismang = parseBool(newAttribute['Is Manager?']);
+      AddEmployeeItem(name, email, pwd, ismang);
     }
     setNewAttribute({});
   };
@@ -93,6 +100,10 @@ function TableInfo(props) {
       const ID = newAttribute['Recipe ID'];
       console.log(ID);
       DeleteRecipesItem(ID);
+    } else if(tab_id === 3){
+      const ID = newAttribute['Employee ID'];
+      console.log(ID);
+      DeleteEmployeeItem(ID);
     }
     setNewAttribute({});
   };
@@ -125,6 +136,8 @@ function TableInfo(props) {
         UpdateMenuTable(data['menu_item_id'], data['menu_item_name'], data['menu_item_cost']);
       }else if(tab_id === 2){
         UpdateRecipesTable(data['recipe_id'], data['recipe_item_name'], data['inventory_id'], data['menu_id'], data['amt_used']);
+      }else if(tab_id === 3){
+        UpdateEmployeeTable(data['Employee ID'], data['Employee Name'], data['Email'], data['Password'], data['Is Manager?']);
       }
     }
   };
@@ -186,6 +199,7 @@ const Table = () => {
   const inventoryData = GetInventoryTable(0,0);
   const recipeData = GetRecipesTable();
   const menuData = GetMenuTable();
+  const employeeData = GetEmployeeTable();
 
   const tabs = [
     { id: 0, name: 'Inventory',
@@ -199,6 +213,10 @@ const Table = () => {
     { id: 2, name: 'RecipeItems',
       headers: ["Recipe ID", "Item Name", "Inventory ID", "Menu ID", "Amount Used"],
       tableData: recipeData
+    },
+    { id: 3, name: 'Employees',
+      headers: ["Employee ID", "Employee Name", "Email", "Password", "Is Manager?"],
+      tableData: employeeData
     },
   ];
 

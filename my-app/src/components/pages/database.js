@@ -153,7 +153,7 @@ app.get('/inventoryRequest/:start/:end', async (req, res) => {
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " + err);
+    console.error("Read failed with error in Inventory Request: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -172,7 +172,7 @@ app.get('/recipeRequest', async (req, res) => {
     res.json(rows);
 
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " + err);
+    console.error("Read failed with error in Recipe Request: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -191,7 +191,26 @@ app.get('/menuListRequest', async (req, res) => {
     res.json(rows);
 
   } catch (err) {
-    console.error("Read failed with error in inventoryRequest: " + err);
+    console.error("Read failed with error in Menu List Request: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+/**
+ 
+@description Fetches the entire employee list from the database.
+@returns {Object[]} An array of objects representing the employees' credentials.
+@throws {Object} If an error occurs during the database read, an object with an error message is returned.
+*/
+app.get('/employeeRequest', async (req, res) => {
+  try {
+    var queryToUse = 'SELECT * FROM employee';
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+    res.json(rows);
+
+  } catch (err) {
+    console.error("Read failed with error in employee Request: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -538,6 +557,36 @@ app.get('/recipesUpdate/:ID/:name/:invID/:menuID/:quantity', async (req, res) =>
   }
 });
 
+/**
+ * Update employee credentials from table
+ *
+ * @param {object} req - The request object
+ * @param {object} res - The response object
+ * @returns {object} JSON response indicating success or error
+ *
+ * @throws {Error} If any error occurs during the database query
+ */
+
+app.get('/employeeUpdate/:ID/:name/:email/:pwd/:ismang', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    const name = req.params.name;
+    const email = req.params.email;
+    const pwd = req.params.pwd;
+    const ismang = parseBool(req.params.ismang);
+
+    var queryString = 'UPDATE employee SET EMPLOYEE_NAME = $1, EMAIL = $2, PASSWORD = $3, IS_MANAGER = $4 WHERE EMPLOYEE_ID = $5';
+    const queryValues = [name, email, pwd, ismang, ID];
+
+    await pool.query(queryString, queryValues);
+    res.status(200).json({ message: 'Employee updated successfully' });
+
+  } catch (err) {
+    console.error("Read failed with error in employeeUpdate: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 //Add Inventory items to table
 /**
  * Adds an inventory item to the table.
@@ -663,6 +712,43 @@ app.get('/recipesAddItem/:name/:invID/:menuID/:quantity', async (req, res) => {
 });
 
 /**
+ * Adds an employee credential to the table.
+ * 
+ * @param {string} name - The name of the employee.
+ * @param {string} email - The email of the employee.
+ * @param {string} password - The password of the employee.
+ * @param {boolean} ismang - The status of the employee.
+ * @returns {Promise} - Promise object represents the successful addition of the inventory item.
+ * @throws {Error} - If there's an error while adding the inventory item to the table.
+ */
+app.get('/employeeAddItem/:name/:email/:pwd/:ismang', async (req, res) => {
+  try {
+    //get next employee id
+    var queryToUse = "SELECT MAX(EMPLOYEE_ID) as max_id FROM employee";
+    console.log(queryToUse);
+    const { rows } = await pool.query(queryToUse);
+
+    const ID = parseInt(rows[0]['max_id']) + 1;
+    //console.log(ID);
+
+    const name = req.params.name;
+    const email = req.params.email;
+    const pwd = req.params.pwd;
+    const ismang = parseBool(req.params.ismang);
+
+    var queryString = 'INSERT INTO employee (employee_ID, employee_NAME, email, password, is_manager) VALUES ($1, $2, $3, $4, $5)';
+    const queryValues = [ID, name, email, pwd, ismang];
+
+    await pool.query(queryString, queryValues);
+    res.status(200).json({ message: 'Employee added successfully' });
+
+  } catch (err) {
+    console.error("Read failed with error in employeeAddItem: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+/**
  * Delete an inventory item from the table.
  *
  * @function
@@ -755,6 +841,36 @@ app.get('/recipesDeleteItem/:ID', async (req, res) => {
   } catch (err) {
     //console.log("error!");
     console.error("Read failed with error in recipesDeleteItem: " + err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+/**
+ * Delete an employee from the table.
+ *
+ * @function
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {number} req.params.ID - The ID of the employee to delete.
+ * @throws {Error} If there is an error deleting the item.
+ * @returns {Object} A JSON object with a success message on successful deletion.
+ */
+//Delete Inventory items from table
+app.get('/employeeDeleteItem/:ID', async (req, res) => {
+  try {
+    const ID = parseInt(req.params.ID);
+    //console.log(ID);
+
+    var queryString = 'DELETE FROM employee WHERE employee_id = $1';
+    const queryValues = [ID];
+
+    await pool.query(queryString, queryValues);
+    //console.log('Inventory_item table updated sucessfully!');
+    res.status(200).json({ message: 'Employee removed successfully' });
+  } catch (err) {
+    //console.log("error!");
+    console.error("Read failed with error in employeeDeleteItem: " + err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
