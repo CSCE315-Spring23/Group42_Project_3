@@ -32,48 +32,27 @@ const Reports = () => {
     const handleKeyPress = (event) => {
         const { name, value } = event.target;
         if (event.key === "Enter") {
-            if (name === 'startDate' && Date.parse(value)) {
+            if (name === 'startDate'){
                 setStartDate(value);
-            } else if (name === 'endDate' && Date.parse(value)) {
+            }else if(name === 'endDate'){
                 setEndDate(value);
-            } else if (name === 'reportID') {
+            }else if(name === 'reportID'){
                 setReportID(parseInt(value));
-            } else if (name === 'orderID') {
+            }else if(name === 'orderID'){
                 setOrderID(parseInt(value));
             }
         }
     };
 
-
     const handlePopulateTable = (event) => {
         // update the new attribute state
         console.log(newAttribute);
-
-        if (newAttribute['startDate']) {
-            const startDate = new Date(newAttribute['startDate']);
-            if (!isNaN(startDate.getTime())) {
-                setStartDate(startDate);
-            }
-        }
-
-        if (newAttribute['endDate']) {
-            const endDate = new Date(newAttribute['endDate']);
-            if (!isNaN(endDate.getTime())) {
-                setEndDate(endDate);
-            }
-        }
-        if (newAttribute['reportID'] && Number.isInteger(parseInt(newAttribute['reportID']))) {
-            setReportID(parseInt(newAttribute['reportID']));
-        }
-
-        if (newAttribute['orderID'] && Number.isInteger(parseInt(newAttribute['orderID']))) {
-            setOrderID(parseInt(newAttribute['orderID']));
-        }
-
-
+        if(newAttribute['startDate']){setStartDate(newAttribute['startDate']);}
+        if (newAttribute['endDate']){setEndDate(newAttribute['endDate']);}
+        if (newAttribute['reportID']){setReportID(parseInt(newAttribute['reportID']));}
+        if (newAttribute['orderID']){setOrderID(parseInt(newAttribute['orderID']));}
         setIsSubmitted(true);
     };
-
 
     const handleCreateReport = (event) => {
         // update the new attribute state
