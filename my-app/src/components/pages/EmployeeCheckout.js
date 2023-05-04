@@ -18,15 +18,18 @@ function Checkout() {
    * Stateful value for cart item list
    * @type {Array<Object>}
    */
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
+  const list = GetCartItems();
   /**
   
   Fetches cart items from the database and updates list state
   @function
   */
-  useEffect(() => {
-    setList(GetCartItems());
-  }, []);
+  // useEffect(() => {
+  //   setList(GetCartItems());
+  // }, []);
+  // const isEmployee = localStorage.getItem('isEmployee') === 'true';
+  // localStorage.setItem('isManager', true);
   return (
     <>
       <Navbar type='e' links={employeeLinks} buttonText={buttonText} buttonPath='/EmployeeCheckout' />
