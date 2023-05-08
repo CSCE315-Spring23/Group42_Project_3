@@ -53,12 +53,12 @@ function Footer() {
               Employee Login
               {showPopup && <Popup popupStyle={'style2'} />}
             </Button>
-            {/* Link to EmployeeView */}
+            {/* Link to EmployeeView
             <Link to='/EmployeeView'>Employee View</Link>
-            {/* Link to MenuboardView (opens in new tab) */}
+            {/* Link to MenuboardView (opens in new tab)
             <Link to='/Menuboard' target='_blank'>Menuboard View</Link>
-            {/* Link to ManagerView */}
-            <Link to='/ManagerView'>Manager View</Link>
+            {/* Link to ManagerView
+            <Link to='/ManagerView'>Manager View</Link> */}
           </div>
           <div className='footer-link-items'>
             {/* Button to navigate to MenuboardView */}

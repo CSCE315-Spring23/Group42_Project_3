@@ -204,7 +204,7 @@ app.get('/menuListRequest', async (req, res) => {
 */
 app.get('/employeeRequest', async (req, res) => {
   try {
-    var queryToUse = 'SELECT * FROM employee';
+    var queryToUse = 'SELECT * FROM employee ORDER BY EMPLOYEE_ID';
     console.log(queryToUse);
     const { rows } = await pool.query(queryToUse);
     res.json(rows);
@@ -468,10 +468,12 @@ app.get('/excessRequest/:start/:end', async (req, res) => {
     console.log("start:", start);
     console.log("end:", end);
 
-    var queryToUse = "SELECT SUM(AMT_USED) AS total_amt_used, i.INVENTORY_ID, i.INVENTORY_ITEM_NAME " +
+    var queryToUse = "SELECT i.INVENTORY_ID, i.INVENTORY_ITEM_NAME, " +
+      "SUM(CASE WHEN o.DATE_ORDERED BETWEEN $1 AND $2 THEN AMT_USED ELSE 0 END) AS amt_used, " +
+      "SUM(CASE WHEN o.DATE_ORDERED BETWEEN '2020-01-01' AND '2025-02-01' THEN AMT_USED ELSE 0 END) AS total_amt_used " +
       "FROM Recipe_Item r JOIN Inventory_Item i ON r.INVENTORY_ID = i.INVENTORY_ID " +
       "JOIN Item_Sold s ON r.MENU_ID = s.MENU_ITEM_ID JOIN Orders o ON s.ORDER_ID = o.ORDER_ID " +
-      "WHERE o.DATE_ORDERED BETWEEN $1 AND $2 GROUP BY i.INVENTORY_ID, i.INVENTORY_ITEM_NAME"
+      "WHEN o.DATE_ORDERED BETWEEN '2020-01-01' AND '2025-02-01' GROUP BY i.INVENTORY_ID, i.INVENTORY_ITEM_NAME"
     const queryValues = [start, end];
 
     //console.log(querryToUse, queryValues);

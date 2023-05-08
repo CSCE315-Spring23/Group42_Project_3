@@ -103,7 +103,7 @@ const Reports = () => {
         },
         {
             id: 3, name: 'Excess Report',
-            headers: ["Total Amount Used", "Inventory ID", "Item Name"],
+            headers: ["Inventory ID", "Item Name", "Amount Used", "Total Amount Used"],
             tableData: GetExcessReport(startDate, endDate)
         },
         {
