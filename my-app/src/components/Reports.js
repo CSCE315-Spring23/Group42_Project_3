@@ -116,11 +116,11 @@ const Reports = () => {
             headers: ["ID", "Item Name", "Cost", "Quantity"],
             tableData: restockData
         },
-        { id: 6, name: 'X Reports',
+        { id: 6, name: 'Reports',
           headers: ["Report ID", "Last Order ID", "ZReport Date", "Total Cost"],
           tableData: formattedXReportData
         },
-        { id: 7, name: 'Z Reports',
+        { id: 7, name: 'X/Z Reports',
           headers: ["Report ID", "XReport ID", "Menu Item", "Quantity"],
           tableData: GetZReport(reportID)
         },
